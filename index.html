@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&display=swap">
 <style>
-/* Layout: opens straight on drinks. One sticky header (wordmark, four menu tabs, section chips) over a single peach column. */
+/* Layout: a bare splash (wordmark + four menu links) leads to the menus: one sticky header (wordmark, four tabs, section chips) over a single peach column. */
 :root {
   --page: #F9C6BA;          /* apricityrestaurant.com peach */
   --ink: #000000;
@@ -58,7 +58,22 @@ button { font: inherit; color: inherit; letter-spacing: inherit; }
 /* ---------- header ---------- */
 .top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--page); border-bottom: 1px solid var(--rule-strong); }
 .brandrow { display: flex; align-items: baseline; justify-content: space-between; padding-block: 14px 4px; }
-.wordmark { font-weight: 300; font-size: 1.375rem; letter-spacing: 0.3em; line-height: 1; }
+.wordmark { font-weight: 300; font-size: 1.375rem; letter-spacing: 0.3em; line-height: 1; background: none; border: 0; padding: 0; cursor: pointer; }
+
+/* ---------- splash ---------- */
+.splash {
+  min-height: calc(100svh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+  display: grid; align-content: center; gap: 44px; text-align: center; padding-block: 40px;
+}
+.splash h1 { margin: 0; font-weight: 300; font-size: 2.25rem; letter-spacing: 0.3em; margin-right: -0.3em; line-height: 1; }
+.splash .table { display: block; margin-top: 14px; }
+.links { display: grid; border-top: 1px solid var(--rule-strong); }
+.links button {
+  border: 0; border-bottom: 1px solid var(--rule-strong); background: none; padding: 20px 0 18px; cursor: pointer;
+  font-size: 0.9375rem; text-transform: uppercase; letter-spacing: 0.22em; transition: background .2s, color .2s;
+}
+.links button:hover, .links button:active { background: var(--ink); color: var(--page); }
+.splash .note { margin: 0; }
 .table { font-size: 0.6875rem; color: var(--light); }
 
 .tabs { display: flex; align-items: center; justify-content: space-between; padding-block: 10px 8px; }
@@ -139,8 +154,8 @@ details p { margin-top: 8px; }
 <header class="top">
   <div class="wrap">
     <div class="brandrow">
-      <span class="wordmark">APRICITY</span>
-      <span class="table caps" id="table"></span>
+      <button class="wordmark" id="home" type="button" aria-label="Apricity, back to all menus">APRICITY</button>
+      <span class="table caps" data-table></span>
     </div>
     <nav class="tabs" role="tablist" aria-label="Menus">
       <div class="group">
@@ -156,6 +171,20 @@ details p { margin-top: 8px; }
     <div class="chips" id="chips" aria-label="Jump to section"></div>
   </div>
 </header>
+
+<section class="splash wrap" id="splash" hidden>
+  <div>
+    <h1>APRICITY</h1>
+    <span class="table caps" data-table></span>
+  </div>
+  <nav class="links" aria-label="Menus">
+    <button type="button" data-view="drinks">Drinks</button>
+    <button type="button" data-view="wine">Wine list</button>
+    <button type="button" data-view="alacarte">A la carte</button>
+    <button type="button" data-view="tasting">Tasting menus</button>
+  </nav>
+  <p class="note">Allergies? Please tell your server before ordering.</p>
+</section>
 
 <main class="wrap" id="body"></main>
 <footer class="wrap foot" id="foot"></footer>
@@ -283,16 +312,16 @@ details p { margin-top: 8px; }
   var FOOT = "<p>A discretionary 13.5% ‘Apriciation’ goes to the whole team. 50p per person supports School Food Matters.</p>";
 
   // ---------- state ----------
-  var VIEWS = ["drinks", "wine", "alacarte", "tasting"];
-  var state = { view: "drinks", plantOnly: false, courses: 5 };
+  var VIEWS = ["home", "drinks", "wine", "alacarte", "tasting"];
+  var state = { view: "home", plantOnly: false, courses: 5 };
   try { state.plantOnly = !!JSON.parse(localStorage.getItem("apricity-menu") || "{}").plantOnly; } catch (e) {}
 
   var $ = function (s) { return document.querySelector(s); };
-  var chips = $("#chips"), body = $("#body"), foot = $("#foot");
+  var chips = $("#chips"), body = $("#body"), foot = $("#foot"), top = $(".top"), splash = $("#splash");
 
   // The table QR code opens ...?table=12
   var tbl = (location.search.match(/table=(\d+)/) || [])[1];
-  $("#table").textContent = tbl ? "Table " + tbl : "";
+  document.querySelectorAll("[data-table]").forEach(function (el) { el.textContent = tbl ? "Table " + tbl : ""; });
 
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function codes(c) {
@@ -389,12 +418,16 @@ details p { margin-top: 8px; }
   };
 
   function show(view, push) {
-    if (VIEWS.indexOf(view) < 0) view = "drinks";
+    if (VIEWS.indexOf(view) < 0) view = "home";
     state.view = view;
-    document.querySelectorAll(".tab").forEach(function (b) { b.setAttribute("aria-selected", b.dataset.view === view); });
-    render[view]();
-    spy();
-    if (push) { try { history.pushState(null, "", "#" + view); } catch (e) {} }
+    var home = view === "home";
+    splash.hidden = !home; top.hidden = home; body.hidden = home; foot.hidden = home;
+    if (!home) {
+      document.querySelectorAll(".tab").forEach(function (b) { b.setAttribute("aria-selected", b.dataset.view === view); });
+      render[view]();
+      spy();
+    }
+    if (push) { try { history.pushState(null, "", home ? location.pathname + location.search : "#" + view); } catch (e) {} }
     window.scrollTo(0, 0);
   }
   function rerender() { var y = window.scrollY; show(state.view); window.scrollTo(0, y); }
@@ -425,6 +458,7 @@ details p { margin-top: 8px; }
   document.addEventListener("click", function (e) {
     var t = e.target.closest("button");
     if (!t) return;
+    if (t.id === "home") return show("home", true);
     if (t.dataset.view) { if (t.dataset.view !== state.view) show(t.dataset.view, true); else window.scrollTo({ top: 0, behavior: "smooth" }); return; }
     if (t.dataset.jump) { var s = document.getElementById("sec-" + t.dataset.jump); if (s) s.scrollIntoView({ behavior: "smooth" }); setActive(t.dataset.jump); return; }
     if (t.id === "plant") {
