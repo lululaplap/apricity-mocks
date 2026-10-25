@@ -2,278 +2,256 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400&family=Jost:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&display=swap">
 <style>
-/* Layout: one airy, centred column like apricityrestaurant.com. A sticky bar holds the wordmark, four menu tabs and section chips. */
+/* Layout: apricityrestaurant.com's mobile look. A teal band carries the peach APRICITY wordmark; menus sit in one centred column on peach; a teal footer closes each page. */
 :root {
-  --bg: #FFFFFF;
-  --ink: #272727;       /* site body text */
-  --muted: #676767;     /* site secondary text */
-  --faint: #A7A7A7;     /* allergen codes, rules */
-  --line: #E7E7E7;
-  --peach: #FFB7AB;     /* APRICITY wordmark */
-  --peach-wash: #FFF1EE;
-  --on-peach: #272727;
-  --font-mark: "Josefin Sans", "Futura", "Century Gothic", sans-serif;
-  --font-body: "Jost", "Brandon Grotesque", "Futura", "Century Gothic", system-ui, sans-serif;
+  --page: #F9C6BA;          /* site background peach */
+  --band: #034852;          /* site header/footer teal */
+  --on-band: #F9C6BA;
+  --ink: #000000;
+  --mid: #3A3A3A;
+  --light: #5F5A59;
+  --rule: rgba(0, 0, 0, 0.15);
+  --rule-strong: rgba(0, 0, 0, 0.5);
+  --accent: #034852;
+  --sel-bg: #034852;
+  --sel-fg: #F9C6BA;
+  --font: "Josefin Sans", "Brandon Grotesque", "Futura", "Century Gothic", sans-serif;
   --step--2: 0.6875rem;
   --step--1: 0.8125rem;
   --step-0: 1rem;
   --step-1: 1.125rem;
-  --step-2: 1.375rem;
+  --step-2: 1.5rem;
+  --step-3: 2rem;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #1A1918; --ink: #ECE9E7; --muted: #ABA6A3; --faint: #77716E; --line: #34312F;
-    --peach: #FFB7AB; --peach-wash: #3A2D2A; --on-peach: #272727;
+    --page: #032F36; --band: #021F24; --on-band: #F9C6BA; --ink: #FBE6DF; --mid: #E3C4BA; --light: #B39C96;
+    --rule: rgba(249, 198, 186, 0.16); --rule-strong: rgba(249, 198, 186, 0.45);
+    --accent: #F9C6BA; --sel-bg: #F9C6BA; --sel-fg: #032F36;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #1A1918; --ink: #ECE9E7; --muted: #ABA6A3; --faint: #77716E; --line: #34312F;
-  --peach: #FFB7AB; --peach-wash: #3A2D2A; --on-peach: #272727;
+  --page: #032F36; --band: #021F24; --on-band: #F9C6BA; --ink: #FBE6DF; --mid: #E3C4BA; --light: #B39C96;
+  --rule: rgba(249, 198, 186, 0.16); --rule-strong: rgba(249, 198, 186, 0.45);
+  --accent: #F9C6BA; --sel-bg: #F9C6BA; --sel-fg: #032F36;
   color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
 body {
-  background: var(--bg);
+  background: var(--page);
   color: var(--ink);
-  font-family: var(--font-body);
+  font-family: var(--font);
   font-weight: 300;
   font-size: var(--step-0);
   line-height: 1.6;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.03em;
   -webkit-font-smoothing: antialiased;
 }
 body::before {
   content: ""; position: fixed; inset: 0 0 auto;
-  height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg);
+  height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--band);
 }
 button { font: inherit; color: inherit; letter-spacing: inherit; }
 :focus-visible { outline: 1px solid var(--ink); outline-offset: 3px; }
 
-.app { max-width: 540px; margin: 0 auto; }
-.gutter {
+.wrap {
+  max-width: 560px; margin: 0 auto;
   padding-left: max(20px, env(safe-area-inset-left, 0px));
   padding-right: max(20px, env(safe-area-inset-right, 0px));
 }
-.caps { text-transform: uppercase; letter-spacing: 0.18em; font-weight: 400; }
+.caps { text-transform: uppercase; letter-spacing: 0.2em; font-weight: 400; }
 
 /* ---------- sticky top ---------- */
-.top {
-  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
-  background: var(--bg);
-}
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--page); }
+.band { background: var(--band); color: var(--on-band); }
 .brandrow {
   display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
-  padding-block: 16px 12px;
+  padding-block: 14px 12px;
 }
 .wordmark {
-  grid-column: 2;
-  background: none; border: 0; padding: 0 0 6px; cursor: pointer;
-  font-family: var(--font-mark); font-weight: 300; font-size: 1.5rem; line-height: 1;
-  letter-spacing: 0.3em; margin-right: -0.3em; color: var(--peach);
-  border-bottom: 1px solid var(--line);
+  grid-column: 2; background: none; border: 0; padding: 0; cursor: pointer;
+  font-family: var(--font); font-weight: 300; font-size: 2rem; line-height: 1;
+  letter-spacing: 0.16em; margin-right: -0.16em; color: var(--on-band);
 }
 .table-chip {
-  grid-column: 3; justify-self: end;
-  font-size: var(--step--2); color: var(--muted); white-space: nowrap;
+  grid-column: 3; justify-self: end; font-size: var(--step--2); white-space: nowrap; opacity: 0.85;
 }
-.tabs {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
-}
+.tabs { display: grid; grid-template-columns: repeat(4, auto); justify-content: space-between; padding-block: 14px 10px; }
 .tab {
-  border: 0; background: transparent; padding: 12px 2px 11px; cursor: pointer;
-  font-size: var(--step--2); color: var(--muted); position: relative;
+  border: 0; background: transparent; padding: 4px 2px; cursor: pointer;
+  font-size: var(--step--1); color: var(--mid); letter-spacing: 0.08em; text-transform: uppercase;
+  text-underline-offset: 4px;
 }
-.tab::after {
-  content: ""; position: absolute; left: 22%; right: 22%; bottom: -1px; height: 2px;
-  background: var(--peach); transform: scaleX(0); transition: transform .25s;
-}
-.tab[aria-selected="true"] { color: var(--ink); }
-.tab[aria-selected="true"]::after { transform: scaleX(1); }
+.tab[aria-selected="true"] { color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; font-weight: 600; }
 
 .chips {
   display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none;
-  padding-block: 10px; border-bottom: 1px solid var(--line);
+  padding-block: 2px 12px; border-bottom: 1px solid var(--rule-strong);
 }
 .chips::-webkit-scrollbar { display: none; }
 .chip {
-  flex: none; border: 1px solid var(--line); background: transparent; border-radius: 999px;
-  padding: 5px 12px 4px; font-size: var(--step--2); cursor: pointer; color: var(--muted);
-  white-space: nowrap; text-transform: uppercase; letter-spacing: 0.12em;
+  flex: none; border: 1px solid var(--rule-strong); background: transparent; border-radius: 999px;
+  padding: 6px 12px 4px; font-size: var(--step--2); cursor: pointer; color: var(--mid);
+  white-space: nowrap; text-transform: uppercase; letter-spacing: 0.14em;
 }
-.chip.active { border-color: var(--ink); color: var(--ink); }
-.chip.filter[aria-pressed="true"] { background: var(--peach); border-color: var(--peach); color: var(--on-peach); }
-.chips .sep { flex: none; width: 1px; background: var(--line); margin: 3px 2px; }
+.chip.active { background: var(--ink); border-color: var(--ink); color: var(--page); }
+.chip.filter[aria-pressed="true"] { background: var(--sel-bg); border-color: var(--sel-bg); color: var(--sel-fg); }
+.chips .sep { flex: none; width: 1px; background: var(--rule-strong); margin: 3px 2px; }
 
 /* ---------- welcome ---------- */
-.welcome { padding-block: 8px 36px; display: grid; gap: 26px; text-align: center; }
-.hero {
-  margin: 0 calc(-1 * max(20px, env(safe-area-inset-left, 0px))) 0 calc(-1 * max(20px, env(safe-area-inset-right, 0px)));
-  aspect-ratio: 4 / 3; max-width: calc(100% + 40px); overflow: hidden; background: var(--line);
-}
+.welcome { padding-block: 0 40px; display: grid; gap: 28px; text-align: center; }
+.hero { margin-inline: calc(-1 * max(20px, env(safe-area-inset-left, 0px))); aspect-ratio: 4 / 3; overflow: hidden; background: var(--band); }
 .hero img { width: 100%; height: 100%; object-fit: cover; display: block; animation: settle 1.6s ease-out both; }
 @keyframes settle { from { transform: scale(1.04); } to { transform: none; } }
-.welcome h1 { font-size: var(--step-1); margin: 4px 0 0; }
-.welcome .lede { color: var(--muted); margin: 0 auto; max-width: 34ch; font-size: 0.9375rem; }
+.welcome h1 { font-size: var(--step-3); letter-spacing: 0.25em; margin: 8px 0 14px; margin-right: -0.25em; }
+.lede { color: var(--mid); margin: 0 auto; max-width: 34ch; font-size: 0.9375rem; line-height: 1.8; }
 .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .choice {
-  border: 1px solid var(--line); background: transparent; cursor: pointer;
-  padding: 20px 8px 18px; display: grid; gap: 4px; justify-items: center;
-  transition: border-color .2s, background .2s;
+  border: 1px solid var(--rule-strong); background: transparent; cursor: pointer;
+  padding: 22px 8px 18px; display: grid; gap: 6px; justify-items: center; align-content: center;
+  transition: background .2s, color .2s;
 }
-.choice:hover, .choice:active { border-color: var(--peach); background: var(--peach-wash); }
+.choice:hover, .choice:active { background: var(--sel-bg); color: var(--sel-fg); border-color: var(--sel-bg); }
+.choice:hover .sub, .choice:active .sub { color: var(--sel-fg); }
 .choice .name { font-size: var(--step--1); }
-.choice .sub { font-size: var(--step--1); color: var(--muted); line-height: 1.35; }
+.choice .sub { font-size: var(--step--1); color: var(--mid); line-height: 1.35; }
 .allergy {
-  font-size: 0.9375rem; color: var(--muted); margin: 0; padding: 14px 16px;
-  background: var(--peach-wash);
+  font-size: 0.9375rem; color: var(--mid); margin: 0; padding-block: 16px;
+  border-top: 1px solid var(--rule-strong); border-bottom: 1px solid var(--rule-strong);
 }
-.allergy strong { color: var(--ink); font-weight: 400; }
+.allergy strong { color: var(--ink); font-weight: 600; }
 
 /* ---------- menu ---------- */
-.menu { padding-block: 4px 24px; }
-.page-head { text-align: center; padding-top: 26px; }
-.page-head h1 { font-size: var(--step-1); margin: 0; }
-.intro { color: var(--muted); font-size: 0.9375rem; margin: 10px auto 0; max-width: 36ch; text-align: center; }
-.section { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 150px); padding-top: 28px; }
-.section h2 {
-  font-size: var(--step--1); margin: 0 0 4px;
+.menu { padding-block: 0 8px; }
+.page-head { text-align: center; padding-top: 34px; }
+.page-head h1 { font-size: var(--step-2); letter-spacing: 0.25em; margin: 0 -0.25em 0 0; }
+.intro { color: var(--mid); font-size: 0.875rem; line-height: 1.8; margin: 14px auto 0; max-width: 36ch; text-align: center; }
+.section { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 170px); padding-top: 30px; }
+.section > h2 {
+  font-size: var(--step--1); margin: 0; padding-bottom: 8px; border-bottom: 1px solid var(--rule-strong);
   display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
 }
-.section h2 small { font-size: var(--step--2); color: var(--faint); letter-spacing: 0.12em; }
-.sec-note { color: var(--muted); font-size: 0.875rem; margin: 0 0 4px; }
+.section > h2 small { font-size: var(--step--2); color: var(--light); letter-spacing: 0.14em; }
 .items { list-style: none; margin: 0; padding: 0; }
 .item {
-  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 18px;
-  padding: 13px 0; border-bottom: 1px solid var(--line);
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 20px;
+  padding: 12px 0; border-bottom: 1px solid var(--rule);
 }
 .item:last-child { border-bottom: 0; }
-.item .title { min-width: 0; }
-.codes { font-size: var(--step--2); color: var(--faint); letter-spacing: 0.08em; white-space: nowrap; }
-.codes .pb { color: var(--ink); background: var(--peach-wash); padding: 1px 4px; }
-.item .desc { grid-column: 1; color: var(--muted); font-size: 0.875rem; margin: 0; }
+.item .title { min-width: 0; font-weight: 400; }
+.codes { font-size: var(--step--2); color: var(--light); letter-spacing: 0.08em; white-space: nowrap; font-weight: 400; }
+.codes .pb { color: var(--accent); font-weight: 600; }
+.item .desc { grid-column: 1; color: var(--mid); font-size: 0.875rem; margin: 0; }
 .price {
   grid-column: 2; grid-row: 1 / span 2; align-self: start;
-  font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right;
+  font-variant-numeric: tabular-nums lining-nums; white-space: nowrap; text-align: right; font-weight: 400;
 }
-.price .alt { display: block; color: var(--muted); font-size: var(--step--1); }
-.empty { color: var(--muted); padding: 13px 0; margin: 0; font-size: 0.9375rem; }
-.prose { color: var(--muted); font-size: 0.9375rem; margin: 6px 0 0; }
+.price .alt { display: block; color: var(--light); font-size: var(--step--2); letter-spacing: 0.06em; font-weight: 300; }
+.empty { color: var(--mid); padding: 12px 0; margin: 0; font-size: 0.9375rem; }
+.prose { color: var(--mid); font-size: 0.875rem; margin: 10px 0 0; line-height: 1.7; }
 
-/* tasting */
-.seg {
-  display: grid; grid-template-columns: 1fr 1fr; margin: 22px 0 0;
-  border: 1px solid var(--line);
-}
-.seg button {
-  border: 0; background: transparent; padding: 14px 6px 12px; cursor: pointer; display: grid; gap: 2px;
-}
-.seg button + button { border-left: 1px solid var(--line); }
+/* wine rows (as on the website: vintage, producer / cuvée, then grapes and region) */
+.wine .title .vin { color: var(--mid); font-weight: 300; }
+.wine .title .cuv { color: var(--mid); font-weight: 300; }
+.wine .title .uniq { color: var(--accent); margin-right: 4px; }
+.wine .meta { grid-column: 1; display: flex; flex-wrap: wrap; gap: 0 14px; font-size: var(--step--1); color: var(--light); }
+
+/* switches (tasting menus, glass/bottle) */
+.seg { display: grid; grid-template-columns: 1fr 1fr; margin: 24px 0 0; border: 1px solid var(--rule-strong); }
+.seg button { border: 0; background: transparent; padding: 14px 6px 12px; cursor: pointer; display: grid; gap: 2px; }
+.seg button + button { border-left: 1px solid var(--rule-strong); }
 .seg .n { font-size: var(--step--1); }
-.seg .p { font-size: var(--step-2); font-variant-numeric: tabular-nums; }
-.seg .s { font-size: var(--step--1); color: var(--muted); }
-.seg button[aria-pressed="true"] { background: var(--peach); color: var(--on-peach); }
-.seg button[aria-pressed="true"] .s { color: var(--on-peach); }
-.fine { color: var(--muted); font-size: 0.8125rem; margin: 8px 0 0; text-align: center; }
-.extras { list-style: none; margin: 0; padding: 0; }
-.extras li { display: flex; justify-content: space-between; gap: 16px; padding: 7px 0; font-size: 0.9375rem; }
-.extras .price { grid-row: auto; }
-.course { padding-top: 26px; }
-.course h2 { font-size: var(--step--1); margin: 0; }
-.course .hint { font-size: var(--step--2); color: var(--faint); letter-spacing: 0.12em; }
+.seg .p { font-size: var(--step-2); font-variant-numeric: lining-nums; }
+.seg .s { font-size: var(--step--1); color: var(--mid); }
+.seg button[aria-pressed="true"] { background: var(--sel-bg); color: var(--sel-fg); }
+.seg button[aria-pressed="true"] .s { color: var(--sel-fg); }
+.fine { color: var(--mid); font-size: 0.8125rem; margin: 10px 0 0; text-align: center; }
+.course { padding-top: 22px; }
+.course h3 { font-size: var(--step--2); margin: 0; color: var(--mid); }
+.course .hint { color: var(--accent); font-weight: 600; }
 .opts { list-style: none; margin: 4px 0 0; padding: 0; }
-.opt { padding: 10px 0; }
-.opt + .opt::before {
-  content: "or"; display: block; color: var(--faint); font-size: var(--step--1);
-  margin: -2px 0 8px; font-style: italic;
-}
-.supp { display: block; color: var(--muted); font-size: 0.875rem; }
-.divider { width: 24px; height: 1px; background: var(--faint); margin: 26px 0 0; border: 0; }
+.opt { padding: 8px 0; font-weight: 400; }
+.opt + .opt::before { content: "or"; display: block; color: var(--light); font-size: var(--step--1); margin: -2px 0 6px; font-weight: 300; }
+.supp { display: block; color: var(--mid); font-size: 0.875rem; font-weight: 300; }
 
-/* wine placeholder */
-.ghost { display: grid; gap: 14px; padding-top: 18px; }
-.ghost i { display: block; height: 12px; background: var(--line); border-radius: 2px; }
-.ghost i:nth-child(odd) { width: 78%; } .ghost i:nth-child(3n) { width: 56%; }
-.todo {
-  border: 1px dashed var(--faint); color: var(--muted); font-size: 0.875rem; padding: 12px 14px; margin-top: 22px;
-}
-
-/* footer */
-.foot { margin-top: 36px; border-top: 1px solid var(--line); padding-top: 22px; display: grid; gap: 14px; font-size: 0.8125rem; color: var(--muted); }
-.foot p { margin: 0; }
-.foot h3 { margin: 0 0 4px; font-size: var(--step--2); color: var(--ink); }
-.key { line-height: 1.8; }
-.mock { text-align: center; color: var(--faint); font-size: var(--step--2); padding-block: 8px 28px; letter-spacing: 0.1em; text-transform: uppercase; }
+/* footer band */
+.foot { margin-top: 44px; padding-block: 30px 34px; display: grid; gap: 18px; font-size: 0.8125rem; line-height: 1.7; }
+.foot p { margin: 0; opacity: 0.9; }
+.foot h3 { margin: 0 0 4px; font-size: var(--step--1); color: var(--on-band); }
+.foot .star { text-align: center; font-size: var(--step--1); letter-spacing: 0.1em; padding-top: 6px; border-top: 1px solid rgba(249, 198, 186, 0.3); }
+.foot .mock { text-align: center; font-size: var(--step--2); opacity: 0.65; letter-spacing: 0.12em; text-transform: uppercase; }
 
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
 </style>
 
-<div class="app">
-  <div class="top gutter">
-    <div class="brandrow">
+<div class="top">
+  <div class="band">
+    <div class="wrap brandrow">
       <button class="wordmark" id="home" type="button" aria-label="Apricity, back to all menus">APRICITY</button>
       <span class="table-chip caps" id="table-chip">Table 7</span>
     </div>
-    <div id="menu-nav" hidden>
-      <div class="tabs" role="tablist" aria-label="Menus">
-        <button class="tab caps" role="tab" id="tab-alacarte" data-view="alacarte" type="button">A la carte</button>
-        <button class="tab caps" role="tab" id="tab-tasting" data-view="tasting" type="button">Tasting</button>
-        <button class="tab caps" role="tab" id="tab-drinks" data-view="drinks" type="button">Drinks</button>
-        <button class="tab caps" role="tab" id="tab-wine" data-view="wine" type="button">Wine</button>
-      </div>
-      <div class="chips" id="chips" aria-label="Jump to section"></div>
-    </div>
   </div>
-
-  <main>
-    <section class="welcome gutter" id="welcome">
-      <div class="hero"><img src="dishes.jpg" alt="Five Apricity dishes in handmade bowls on a wooden table" width="640" height="480"></div>
-      <div>
-        <h1 class="caps">Menus</h1>
-        <p class="lede">We use hyper-seasonal produce from farms that align with our values, and locally foraged ingredients, with a low-waste approach to cooking.</p>
-      </div>
-      <div class="choices">
-        <button class="choice" type="button" data-go="alacarte"><span class="name caps">A la carte</span><span class="sub">Starters, mains, sides &amp; puddings</span></button>
-        <button class="choice" type="button" data-go="tasting"><span class="name caps">Tasting menus</span><span class="sub">5 or 7 courses, from £85</span></button>
-        <button class="choice" type="button" data-go="drinks"><span class="name caps">Drinks</span><span class="sub">Cocktails, soft, beer &amp; spirits</span></button>
-        <button class="choice" type="button" data-go="wine"><span class="name caps">Wine list</span><span class="sub">Low intervention growers</span></button>
-      </div>
-      <p class="allergy"><strong>Any allergies?</strong> Please let your server know before ordering. Allergens are listed beside every dish.</p>
-    </section>
-
-    <section class="menu gutter" id="menu" hidden>
-      <div id="menu-body"></div>
-      <div class="foot" id="foot"></div>
-    </section>
-  </main>
-
-  <p class="mock gutter">Design mockup · menu copied from apricityrestaurant.com, 25 Oct 2026</p>
+  <div class="wrap" id="menu-nav" hidden>
+    <div class="tabs" role="tablist" aria-label="Menus">
+      <button class="tab" role="tab" id="tab-alacarte" data-view="alacarte" type="button">A la carte</button>
+      <button class="tab" role="tab" id="tab-tasting" data-view="tasting" type="button">Tasting</button>
+      <button class="tab" role="tab" id="tab-drinks" data-view="drinks" type="button">Drinks</button>
+      <button class="tab" role="tab" id="tab-wine" data-view="wine" type="button">Wine list</button>
+    </div>
+    <div class="chips" id="chips" aria-label="Jump to section"></div>
+  </div>
 </div>
+
+<main>
+  <section class="welcome wrap" id="welcome">
+    <div class="hero"><img src="dishes.jpg" alt="Five Apricity dishes in handmade bowls on a wooden table" width="640" height="480"></div>
+    <div>
+      <h1 class="caps">Menus</h1>
+      <p class="lede">We use hyper-seasonal produce from farms that align with our values, and locally foraged ingredients, with a low-waste approach to cooking.</p>
+    </div>
+    <div class="choices">
+      <button class="choice" type="button" data-go="alacarte"><span class="name caps">A la carte</span><span class="sub">Starters, mains, sides &amp; puddings</span></button>
+      <button class="choice" type="button" data-go="tasting"><span class="name caps">Tasting menus</span><span class="sub">5 or 7 courses, from £85</span></button>
+      <button class="choice" type="button" data-go="drinks"><span class="name caps">Drinks</span><span class="sub">Cocktails, soft, beer &amp; spirits</span></button>
+      <button class="choice" type="button" data-go="wine"><span class="name caps">Wine list</span><span class="sub">Low intervention growers</span></button>
+    </div>
+    <p class="allergy"><strong>Any allergies?</strong> Please let your server know before ordering. Allergens are listed beside every dish.</p>
+  </section>
+
+  <section class="menu wrap" id="menu" hidden>
+    <div id="menu-body"></div>
+  </section>
+</main>
+
+<footer class="band">
+  <div class="wrap foot" id="foot"></div>
+</footer>
 
 <script>
 (function () {
   // ---------- content (from apricityrestaurant.com, 25 Oct 2026) ----------
-  var BREAD = { n: "Homemade Wildfarmed sourdough bread with Estate Dairy butter", c: "V, G, D", or: "or Citizens of Soil olive oil", oc: "P-B, G", p: "£6" };
+  var BREAD = { n: "Homemade Wildfarmed sourdough bread with Estate Dairy butter", c: "V, G, D", d: "or Citizens of Soil olive oil ", dc: "P-B, G", p: "£6", pb: true };
 
   var MENUS = {
     alacarte: {
-      title: "A la carte menu",
+      title: "A la carte",
       intro: "We use sustainable produce at the height of season from small-scale farmers and locally foraged ingredients. All with a low-waste approach to cooking.",
+      food: true,
       sections: [
-        { id: "bread", title: "Bread", items: [ { n: BREAD.n, c: BREAD.c, d: BREAD.or + " ", dc: BREAD.oc, p: BREAD.p, pb: true } ] },
+        { id: "bread", title: "Bread", items: [ BREAD ] },
         { id: "starters", title: "Starters", items: [
           { n: "Tempura kuri squash, Westcombe ricotta, chilli oil", c: "V, D", p: "£17" },
           { n: "Roasted Sussex carrot, vadouvan, carrot top pesto, Bombay mix", c: "P-B, Mu", p: "£17" },
           { n: "London butterhead lettuce, miso, pickled rhubarb, crispy kale", c: "P-B, Mu", p: "£17" },
           { n: "Slow-cooked ox tongue terrine, beetroot ketchup, mustard mayo", c: "Mu, G", p: "£19" },
           { n: "Cured chalk stream trout, greengage, crème fraîche, bergamot", c: "F, D", p: "£20" },
-          { n: "Scottish hand-dived scallops, caramelised celeriac, sudachi lime", c: "D, F, Mo", p: "£27", alt: "main £49" }
+          { n: "Scottish hand-dived scallops, caramelised celeriac, sudachi lime", c: "D, F, Mo", p: "£27", alt: "as main £49" }
         ]},
         { id: "mains", title: "Mains", items: [
           { n: "Flourish cabbage, watercress, shallot, marrowfat pea puree", c: "P-B, Mu", p: "£34" },
@@ -294,8 +272,7 @@ button { font: inherit; color: inherit; letter-spacing: inherit; }
           { n: "Basil panna cotta, apple sorbet, sesame crumb, basil", c: "P-B, Se", p: "£15" },
           { n: "Hafod & Ogleshield cheese custard, apple loaf, pickled blackberries", c: "V, G, D, E", p: "£14" }
         ]}
-      ],
-      food: true
+      ]
     },
     drinks: {
       title: "Drinks",
@@ -350,8 +327,8 @@ button { font: inherit; color: inherit; letter-spacing: inherit; }
   var TASTING = {
     intro: "Containing more than 30 servings of plants, our tasting menus feature a plant-based option for every course with the option to mix and match with animal-protein dishes.",
     menus: {
-      5: { price: "£85", special: "£65", wine: "£68", na: "£36", glasses: "four glasses" },
-      7: { price: "£99", special: "£79", wine: "£95", na: "£54", glasses: "six glasses" }
+      5: { price: "£85", special: "£65", wine: "£68", na: "£36", glasses: "Four glasses" },
+      7: { price: "£99", special: "£79", wine: "£95", na: "£54", glasses: "Six glasses" }
     },
     courses: [
       { t: "To start", o: [
@@ -385,8 +362,11 @@ button { font: inherit; color: inherit; letter-spacing: inherit; }
     ]
   };
 
+  // Wine list, extracted from the website's wine-list page.
+  // u = ♢ unique expression, v = vintage, p = producer, c = cuvée, g = grapes, r = region, $ = price, gl = glass price
   var WINE = {
-    intro: "We work with growers who prioritise biodiversity and soil regeneration in their respective regions, and let the grapes speak for their terroir, with as few additions and subtractions as possible."
+    intro: "We work with growers who prioritise biodiversity and soil regeneration in their respective regions, and let the grapes speak for their terroir, with as few additions and subtractions as possible.",
+    groups: [{"t":"Wines by the Glass","s":[{"t":"Sparkling","w":[{"u":1,"v":"2024","p":"Chateau Le Roc","c":"Roc Ambulle","g":"Negrette","r":"Fronton, FR","$":"£16"},{"v":"2020","p":"Roebuck Estates","c":"Classic Cuvée","g":"Chardonnay, Pinot Noir & Pinot Meunier","r":"Sussex, ENG","$":"£22"}]},{"t":"Champagne","w":[{"v":"2022","p":"Thibaud Brocard","c":"Dits-Lieux","g":"Pinot Noir, Pinot Blanc & Chardonnay","r":"Champagne, FR","$":"£29"}]},{"t":"White","w":[{"u":1,"v":"NV","p":"Apricity × Wasted Wine Club","c":"Riesling+","r":"Mosel, GER","$":"£14"},{"v":"2023","p":"Davenport","c":"Horsmonden","g":"Bacchus, Ortega+","r":"East Sussex, UK","$":"£15"},{"v":"2025","p":"Mas Foulaquier","c":"L'Oiseau","g":"Clairette, Grenache Gris, Grenache Blanc & Bourboulenc","r":"Languedoc, FR","$":"£18"},{"v":"2023","p":"Gili","c":"Villo","g":"Grillo","r":"Sicily, IT","$":"£19"},{"v":"2023","p":"Montanet-Thoden","c":"Vezelay","g":"Chardonnay","r":"Burgundy, FR","$":"£20"}]},{"t":"Rosé","w":[{"v":"2025","p":"Valérie Courrèges","c":"Le Vent dans les Voiles","g":"Grenache, Cinsaut","r":"Provence, FR","$":"£16"}]},{"t":"Skin Contact","w":[{"u":1,"v":"2025","p":"Radikon","c":"Pop Bianco","g":"Malvasia, Ribolla Gialla, Tocai Friulano","r":"Fruili, IT","$":"£20"}]},{"t":"Red","w":[{"v":"2024","p":"Mas du Libian","c":"Bout d'Zan","g":"Grenache & Syrah","r":"Rhone, FR","$":"£15"},{"v":"2024","p":"Ferdinando Principiano","c":"Langhe","g":"Nebbiolo","r":"Piemonte, IT","$":"£17"},{"v":"2024","p":"Pranzegg","c":"Rosso per tutti","g":"Vernatsch & Lagrein","r":"Trentino Alto-Adige, IT","$":"£19"},{"v":"2020","p":"Matthieu Cosse","c":"Fronsac","g":"Cabernet Sauvignon, Merlot, Cabernet Franc","r":"Bordeaux, FR","$":"£20"},{"v":"2023","p":"Montanet-Thoden","c":"Garance","g":"Pinot Noir","r":"Burgundy, FR","$":"£23"}]}]},{"t":"Bottles · 750ml","s":[{"t":"Sparkling","w":[{"v":"2021","p":"Entre Vinyes","c":"Funambul Brut Nature","g":"Macabeo, Parellada, Xarel-lo","r":"Penedes, ESP","$":"£75"},{"u":1,"v":"2022","p":"Kamara Estate","c":"Blooming Island","g":"Assyrtiko, Malagousia & Xinomavro","r":"Thessaloniki, GRE","$":"£95"},{"u":1,"v":"2023/2024","p":"Domaine Rietsch","c":"Cremant D'Alsace","g":"Auxerrois, Chardonnay & Pinot Gris","r":"Alsace, FR","$":"£110"},{"v":"2020","p":"Roebuck Estates","c":"Classic Cuvée","g":"Chardonnay, Pinot Noir & Pinot Meunier","r":"Sussex, ENG","$":"£130"},{"v":"NV","p":"Langham Estate","c":"Culver","g":"Pinot Noir, Chardonnay & Pinot Meunier","r":"Dorset, ENG","$":"£130"},{"v":"2015","p":"Staffelter Hof","c":"Brut Sekt","g":"Riesling","r":"Mosel, GER","$":"£140"},{"v":"2015","p":"Roebuck Estates","c":"Rare Expressions No.19","g":"Pinot Noir","r":"Sussex, ENG","$":"£190"}]},{"t":"Champagne","w":[{"v":"2022","p":"Thibaud Brocard","c":"Dits-Lieux","g":"Pinot Noir, Pinot Blanc & Chardonnay","r":"Champagne, FR","$":"£170"},{"v":"2018","p":"Franck Pascal","c":"Tolérance (Rose)","g":"Chardonnay & Pinot Meunier","r":"Champagne, FR","$":"£220"},{"v":"NV","p":"Domaine Les Monts Furnois","c":"Côte","g":"Chardonnay","r":"Champagne, FR","$":"£230"},{"v":"NV","p":"La Rogerie","c":"Le Burgh Sud","g":"Chardonnay","r":"Champagne, FR","$":"£245"},{"v":"2023","p":"Georges Laval","c":"Cumieres Premier Cru Brut Nature","g":"Pinot Noir, Chardonnay & Pinot Meunier","r":"Champagne, FR","$":"£260"},{"v":"NV","p":"Vincent Laval","c":"Les Vignes de mon Oncle","g":"Pinot Noir, Chardonnay & Pinot Meunier","r":"Champagne, FR","$":"£340"},{"v":"NV (2019 base)","p":"Guillame Selosse","c":"Largillier","g":"Pinot Noir","r":"Champagne, FR","$":"£475"}]},{"t":"White — Aromatic & Fresh","w":[{"u":1,"v":"NV","p":"Apricity × Wasted Wine Club","c":"Riesling+","r":"Mosel, GER","$":"£68"},{"u":1,"v":"2023","p":"Michael Gindl","c":"Michi's Farm","g":"Grüner Veltliner","r":"Weinviertel, AUT","$":"£72"},{"v":"2023","p":"Davenport","c":"Horsemonden","g":"Bacchus, Ortega+","r":"East Sussex, UK","$":"£77"},{"v":"2025","p":"Clos du Tue-Beouf","c":"Vin Blanc","g":"Sauvignon Blanc","r":"Loire, FR","$":"£78"},{"v":"2023","p":"Vignoble de L'Écu","c":"Classic","g":"Melon Blanc","r":"Loire, FR","$":"£88"},{"v":"2023","p":"Frantz Saumon","c":"Vin de Frantz","g":"Chenin Blanc","r":"Loire, FR","$":"£93"},{"v":"2025","p":"Josmeyer","c":"Mise du Printemps","g":"Pinot Blanc","r":"Alsace, FR","$":"£95"},{"u":1,"v":"2023","p":"Titerok-Akaet","c":"Ye-Ye","g":"Malvasia Volcánica","r":"Lanzarote, ESP","$":"£95"},{"v":"2023","p":"Domaine Rietsch","c":"Vieille Vigne","g":"Sylvaner","r":"Alsace, FR","$":"£105"},{"u":1,"v":"2023","p":"Ham Street","g":"Chardonnay, Bacchus","r":"Kent, UK","$":"£105"},{"u":1,"v":"2024","p":"Alice et Oliver De Moor","c":"Le Meme Azimut","g":"Riesling, Gewurztraminer, Muscat, Pinot Blanc","r":"Alsace, FR","$":"£100"},{"v":"2023","p":"Montanet-Thoden","c":"Galerne","g":"Chardonnay","r":"Burgundy, FR","$":"£110"},{"u":1,"v":"2022","p":"Token","c":"Ribolla Gialla","r":"Friuli, IT","$":"£110"},{"v":"2024","p":"Domaine Henri Bourgeois","c":"Sancerre, La Vigne Blanche","g":"Sauvignon Blanc","r":"Loire, FR","$":"£110"},{"v":"2024","p":"Domaine Giachino","c":"Monfarina","g":"Jacquère","r":"Savoie, FR","$":"£110"},{"v":"2023","p":"Marie-Pierre Chevassu-Fassenet","c":"Ouille","g":"Savagnin","r":"Jura, FR","$":"£115"},{"u":1,"v":"2023","p":"Bott Frigyes","c":"Furmint","r":"Garam Valley, SK","$":"£115"},{"v":"2024","p":"Domaine Les Enfants Sauvages","c":"Cool Moon","g":"Grenache Blanc, Maccabeu, Vermentino","r":"Languedoc, FR","$":"£120"},{"v":"2023","p":"Correntin Houillon","c":"Force of Nature","g":"Altesse","r":"Savoie, FR","$":"£130"},{"v":"2024","p":"Enviante","c":"Palo Blanco","g":"Listan Bianco (Palomino)","r":"Tenerife, ESP","$":"£140"},{"v":"2024","p":"Alberto Nanclares","c":"Albarino","r":"Rias Baxias, ESP","$":"£140"},{"v":"2022","p":"Vignes du Maynes","c":"Aligo-Rhythm","g":"Aligoté","r":"Burgundy, FR","$":"£140"},{"u":1,"v":"2021","p":"Maria & Sepp Muster","c":"Graf","g":"Sauvignon Blanc","r":"Styria, AUT","$":"£140"},{"v":"2023","p":"R&R Trossen","c":"Madonna Purus","g":"Riesling","r":"Mosel, GER","$":"£150"},{"v":"2024","p":"Simon Faure","c":"Saint Veran","g":"Chardonnay","r":"Burgundy, FR","$":"£155"},{"u":1,"v":"2021","p":"Tony Bornard","c":"Au fil des générations","g":"Chardonnay","r":"Jura, FR","$":"£165"},{"u":1,"v":"2024","p":"Chantereves","c":"Yume Utai","g":"Chardonnay","r":"Burgundy, FR","$":"£170"},{"u":1,"v":"2024","p":"Chantereves","c":"Bas Des Ees","g":"Aligote","r":"Burgundy, FR","$":"£180"},{"v":"2023","p":"Philippe Pacalet","c":"Ladoix","g":"Chardonnay","r":"Burgundy, FR","$":"£255"}]},{"t":"White — Round & Textured","w":[{"v":"2023","p":"Valdibella Cooperative","c":"Bianco","g":"Cataratto","r":"Sicily, IT","$":"£45"},{"v":"2025","p":"Mas Foulaquier","c":"L'Oiseau","g":"Clairette, Grenache Gris, Grenache Blanc & Bourboulenc","r":"Languedoc, FR","$":"£87"},{"v":"2023","p":"Domaine Tessier","c":"Sables","g":"Romarantin","r":"Loire, FR","$":"£90"},{"v":"2020","p":"Chapel Down","c":"Kit's Coty","g":"Chardonnay","r":"Kent, ENG","$":"£90"},{"v":"2024","p":"Gili","c":"Bislacco","g":"Catarratto","r":"Sicily, IT","$":"£95"},{"v":"2024","p":"Domaine Les Bruyeres","c":"L'Envie","g":"Marsanne","r":"Rhone, FR","$":"£95"},{"v":"2021","p":"Bodegas Moraza","c":"Moraza Dia Sol","g":"Viura","r":"Rioja, ESP","$":"£98"},{"v":"2025","p":"Forjas del Salnés","c":"Leirana","g":"Albariño","r":"Rías Baixas, ESP","$":"£98"},{"u":1,"v":"2022","p":"Strekov 1075","c":"Richard","g":"Chardonnay","r":"Strekov, SK","$":"£105"},{"v":"2023","p":"De Fermo","c":"Don Carlino","g":"Pecorino","r":"Abruzzo, IT","$":"£110"},{"u":1,"v":"2023","p":"Pierre Frick","c":"Chasselas sans soufre","g":"Chasselas","r":"Alsace, FR","$":"£115"},{"u":1,"v":"2023","p":"António Madeira","c":"Vinhas Velhas Branco","g":"Native Varieties","r":"Dão, PT","$":"£120"},{"v":"2022","p":"Blackbook","c":"Painter of Light","g":"Chardonnay","r":"Essex, UK","$":"£120"},{"v":"2023","p":"Selvadolce","c":"Crescendo","g":"Pigato","r":"Liguria, IT","$":"£130"},{"v":"2021","p":"Johannes Zillinger, Neumen","c":"Fume Blanc","g":"Sauvignon Blanc","r":"Weinviertel, AUT","$":"£140"},{"u":1,"v":"2021","p":"Leon Barral","c":"Le Blanc","g":"Terret Blanc, Terret Gris & Roussane","r":"Languedoc, FR","$":"£150"},{"u":1,"v":"2024","p":"Matassa","c":"Rufo","g":"Macabeo","r":"Roussillon, FR","$":"£150"},{"v":"2022","p":"Pyramid Valley","c":"Chardonnay","r":"North Canterbury, NZ","$":"£160"},{"v":"2021","p":"Anne et Jean-Francois Ganevat","c":"Victor de la Combe","g":"Chardonnay","r":"Jura, FR","$":"£180"},{"u":1,"v":"2023","p":"La Porte Saint Jean","c":"Les Pouches","g":"Chenin Blanc","r":"Loire, FR","$":"£190"},{"u":1,"v":"2023","p":"Chantereves","c":"Mainbey","g":"Chardonnay","r":"Burgundy, FR","$":"£230"},{"u":1,"v":"2023","p":"Chantereves","c":"Les Monts de Fussey","g":"Chardonnay","r":"Burgundy, FR","$":"£240"},{"v":"2022","p":"Emidio Pepe","c":"Pecorino","r":"Abruzzo, IT","$":"£280"},{"u":1,"v":"2019","p":"Domaine Miroirs","c":"Sonortie du Vent","g":"Chardonnay","r":"Jura, FR","$":"£475"}]},{"t":"Rosé","w":[{"v":"2025","p":"Valérie Courrèges","c":"Le Vent dans les Voiles","g":"Grenache, Cinsaut","r":"Provence, FR","$":"£79"},{"u":1,"v":"2021","p":"Azul y Garanza","c":"Naturaleza Salvaje Clarete","g":"Garnacha Blanca & Garnacha","r":"Navarra, ESP","$":"£84"},{"v":"2024","p":"Marabino","c":"Rosanera","g":"Nero d'Avola","r":"Silicy, IT","$":"£85"},{"v":"2021","p":"Blackbook","c":"I'd Rather Be a Rebel","g":"Pinot Noir","r":"London, ENG","$":"£98"},{"u":1,"v":"2023","p":"Sophie Evans","c":"Pinot Pinot","g":"Pinot Noir, Pinot Gris","r":"Kent, ENG","$":"£114"}]},{"t":"Orange / Skin Contact","w":[{"u":1,"v":"2023","p":"Ham Street","c":"Field Blend","g":"Pinot Noir, Pinot Meunier","r":"Kent, UK","$":"£95"},{"u":1,"v":"2025","p":"Gili","c":"N5","g":"Muscat","r":"Sicily, IT","$":"£99"},{"u":1,"v":"2025","p":"Radikon","c":"Pop Bianco","g":"Malvasia, Ribolla Gialla, Tocai Friulano","r":"Fruili, IT","$":"£105"},{"u":1,"v":"2024","p":"Matassa","c":"Cuvée Marguerite","g":"Muscat, Muscat di Alexandria, Macabeo","r":"Roussillon, FR","$":"£130"},{"u":1,"v":"2024","p":"La Stoppa","c":"Costabosco","g":"Malvasia di Candia Aromatica","r":"Emilia-Romagna, IT","$":"£130"},{"u":1,"v":"2022","p":"Weingut Werlitsch","c":"Glück","g":"Sauvignon Blanc","r":"Styria, AUT","$":"£155"},{"u":1,"v":"2023","p":"Massa Vecchia","c":"Ariento","g":"Vermentino","r":"Tuscany, IT","$":"£190"}]},{"t":"Red — Soft & Juicy","w":[{"v":"2023","p":"Valdibella Cooperative","c":"Rosso","g":"Nero d'Avola","r":"Sicily, IT","$":"£45"},{"u":1,"v":"2017","p":"Syfany","c":"André","r":"Moravia, CZ","$":"£55"},{"u":1,"v":"2024","p":"I Foresteri","c":"Girotondo","g":"Sangiovese","r":"Tuscany, IT","$":"£80"},{"v":"2024","p":"Domaine Breton","c":"Le Grolleau","g":"Grolleau","r":"Loire, FR","$":"£82"},{"u":1,"v":"2020","p":"Wachter Wiesler","c":"Bela-Joska","g":"Blaufränkisch","r":"Burgenland, AUT","$":"£94"},{"u":1,"v":"2021","p":"Domaine Inebriati","c":"Naia","g":"Carignan","r":"Languedoc, FR","$":"£95"},{"v":"2023","p":"Fedellos","c":"Ax Xaras","g":"Mencia","r":"Galicia, ESP","$":"£95"},{"u":1,"v":"2024","p":"Pranzegg","c":"Rosso per tutti","g":"Vernatsch & Lagrein","r":"Trentino Alto-Adige, IT","$":"£99"},{"u":1,"v":"NV","p":"Milan Nestarec","c":"Postmoderna","g":"Blaufrankisch","r":"Moravia, CZ","$":"£110"},{"u":1,"v":"2023","p":"Etienne Seignovert","c":"Gentil Monstre","g":"Syrah & Merlot","r":"Ardeche, FR","$":"£110"},{"u":1,"v":"2021","p":"Ktima Ligas","c":"XI-RO","g":"Xinomavro","r":"Pella, GR","$":"£116"},{"v":"2021","p":"Christof Ruof","c":"Steingut","g":"Pinot Noir","r":"Valais, SUI","$":"£120"},{"u":1,"v":"2023","p":"Domaine Thillardon","c":"Chenas Vibrations","g":"Gamay","r":"Beaujolais, FR","$":"£120"},{"u":1,"v":"2024","p":"Pierre Frick","c":"Physalis","g":"Pinot Noir","r":"Alsace, FR","$":"£120"},{"u":1,"v":"2022","p":"Walgate Wines","c":"Pinot Meunier","r":"East Sussex, UK","$":"£127"},{"u":1,"v":"2024","p":"Matassa","c":"River","g":"Syrah","r":"Rousillon, FR","$":"£130"},{"u":1,"v":"2022","p":"Correntin Houillon","c":"Arcane","g":"Pinot Noir","r":"Savoie, FR","$":"£130"},{"v":"2024","p":"Fanny Sabre","c":"Bourgogne XXIV","g":"Pinot Noir","r":"Burgundy, FR","$":"£140"},{"u":1,"v":"2022","p":"Cailloux du Paradis","c":"Racines Rouge","g":"Pineau d'Aunis, Cot, Gamay +","r":"Loire, FR","$":"£140"},{"u":1,"v":"2021","p":"Matassa","c":"French Disko","g":"Cinsault","r":"Roussillon, FR","$":"£160"},{"u":1,"v":"2023","p":"Domaine Dandellion","c":"Sur La Plage","g":"Pinot Noir","r":"Burgundy, FR","$":"£175"},{"v":"2024","p":"Anne et Jean-Francois Ganevat","c":"La Croix des Batailles","g":"Pinot Noir & Gamay","r":"Jura, FR","$":"£195"},{"v":"2024","p":"Chantereves","c":"La Maladerote","g":"Pinot Noir","r":"Burgundy, FR","$":"£210"},{"v":"2024","p":"Chantereves","c":"Dessus De Montchenevoy","g":"Pinot Noir","r":"Burgundy, FR","$":"£230"},{"u":1,"v":"2021","p":"Yann Durieux","c":"Les 1ers Ponts","g":"Pinot Noir","r":"Burgundy, FR","$":"£280"},{"v":"2023","p":"Philippe Pacalet","c":"Nuits-Saint-Georges Village","g":"Pinot Noir","r":"Burgundy, FR","$":"£310"},{"v":"2023","p":"Preurie Roch","c":"VDF Rouge","g":"Pinot Noir","r":"Burgundy, FR","$":"£310"}]},{"t":"Red — Rich & Structured","w":[{"v":"2023","p":"Fabrizio Iuli","c":"Umberta","g":"Barbera","r":"Piemonte, IT","$":"£70"},{"v":"2024","p":"Mas du Libian","c":"Bout d'Zan","g":"Grenache & Syrah","r":"Ardèche, FR","$":"£74"},{"u":1,"v":"NV","p":"Slobodne","c":"Majer 3","g":"Field Blend","r":"Trnava, SK","$":"£81"},{"v":"2018","p":"Vino Magula","c":"Baccara","g":"Dunaj, Frankovka & Rosa","r":"Trnava, SK","$":"£85"},{"v":"2024","p":"Ferdinando Principiano","c":"Langhe","g":"Nebbiolo","r":"Piemonte, IT","$":"£90"},{"v":"2019","p":"Dva Duby","c":"Vox Silentum","g":"Frankovka (Blaufränkisch)","r":"Moravia, CZ","$":"£90"},{"v":"2021","p":"Clos Fantine","c":"Faugéres Tradition","g":"Carignan, Grenache, Syrah","r":"Languedoc, FR","$":"£90"},{"v":"2024","p":"Domaine Breton","c":"Les Beaux Monts","g":"Cabernet Franc","r":"Loire, FR","$":"£95"},{"v":"2023","p":"Agricola Foradori","c":"Foradori","g":"Teroldego","r":"Trentino, IT","$":"£105"},{"v":"2020","p":"Matthieu Cosse","c":"Fronsac","g":"Cabernet Sauvignon, Merlot, Malbec, Cabernet Franc","r":"Bordeaux, FR","$":"£105"},{"v":"2014","p":"Claus Preisinger","c":"Pannobile","g":"Blaufränkisch, Zweigelt","r":"Burgenland, AUT","$":"£110"},{"v":"2023","p":"Bott Frigyes","c":"Kékfrankos","g":"Blaufränkisch","r":"Garam Valley, SK","$":"£115"},{"u":1,"v":"2022","p":"Cantine Matrone","c":"A Muntagna","g":"Cascaveglia & Piedirosso","r":"Campania, IT","$":"£120"},{"v":"2020","p":"Matthieu Dumarcher","c":"Réserve","g":"Syrah, Grenache & Carignan","r":"Rhône, FR","$":"£120"},{"v":"2017","p":"Louis Magnin","c":"La Brova","g":"Mondeuse","r":"Savoie, FR","$":"£130"},{"v":"2023","p":"La Porte Saint Jean","c":"Saumur-Champigny","g":"Cabernet Franc","r":"Loire, FR","$":"£155"},{"u":1,"v":"2023","p":"Dard et Ribo","c":"Crozes-Hermitage Rouge","g":"Syrah","r":"Rhône, FR","$":"£160"},{"v":"2020","p":"Fonterenza","c":"Rosso di Montalcino","g":"Sangiovese","r":"Tuscany, IT","$":"£160"},{"v":"2019","p":"Olivier Riviere","c":"Ganko","g":"Garanacha & Mazuelo","r":"Rhône, FR","$":"£160"},{"v":"2022","p":"Pyramid Valley","c":"Snake's Tongue","g":"Pinot Noir","r":"Central Otago, NZ","$":"£220"},{"u":1,"v":"2022","p":"Massa Vecchia","c":"Poggio a'Venti","g":"Sangiovese","r":"Tuscany, IT","$":"£260"},{"v":"2021","p":"Philippe Pacalet","c":"Cornas","g":"Syrah","r":"Rhône, FR","$":"£260"}]},{"t":"Sweet & Afters","w":[{"v":"2024","p":"L'Archetipo","c":"Moscatello Selvatico","r":"Puglia, IT","$":"£80","gl":"£15 / 125ml"},{"v":"NV","p":"Szolo","c":"Dolce","g":"Furmint +","r":"Tokaj, HUN","$":"£90","gl":"£10 / 75ml"},{"v":"2023","p":"Mas Amiel","c":"Maury Vintage","g":"Grenache","r":"Rousillon, FR","$":"£118","gl":"£12 / 75ml"},{"v":"2024","p":"La Stoppa","c":"Vino del volta","g":"Malvasia di Candia Aromatica","r":"Emiglia Romagna, IT","$":"£150","gl":"£17 / 75ml"},{"v":"2022","p":"Domaine de Souch","c":"Cuvee Marie-Kattalyn","g":"Petit Manseng","r":"Jurancon, FR","$":"£210","gl":"£21 / 75ml"},{"u":1,"v":"2005","p":"Staffelter Hof","c":"Riesling Auslese","g":"Riesling","r":"Mosel, GER","$":"£85"}]}]}]
   };
 
   var KEY = "V – Vegetarian · P-B – Plant-Based · C – Crustaceans · Ce – Celery · D – Dairy · E – Eggs · F – Fish · P – Peanuts · G – Gluten · L – Lupin · N – Nuts · Mo – Molluscs · Mu – Mustard · S – Soya · SD – Sulphur Dioxide · Se – Sesame Seeds · A – Alcohol";
@@ -395,8 +375,11 @@ button { font: inherit; color: inherit; letter-spacing: inherit; }
   var SFM = "A donation of 50p per person is added to each bill to support the work of School Food Matters, who believe that every child should enjoy nutritious, delicious and sustainable food at school and leave with an informed and positive relationship with food.";
 
   // ---------- state ----------
-  var state = { view: "welcome", plantOnly: false, courses: 5 };
-  try { if (JSON.parse(localStorage.getItem("apricity-menu") || "{}").plantOnly) state.plantOnly = true; } catch (e) {}
+  var state = { view: "welcome", plantOnly: false, uniqueOnly: false, courses: 5, wineGroup: 0 };
+  try {
+    var saved = JSON.parse(localStorage.getItem("apricity-menu") || "{}");
+    state.plantOnly = !!saved.plantOnly;
+  } catch (e) {}
 
   var $ = function (s) { return document.querySelector(s); };
   var welcome = $("#welcome"), menu = $("#menu"), nav = $("#menu-nav"),
@@ -411,22 +394,32 @@ button { font: inherit; color: inherit; letter-spacing: inherit; }
     if (!c) return "";
     return ' <span class="codes">' + c.split(", ").map(function (x) { return x === "P-B" ? '<span class="pb">P-B</span>' : esc(x); }).join(", ") + "</span>";
   }
-  function isPB(i) { return i.pb || / ?P-B/.test(i.c || ""); }
+  function isPB(i) { return i.pb || /P-B/.test(i.c || ""); }
   function itemHTML(i) {
     return '<li class="item"><span class="title">' + esc(i.n) + codes(i.c) + '</span><span class="price">' + esc(i.p) +
       (i.alt ? '<span class="alt">' + esc(i.alt) + "</span>" : "") + "</span>" +
       (i.d ? '<p class="desc">' + esc(i.d) + codes(i.dc) + "</p>" : "") + "</li>";
   }
-  function head(title, intro) {
-    return '<div class="page-head"><h1 class="caps">' + esc(title) + '</h1><p class="intro">' + esc(intro) + "</p></div>";
+  function wineHTML(w) {
+    return '<li class="item wine"><span class="title">' + (w.u ? '<span class="uniq" title="Wine with a unique expression">♢</span>' : "") +
+      '<span class="vin">' + esc(w.v) + "</span> " + esc(w.p) + (w.c ? ' <span class="cuv">/ ' + esc(w.c) + "</span>" : "") + "</span>" +
+      '<span class="price">' + esc(w.$) + (w.gl ? '<span class="alt">' + esc(w.gl) + "</span>" : "") + "</span>" +
+      '<span class="meta">' + (w.g ? "<span>" + esc(w.g) + "</span>" : "") + "<span>" + esc(w.r) + "</span></span></li>";
   }
-  function filterChip() {
-    return '<button class="chip filter" type="button" id="plant-filter" aria-pressed="' + state.plantOnly + '">Plant-based only</button><span class="sep" aria-hidden="true"></span>';
+  function head(title, intro, extra) {
+    return '<div class="page-head"><h1 class="caps">' + esc(title) + '</h1><p class="intro">' + esc(intro) + "</p>" + (extra || "") + "</div>";
+  }
+  function filterChip(id, label, on) {
+    return '<button class="chip filter" type="button" id="' + id + '" aria-pressed="' + on + '">' + label + '</button><span class="sep" aria-hidden="true"></span>';
+  }
+  function jumpChips(list) {
+    return list.map(function (s) { return '<button class="chip" type="button" data-jump="' + s.id + '">' + esc(s.title) + "</button>"; }).join("");
   }
   function footer(food) {
     foot.innerHTML =
-      (food ? '<div><h3 class="caps">Allergens</h3><p class="key">' + esc(KEY) + "</p></div><p>" + esc(TRACES) + "</p>" : "") +
-      '<div><h3 class="caps">Apriciation</h3><p>' + esc(APRICIATION) + "</p></div><p>" + esc(SFM) + "</p>";
+      (food ? '<div><h3 class="caps">Allergens</h3><p>' + esc(KEY) + "</p></div><p>" + esc(TRACES) + "</p>" : "") +
+      '<div><h3 class="caps">Apriciation</h3><p>' + esc(APRICIATION) + "</p></div><p>" + esc(SFM) + "</p>" +
+      '<p class="star">Michelin Green Star</p><p class="mock">Design mockup · content from apricityrestaurant.com, 25 Oct 2026</p>';
   }
 
   // ---------- render ----------
@@ -442,8 +435,7 @@ button { font: inherit; color: inherit; letter-spacing: inherit; }
       html += "</ul>" + (s.after ? '<p class="prose">' + esc(s.after) + "</p>" : "") + "</section>";
     });
     body.innerHTML = html;
-    var c = m.sections.map(function (s) { return '<button class="chip" type="button" data-jump="' + s.id + '">' + esc(s.title) + "</button>"; }).join("");
-    chips.innerHTML = (m.food ? filterChip() : "") + c;
+    chips.innerHTML = (m.food ? filterChip("plant-filter", "Plant-based only", state.plantOnly) : "") + jumpChips(m.sections);
     chips.hidden = false;
     footer(m.food);
     spy();
@@ -462,10 +454,10 @@ button { font: inherit; color: inherit; letter-spacing: inherit; }
     html += '<section class="section" id="sec-courses" data-sec="courses"><h2 class="caps">Choose one dish per course<small class="caps">' + state.courses + " courses</small></h2>";
     TASTING.courses.forEach(function (c) {
       if (c.only7 && state.courses !== 7) {
-        if (c.add5) html += '<div class="course"><h2 class="caps">' + esc(c.t) + ' <span class="hint">Add for ' + c.add5 + "</span></h2></div>";
+        if (c.add5) html += '<div class="course"><h3 class="caps">' + esc(c.t) + ' · <span class="hint">Add for ' + c.add5 + "</span></h3></div>";
         return;
       }
-      html += '<div class="course"><h2 class="caps">' + esc(c.t) + "</h2>";
+      html += '<div class="course"><h3 class="caps">' + esc(c.t) + "</h3>";
       if (c.fixed) { html += '<p class="prose">' + esc(c.fixed) + "</p></div>"; return; }
       var opts = c.o.filter(function (o) { return !state.plantOnly || isPB(o); });
       html += '<ul class="opts">' + opts.map(function (o) {
@@ -474,28 +466,40 @@ button { font: inherit; color: inherit; letter-spacing: inherit; }
     });
     html += "</section>";
 
-    html += '<section class="section" id="sec-drinks" data-sec="drinks"><h2 class="caps">Pairings<small class="caps">' + sel.glasses + '</small></h2><ul class="items">' +
+    html += '<section class="section" id="sec-pairings" data-sec="pairings"><h2 class="caps">Pairings<small class="caps">' + sel.glasses + '</small></h2><ul class="items">' +
       itemHTML({ n: "Wine pairing", p: sel.wine }) + itemHTML({ n: "Non-alcoholic pairing", d: "Curated by Michal, our resident drinks expert", p: sel.na }) + "</ul></section>";
 
     html += '<section class="section" id="sec-extras" data-sec="extras"><h2 class="caps">Add on the side</h2><ul class="items">' +
-      [{ n: BREAD.n, c: BREAD.c, d: BREAD.or + " ", dc: BREAD.oc, p: BREAD.p, pb: true }].concat(TASTING.sides)
-        .filter(function (i) { return !state.plantOnly || isPB(i); }).map(itemHTML).join("") + "</ul></section>";
+      [BREAD].concat(TASTING.sides).filter(function (i) { return !state.plantOnly || isPB(i); }).map(itemHTML).join("") + "</ul></section>";
 
     body.innerHTML = html;
-    chips.innerHTML = filterChip() +
-      '<button class="chip" type="button" data-jump="courses">Courses</button><button class="chip" type="button" data-jump="drinks">Pairings</button><button class="chip" type="button" data-jump="extras">Sides</button>';
+    chips.innerHTML = filterChip("plant-filter", "Plant-based only", state.plantOnly) +
+      jumpChips([{ id: "courses", title: "Courses" }, { id: "pairings", title: "Pairings" }, { id: "extras", title: "Sides" }]);
     chips.hidden = false;
     footer(true);
     spy();
   }
 
   function renderWine() {
-    body.innerHTML = head("Wine list", WINE.intro) +
-      '<p class="fine">♢ Wines with unique expressions</p>' +
-      '<div class="todo">Mockup note: the website loads the wine list from a separate feed, and it was not captured in the PDF. The live list (by the glass, sparkling, white, orange, rosé, red, sweet) would appear here in the same layout as the drinks menu.</div>' +
-      '<div class="ghost" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>';
-    chips.innerHTML = ""; chips.hidden = true;
+    var labels = [["By the glass", "125ml"], ["Bottles", "750ml"]];
+    var html = head("Wine list", WINE.intro, '<p class="fine">♢ Wines with unique expressions</p>') +
+      '<div class="seg" role="group" aria-label="Glass or bottle">' + WINE.groups.map(function (g, i) {
+        var n = g.s.reduce(function (a, s) { return a + s.w.length; }, 0);
+        return '<button type="button" data-wine="' + i + '" aria-pressed="' + (state.wineGroup === i) + '"><span class="n caps">' + labels[i][0] +
+          '</span><span class="s">' + labels[i][1] + " · " + n + " wines</span></button>";
+      }).join("") + "</div>";
+    var group = WINE.groups[state.wineGroup], secs = [];
+    group.s.forEach(function (s, i) {
+      var id = "w" + state.wineGroup + "-" + i, ws = s.w.filter(function (w) { return !state.uniqueOnly || w.u; });
+      secs.push({ id: id, title: s.t.replace(/^(White|Red) — /, "$1: ") });
+      html += '<section class="section" id="sec-' + id + '" data-sec="' + id + '"><h2 class="caps">' + esc(s.t) + '</h2><ul class="items">' +
+        (ws.length ? ws.map(wineHTML).join("") : '<li class="empty">No ♢ wines in this section.</li>') + "</ul></section>";
+    });
+    body.innerHTML = html;
+    chips.innerHTML = filterChip("unique-filter", "♢ Unique only", state.uniqueOnly) + jumpChips(secs);
+    chips.hidden = false;
     footer(false);
+    spy();
   }
 
   function show(view, push) {
@@ -504,14 +508,14 @@ button { font: inherit; color: inherit; letter-spacing: inherit; }
     var inMenu = view !== "welcome";
     welcome.hidden = inMenu; menu.hidden = !inMenu; nav.hidden = !inMenu;
     document.querySelectorAll(".tab").forEach(function (b) { b.setAttribute("aria-selected", b.dataset.view === view); });
-    if (view === "tasting") renderTasting(); else if (view === "wine") renderWine(); else if (inMenu) renderList(view);
+    if (view === "tasting") renderTasting(); else if (view === "wine") renderWine(); else if (inMenu) renderList(view); else footer(false);
     if (push !== false) { try { history.pushState({ v: view }, "", inMenu ? "#" + view : location.pathname + location.search); } catch (e) {} }
     window.scrollTo(0, 0);
   }
-  function rerender(keepScroll) {
+  function rerender() {
     var y = window.scrollY;
     show(state.view, false);
-    if (keepScroll) window.scrollTo(0, y);
+    window.scrollTo(0, y);
   }
 
   // ---------- section scroll-spy ----------
@@ -547,9 +551,11 @@ button { font: inherit; color: inherit; letter-spacing: inherit; }
     if (t.id === "plant-filter") {
       state.plantOnly = !state.plantOnly;
       try { localStorage.setItem("apricity-menu", JSON.stringify({ plantOnly: state.plantOnly })); } catch (err) {}
-      return rerender(true);
+      return rerender();
     }
-    if (t.dataset.courses) { state.courses = +t.dataset.courses; return rerender(true); }
+    if (t.id === "unique-filter") { state.uniqueOnly = !state.uniqueOnly; return rerender(); }
+    if (t.dataset.courses) { state.courses = +t.dataset.courses; return rerender(); }
+    if (t.dataset.wine) { state.wineGroup = +t.dataset.wine; return show("wine", false); }
   });
   window.addEventListener("popstate", function () { show(location.hash.slice(1), false); });
 
