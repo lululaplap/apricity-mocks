@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Apricity Table Menu</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Layout: one narrow column (phone first). A sticky bar holds the brand, the three menu tabs and the section chips. */
+:root {
+  --bg: #F2F4F0;        /* frosty morning */
+  --surface: #FFFFFF;
+  --ink: #1E2925;       /* evergreen ink */
+  --muted: #5C6862;
+  --line: #DADFD8;
+  --sun: #C9661F;       /* low winter sun */
+  --sun-soft: #F7E4D2;
+  --leaf: #3F7350;      /* plant-based marker */
+  --leaf-soft: #E1EEE3;
+  --font-display: "Gloock", "Iowan Old Style", Georgia, serif;
+  --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.1875rem;
+  --step-2: 1.5rem;
+  --step-3: 2.25rem;
+  --radius: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121816; --surface: #1A221F; --ink: #ECEFEA; --muted: #9BA6A0; --line: #2B3531;
+    --sun: #F0A15C; --sun-soft: #3A2A1D; --leaf: #8CC39B; --leaf-soft: #1F3326;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121816; --surface: #1A221F; --ink: #ECEFEA; --muted: #9BA6A0; --line: #2B3531;
+  --sun: #F0A15C; --sun-soft: #3A2A1D; --leaf: #8CC39B; --leaf-soft: #1F3326;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg);
+}
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--sun); outline-offset: 2px; border-radius: 6px; }
+
+.app { max-width: 560px; margin: 0 auto; min-height: 100%; }
+.gutter {
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* ---------- sticky top ---------- */
+.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+.brandrow {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding-block: 12px 10px;
+}
+.wordmark {
+  background: none; border: 0; padding: 0; cursor: pointer;
+  font-family: var(--font-display); font-size: var(--step-2); line-height: 1;
+  letter-spacing: -0.01em; display: inline-flex; align-items: baseline; gap: 6px;
+}
+.wordmark .dot {
+  width: 9px; height: 9px; border-radius: 50%; background: var(--sun); display: inline-block;
+}
+.table-chip {
+  font-size: var(--step--1); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px;
+  white-space: nowrap;
+}
+
+.tabs {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 4px;
+  margin-bottom: 10px;
+}
+.tab {
+  border: 0; background: transparent; border-radius: 999px; padding: 9px 4px;
+  font-weight: 600; font-size: 0.9375rem; cursor: pointer; color: var(--muted);
+  transition: background .2s, color .2s;
+}
+.tab[aria-selected="true"] { background: var(--ink); color: var(--bg); }
+
+.chips {
+  display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none;
+  padding-bottom: 10px; scroll-padding-inline: 16px;
+}
+.chips::-webkit-scrollbar { display: none; }
+.chip {
+  flex: none; border: 1px solid var(--line); background: transparent; border-radius: 999px;
+  padding: 6px 12px; font-size: var(--step--1); font-weight: 500; cursor: pointer; color: var(--muted);
+  white-space: nowrap;
+}
+.chip.active { border-color: var(--ink); color: var(--ink); background: var(--surface); }
+.chip.filter[aria-pressed="true"] { border-color: var(--leaf); background: var(--leaf-soft); color: var(--leaf); }
+.chips .sep { flex: none; width: 1px; background: var(--line); margin: 4px 2px; }
+
+/* ---------- welcome ---------- */
+.welcome { padding-block: 28px 40px; display: grid; gap: 28px; }
+.horizon {
+  position: relative; height: 72px; overflow: hidden; border-bottom: 1px solid var(--ink);
+}
+.horizon .sun {
+  position: absolute; left: 50%; bottom: -46px; width: 92px; height: 92px; margin-left: -46px;
+  border-radius: 50%; background: radial-gradient(circle at 50% 40%, var(--sun), color-mix(in srgb, var(--sun) 70%, var(--bg)));
+  box-shadow: 0 0 60px 12px var(--sun-soft);
+  animation: rise 1.4s ease-out both;
+}
+@keyframes rise { from { transform: translateY(26px); } to { transform: none; } }
+.hello { text-align: center; display: grid; gap: 6px; }
+.hello h1 {
+  font-family: var(--font-display); font-weight: 400; font-size: var(--step-3); line-height: 1.05;
+  margin: 0; text-wrap: balance; letter-spacing: -0.015em;
+}
+.hello p { margin: 0; color: var(--muted); }
+.service {
+  justify-self: center; font-size: var(--step--1); font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--sun);
+}
+
+.choices { display: grid; gap: 10px; }
+.choice {
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px;
+  text-align: left; width: 100%; cursor: pointer;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 18px 18px;
+  transition: border-color .2s, transform .15s;
+}
+.choice:hover { border-color: var(--ink); }
+.choice:active { transform: scale(0.99); }
+.choice .name { font-family: var(--font-display); font-size: var(--step-2); line-height: 1.1; display: block; }
+.choice .sub { color: var(--muted); font-size: 0.9375rem; display: block; margin-top: 2px; }
+.choice .arrow {
+  width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--bg); color: var(--ink); font-size: 1.1rem;
+}
+.choice.primary { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.choice.primary .sub { color: color-mix(in srgb, var(--bg) 75%, var(--ink)); }
+.choice.primary .arrow { background: var(--sun); color: #1E2925; }
+
+.note {
+  display: grid; gap: 10px; font-size: 0.9375rem; color: var(--muted);
+  border-top: 1px solid var(--line); padding-top: 18px;
+}
+.note strong { color: var(--ink); font-weight: 600; }
+.key { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; font-size: var(--step--1); }
+.key span { display: inline-flex; gap: 6px; align-items: center; }
+
+/* ---------- menu ---------- */
+.menu { padding-block: 8px 32px; }
+.intro { color: var(--muted); font-size: 0.9375rem; margin: 14px 0 0; max-width: 60ch; }
+.section { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 150px); padding-top: 22px; }
+.section h2 {
+  font-family: var(--font-display); font-weight: 400; font-size: var(--step-2); margin: 0 0 2px;
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+}
+.section h2 small {
+  font-family: var(--font-body); font-size: var(--step--1); color: var(--muted); font-weight: 500;
+  letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap;
+}
+.section .sec-note { color: var(--muted); font-size: var(--step--1); margin: 0 0 6px; }
+.items { list-style: none; margin: 0; padding: 0; }
+.item {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px;
+  padding: 14px 0; border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item .title { font-weight: 600; font-size: var(--step-0); display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.item .desc { grid-column: 1; color: var(--muted); font-size: 0.9375rem; margin: 0; max-width: 60ch; }
+.item .price {
+  font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; text-align: right;
+  grid-column: 2; grid-row: 1 / span 2; align-self: start;
+}
+.item .price .alt { display: block; font-weight: 400; color: var(--muted); font-size: var(--step--1); }
+.tag {
+  font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.06em; padding: 2px 6px;
+  border-radius: 5px; line-height: 1.3;
+}
+.tag.pb { background: var(--leaf-soft); color: var(--leaf); }
+.tag.v { background: var(--sun-soft); color: var(--sun); }
+.empty { color: var(--muted); padding: 14px 0; margin: 0; font-size: 0.9375rem; }
+
+/* tasting */
+.seg {
+  display: inline-grid; grid-auto-flow: column; gap: 2px; border: 1px solid var(--line);
+  border-radius: 999px; padding: 3px; background: var(--surface);
+}
+.seg button {
+  border: 0; background: transparent; padding: 6px 14px; border-radius: 999px; cursor: pointer;
+  font-size: 0.9375rem; font-weight: 600; color: var(--muted);
+}
+.seg button[aria-pressed="true"] { background: var(--sun-soft); color: var(--ink); }
+.controls { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.price-card {
+  margin-top: 18px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 16px 18px; display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 4px 12px; align-items: baseline;
+}
+.price-card .big { font-family: var(--font-display); font-size: var(--step-3); line-height: 1; font-variant-numeric: tabular-nums; }
+.price-card .lbl { font-weight: 600; }
+.price-card .meta { grid-column: 1 / -1; color: var(--muted); font-size: var(--step--1); }
+.courses { list-style: none; margin: 8px 0 0; padding: 0; counter-reset: c; }
+.course {
+  counter-increment: c; display: grid; grid-template-columns: 2.25rem minmax(0,1fr); gap: 2px 8px;
+  padding: 14px 0; border-bottom: 1px solid var(--line);
+}
+.course:last-child { border-bottom: 0; }
+.course::before {
+  content: counter(c); grid-row: span 2; font-family: var(--font-display); font-size: var(--step-1);
+  color: var(--sun); line-height: 1.3; font-variant-numeric: tabular-nums;
+}
+.course .title { font-weight: 600; }
+.course .desc { color: var(--muted); font-size: 0.9375rem; margin: 0; }
+
+.foot {
+  margin-top: 28px; padding: 16px 18px; border-radius: var(--radius); background: var(--sun-soft);
+  font-size: 0.9375rem; display: grid; gap: 6px;
+}
+.foot strong { font-weight: 600; }
+.foot p { margin: 0; }
+.mock {
+  text-align: center; color: var(--muted); font-size: var(--step--1); padding-block: 18px 28px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+</style>
+
+<div class="app">
+  <div class="top gutter">
+    <div class="brandrow">
+      <button class="wordmark" id="home" type="button" aria-label="Apricity, back to start">apricity<span class="dot" aria-hidden="true"></span></button>
+      <span class="table-chip" id="table-chip">Table 7</span>
+    </div>
+    <div id="menu-nav" hidden>
+      <div class="tabs" role="tablist" aria-label="Menus">
+        <button class="tab" role="tab" id="tab-alacarte" data-view="alacarte" type="button">À la carte</button>
+        <button class="tab" role="tab" id="tab-tasting" data-view="tasting" type="button">Tasting</button>
+        <button class="tab" role="tab" id="tab-drinks" data-view="drinks" type="button">Drinks</button>
+      </div>
+      <div class="chips" id="chips" aria-label="Jump to section"></div>
+    </div>
+  </div>
+
+  <main>
+    <section class="welcome gutter" id="welcome">
+      <div class="horizon" aria-hidden="true"><div class="sun"></div></div>
+      <div class="hello">
+        <span class="service" id="service">Lunch · Tuesday</span>
+        <h1 id="greeting">Good afternoon, welcome to Apricity</h1>
+        <p>Choose a menu. You can switch at any time from the bar at the top.</p>
+      </div>
+      <div class="choices">
+        <button class="choice primary" type="button" data-go="alacarte">
+          <span><span class="name">À la carte</span><span class="sub">Snacks, starters, mains, sides and desserts</span></span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </button>
+        <button class="choice" type="button" data-go="tasting">
+          <span><span class="name">Tasting menu</span><span class="sub" id="tasting-sub">5 or 7 courses, plant-based or omnivore</span></span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </button>
+        <button class="choice" type="button" data-go="drinks">
+          <span><span class="name">Drinks</span><span class="sub">Cocktails, wine, beer and low &amp; no</span></span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+      <div class="note">
+        <p style="margin:0"><strong>Allergies or intolerances?</strong> Tell your server before you order. We can check every dish.</p>
+        <div class="key">
+          <span><span class="tag pb">PB</span> Plant-based</span>
+          <span><span class="tag v">V</span> Vegetarian</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="menu gutter" id="menu" hidden>
+      <div id="menu-body"></div>
+      <div class="foot">
+        <p><strong>Ask us about allergens.</strong> Our kitchen handles all 14 major allergens, and dishes change with what our growers have.</p>
+        <p>We cook with whole ingredients and waste as little as we can. Offcuts become dips, ferments and stocks.</p>
+      </div>
+    </section>
+  </main>
+
+  <p class="mock gutter">Design mockup. Dishes, prices and wording are samples for layout only.</p>
+</div>
+
+<script>
+(function () {
+  // ---------- sample data ----------
+  var MENUS = {
+    alacarte: {
+      label: "À la carte",
+      intro: "Built around British produce from small growers. Dishes change through the week.",
+      sections: [
+        { id: "snacks", title: "Snacks", items: [
+          { n: "Sourdough", d: "Cultured butter, or rapeseed oil", p: "£6", t: ["pb"] },
+          { n: "Oat & fennel cracker, wasted dip", d: "Made from yesterday's bread and today's kitchen offcuts", p: "£7", t: ["pb"] },
+          { n: "Cured meats", d: "From Crown & Queue, pickles", p: "£12" }
+        ]},
+        { id: "starters", title: "Starters", items: [
+          { n: "Cornish earlies", d: "Brown butter, sea herbs, cured yolk", p: "£17", t: ["v"] },
+          { n: "Beetroot", d: "Smoked almond, pickled walnut, beet leaf", p: "£18", t: ["pb"] },
+          { n: "Hand-dived scallop", d: "Kohlrabi, sea buckthorn, kelp butter", p: "£27" }
+        ]},
+        { id: "mains", title: "Mains", items: [
+          { n: "Celeriac", d: "Wild mushroom, hazelnut, roasting juices", p: "£33", t: ["pb"] },
+          { n: "Hogget", d: "Charred hispi, salsa verde, whey", p: "£36" },
+          { n: "Day boat fish", d: "Mussels, sea vegetables, fermented chilli", p: "£38" }
+        ]},
+        { id: "sides", title: "Sides", items: [
+          { n: "Mac 'n' roasted cauliflower kimcheese", d: "", p: "£9", t: ["v"] },
+          { n: "Garden leaves", d: "Apple balsamic", p: "£6", t: ["pb"] }
+        ]},
+        { id: "desserts", title: "Desserts", items: [
+          { n: "Chouxnut", d: "Seasonal jam, custard", p: "£12", t: ["v"] },
+          { n: "Chocolate", d: "Miso caramel, toasted oat", p: "£13", t: ["pb"] },
+          { n: "British cheese", d: "Oat crackers, chutney", p: "£16", t: ["v"] }
+        ]}
+      ]
+    },
+    drinks: {
+      label: "Drinks",
+      intro: "Citrus only comes in season, so the cocktail list changes through the year.",
+      sections: [
+        { id: "cocktails", title: "Cocktails", items: [
+          { n: "Apricity spritz", d: "English sparkling, apricot kernel, verjus", p: "£16" },
+          { n: "Garden negroni", d: "Gin, rhubarb, English vermouth", p: "£17" },
+          { n: "Winter sun", d: "Whisky, preserved lemon, honey, bitters", p: "£18" },
+          { n: "Milk punch", d: "Clarified, with spent coffee and pear", p: "£19" }
+        ]},
+        { id: "lowno", title: "Low & no", items: [
+          { n: "House shrub & soda", d: "Made from fruit trim", p: "£6" },
+          { n: "Kombucha", d: "Brewed in house", p: "£7" },
+          { n: "Zero spritz", d: "Alcohol-free aperitif, tonic, orange", p: "£10" },
+          { n: "Garden tonic", d: "Non-alcoholic botanical, elderflower tonic", p: "£12" }
+        ]},
+        { id: "gt", title: "Gin & tonic", items: [
+          { n: "English gin & tonic", d: "Seasonal garnish", p: "£14" }
+        ]},
+        { id: "wine", title: "Wine", note: "125ml glass · bottle", items: [
+          { n: "English sparkling", d: "Kent", p: "£15", alt: "£75" },
+          { n: "Bacchus", d: "Sussex", p: "£13", alt: "£62" },
+          { n: "Skin contact", d: "Essex", p: "£14", alt: "£68" },
+          { n: "Pinot noir", d: "Hampshire", p: "£15", alt: "£72" }
+        ]},
+        { id: "beer", title: "Beer & cider", items: [
+          { n: "Lager", d: "London, 330ml", p: "£8" },
+          { n: "Pale ale", d: "Brewed with surplus bread, 330ml", p: "£8" },
+          { n: "Dry cider", d: "Herefordshire, 500ml", p: "£10" }
+        ]},
+        { id: "hot", title: "Coffee & tea", items: [
+          { n: "Coffee", d: "Espresso, flat white or filter", p: "£4" },
+          { n: "Loose-leaf tea", d: "British grown", p: "£4" }
+        ]}
+      ]
+    },
+    tasting: {
+      label: "Tasting",
+      courses: [
+        { n: "Oat & fennel cracker, wasted dip", d: "Today's offcuts" },
+        { n: "Sourdough", d: "Cultured butter", only7: true },
+        { n: "Beetroot", d: "Smoked almond, pickled walnut", m: { n: "Hand-dived scallop", d: "Kohlrabi, sea buckthorn" } },
+        { n: "Cornish earlies", d: "Brown butter, sea herbs" },
+        { n: "Celeriac", d: "Wild mushroom, hazelnut", m: { n: "Hogget", d: "Charred hispi, salsa verde" } },
+        { n: "Sea buckthorn", d: "Frozen yoghurt, oat", only7: true },
+        { n: "Chouxnut", d: "Seasonal jam" }
+      ],
+      prices: { 5: { dinner: "£85", lunch: "£59" }, 7: { dinner: "£99", lunch: "£75" } }
+    }
+  };
+
+  // ---------- state ----------
+  var state = { view: "welcome", plantOnly: false, courses: 5, style: "plant" };
+  var now = new Date();
+  var isLunch = now.getHours() < 16;
+  var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+  try { var saved = JSON.parse(localStorage.getItem("apricity-menu") || "{}");
+    if (saved.plantOnly) state.plantOnly = true;
+  } catch (e) {}
+
+  var $ = function (s) { return document.querySelector(s); };
+  var welcome = $("#welcome"), menu = $("#menu"), nav = $("#menu-nav"),
+      chips = $("#chips"), body = $("#menu-body");
+
+  // Table number comes from the QR code, e.g. ...?table=12 (or #t12 on a shared link)
+  var tbl = (location.search.match(/table=(\d+)/) || location.hash.match(/^#t(\d+)$/) || [])[1];
+  if (tbl) $("#table-chip").textContent = "Table " + tbl;
+
+  $("#service").textContent = (isLunch ? "Lunch" : "Dinner") + " · " + days[now.getDay()];
+  $("#greeting").textContent = (now.getHours() < 12 ? "Good morning" : now.getHours() < 18 ? "Good afternoon" : "Good evening") + ", welcome to Apricity";
+  $("#tasting-sub").textContent = "5 or 7 courses, from " + MENUS.tasting.prices[5][isLunch ? "lunch" : "dinner"] + (isLunch ? " at lunch" : "");
+
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function tags(t) {
+    return (t || []).map(function (x) { return '<span class="tag ' + x + '" title="' + (x === "pb" ? "Plant-based" : "Vegetarian") + '">' + x.toUpperCase() + "</span>"; }).join("");
+  }
+
+  // ---------- render ----------
+  function renderList(key) {
+    var m = MENUS[key], html = '<p class="intro">' + esc(m.intro) + "</p>";
+    m.sections.forEach(function (s) {
+      var items = s.items.filter(function (i) { return !(key === "alacarte" && state.plantOnly) || (i.t || []).indexOf("pb") > -1; });
+      html += '<section class="section" id="sec-' + s.id + '" data-sec="' + s.id + '"><h2>' + esc(s.title) +
+        (s.note ? "<small>" + esc(s.note) + "</small>" : "") + '</h2><ul class="items">';
+      if (!items.length) html += '<li class="empty">No plant-based ' + esc(s.title.toLowerCase()) + " today. Ask your server, we can often adapt a dish.</li>";
+      items.forEach(function (i) {
+        html += '<li class="item"><span class="title">' + esc(i.n) + tags(i.t) + '</span><span class="price">' + esc(i.p) +
+          (i.alt ? '<span class="alt">' + esc(i.alt) + "</span>" : "") + "</span>" +
+          (i.d ? '<p class="desc">' + esc(i.d) + "</p>" : "") + "</li>";
+      });
+      html += "</ul></section>";
+    });
+    body.innerHTML = html;
+
+    var c = m.sections.map(function (s) { return '<button class="chip" type="button" data-jump="' + s.id + '">' + esc(s.title) + "</button>"; }).join("");
+    if (key === "alacarte") c = '<button class="chip filter" type="button" id="plant-filter" aria-pressed="' + state.plantOnly + '">Plant-based only</button><span class="sep" aria-hidden="true"></span>' + c;
+    chips.innerHTML = c;
+    chips.hidden = false;
+    spy();
+  }
+
+  function renderTasting() {
+    var t = MENUS.tasting, p = t.prices[state.courses];
+    var html = '<p class="intro">Served to the whole table. Every course has a plant-based version; the omnivore menu swaps in fish and meat.</p>' +
+      '<div class="controls">' +
+        '<div class="seg" role="group" aria-label="Number of courses">' +
+          '<button type="button" data-courses="5" aria-pressed="' + (state.courses === 5) + '">5 courses</button>' +
+          '<button type="button" data-courses="7" aria-pressed="' + (state.courses === 7) + '">7 courses</button></div>' +
+        '<div class="seg" role="group" aria-label="Menu style">' +
+          '<button type="button" data-style="plant" aria-pressed="' + (state.style === "plant") + '">Plant-based</button>' +
+          '<button type="button" data-style="omni" aria-pressed="' + (state.style === "omni") + '">Omnivore</button></div>' +
+      "</div>" +
+      '<div class="price-card"><span class="lbl">' + state.courses + " courses" + (isLunch ? ", lunch" : "") + "</span>" +
+        '<span class="big">' + (isLunch ? p.lunch : p.dinner) + "</span>" +
+        '<span class="meta">' + (isLunch ? "Lunch price for tables of up to 6 · " + p.dinner + " at dinner. " : "Per person. ") +
+        "Wine and non-alcoholic pairings available, ask your server.</span></div>" +
+      '<section class="section" id="sec-courses"><h2>The menu<small>' + (state.style === "plant" ? "Plant-based" : "Omnivore") + '</small></h2><ol class="courses">';
+    t.courses.forEach(function (c) {
+      if (c.only7 && state.courses !== 7) return;
+      var d = state.style === "omni" && c.m ? c.m : c;
+      html += '<li class="course"><span class="title">' + esc(d.n) + '</span><p class="desc">' + esc(d.d) + "</p></li>";
+    });
+    html += "</ol></section>";
+    body.innerHTML = html;
+    chips.innerHTML = "";
+    chips.hidden = true;
+  }
+
+  function show(view, push) {
+    if (!(view in MENUS)) view = "welcome";
+    state.view = view;
+    var inMenu = view !== "welcome";
+    welcome.hidden = inMenu; menu.hidden = !inMenu; nav.hidden = !inMenu;
+    document.querySelectorAll(".tab").forEach(function (b) { b.setAttribute("aria-selected", b.dataset.view === view); });
+    if (view === "tasting") renderTasting(); else if (inMenu) renderList(view);
+    if (push !== false) { try { history.pushState({ v: view }, "", inMenu ? "#" + view : location.pathname + location.search); } catch (e) {} }
+    window.scrollTo(0, 0);
+  }
+
+  // ---------- section scroll-spy ----------
+  var observer;
+  function spy() {
+    if (observer) observer.disconnect();
+    if (!("IntersectionObserver" in window)) return;
+    observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) setActive(e.target.dataset.sec); });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    body.querySelectorAll("[data-sec]").forEach(function (s) { observer.observe(s); });
+    var first = body.querySelector("[data-sec]");
+    if (first) setActive(first.dataset.sec);
+  }
+  function setActive(id) {
+    chips.querySelectorAll("[data-jump]").forEach(function (c) {
+      var on = c.dataset.jump === id;
+      c.classList.toggle("active", on);
+      if (on) { var l = c.offsetLeft - 16; if (l < chips.scrollLeft || c.offsetLeft + c.offsetWidth > chips.scrollLeft + chips.clientWidth) chips.scrollTo({ left: l, behavior: "smooth" }); }
+    });
+  }
+
+  // ---------- events ----------
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest("button");
+    if (!t) return;
+    if (t.id === "home") return show("welcome");
+    if (t.dataset.go) return show(t.dataset.go);
+    if (t.dataset.view) { if (t.dataset.view !== state.view) show(t.dataset.view); else window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+    if (t.dataset.jump) { var s = document.getElementById("sec-" + t.dataset.jump); if (s) s.scrollIntoView({ behavior: "smooth" }); setActive(t.dataset.jump); return; }
+    if (t.id === "plant-filter") {
+      state.plantOnly = !state.plantOnly;
+      try { localStorage.setItem("apricity-menu", JSON.stringify({ plantOnly: state.plantOnly })); } catch (err) {}
+      return renderList("alacarte");
+    }
+    if (t.dataset.courses) { state.courses = +t.dataset.courses; return renderTasting(); }
+    if (t.dataset.style) { state.style = t.dataset.style; return renderTasting(); }
+  });
+  window.addEventListener("popstate", function () { show(location.hash.slice(1), false); });
+
+  show(location.hash.slice(1), false);
+})();
+</script>
+
+</body>
+</html>
