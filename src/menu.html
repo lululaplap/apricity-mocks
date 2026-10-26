@@ -1,5 +1,6 @@
 <title>Apricity Table Menu</title>
 <meta name="claude:viewport-fit-sides" content="cover">
+<meta name="color-scheme" content="only light">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&display=swap">
@@ -13,18 +14,8 @@
   --rule: rgba(0, 0, 0, 0.14);
   --rule-strong: rgba(0, 0, 0, 0.5);
   --font: "Josefin Sans", "Brandon Grotesque", "Futura", "Century Gothic", sans-serif;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --page: #2B1F1D; --ink: #F9C6BA; --mid: #E2B5AA; --light: #B0918A;
-    --rule: rgba(249, 198, 186, 0.15); --rule-strong: rgba(249, 198, 186, 0.45);
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --page: #2B1F1D; --ink: #F9C6BA; --mid: #E2B5AA; --light: #B0918A;
-  --rule: rgba(249, 198, 186, 0.15); --rule-strong: rgba(249, 198, 186, 0.45);
-  color-scheme: dark;
+  /* Always the website's peach look: no dark mode, and browsers are asked not to auto-darken it. */
+  color-scheme: only light;
 }
 
 * { box-sizing: border-box; }

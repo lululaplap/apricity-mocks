@@ -34,7 +34,7 @@ Not included yet:
 - The site's peach (#F9C6BA) everywhere, with black text and thin black rules. No teal, no photo, no intro paragraphs.
 - Josefin Sans, the fallback font the website itself names after Brandon Grotesque (a licensed font).
 - Selected tabs are underlined, as in the site's navigation. Selected chips and buttons are filled black.
-- Dark mode is a warm dark brown with peach text.
+- Always light: no dark mode, and the page asks browsers not to darken it automatically.
 
 ## User flow
 
