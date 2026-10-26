@@ -6,6 +6,7 @@ A phone-first menu that guests open by scanning the QR code on their table.
 - `sheets/*.csv`: the menu content, one file per Google Sheet tab. Import these to create the sheet.
 - `UPDATING-THE-MENU.md`: the guide for staff.
 - `accessibility/`: the accessibility comparison with the current website, raw results and the audit script.
+- `screenshots/`: before-and-after phone screenshots and task boards showing the journey improvements.
 - `src/menu.html`: the source used for the hosted preview. Edit it, then run `./build.sh` to regenerate `index.html`.
 
 ## Menu content lives in Google Sheets
