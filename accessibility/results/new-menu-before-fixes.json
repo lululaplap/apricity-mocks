@@ -1,0 +1,244 @@
+[
+ {
+  "view": "home",
+  "textItems": 6,
+  "minPx": "13.0",
+  "medianPx": "15.0",
+  "pctCharsUnder14px": 53,
+  "pctCharsUnder16px": 92,
+  "pctCharsWeightUnder400": 100,
+  "pctCharsContrastUnder4_5": 53,
+  "minContrast": 4.47,
+  "targets": 4,
+  "targetsUnder24": 0,
+  "targetsUnder44": 0,
+  "smallTargetsEg": [],
+  "lowContrastEg": [
+   "Allergies? Please tell your server befor:4.47@13.0px"
+  ],
+  "axe": [
+   {
+    "id": "color-contrast",
+    "impact": "serious",
+    "n": 1,
+    "help": "Elements must meet minimum color contrast ratio thresholds",
+    "eg": [
+     "p ::   Element has insufficient color contrast of 4.46 (foreground color: #5f5a59, background color: #f9c6ba, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+    ]
+   },
+   {
+    "id": "landmark-one-main",
+    "impact": "moderate",
+    "n": 1,
+    "help": "Document should have one main landmark",
+    "eg": [
+     "html ::   Document does not have a main landmark"
+    ]
+   },
+   {
+    "id": "region",
+    "impact": "moderate",
+    "n": 2,
+    "help": "All page content should be contained by landmarks",
+    "eg": [
+     "#splash > div ::   Some page content is not contained by landmarks",
+     "p ::   Some page content is not contained by landmarks"
+    ]
+   }
+  ]
+ },
+ {
+  "view": "drinks",
+  "textItems": 90,
+  "minPx": "11.0",
+  "medianPx": "16.0",
+  "pctCharsUnder14px": 19,
+  "pctCharsUnder16px": 45,
+  "pctCharsWeightUnder400": 41,
+  "pctCharsContrastUnder4_5": 8,
+  "minContrast": 4.47,
+  "targets": 11,
+  "targetsUnder24": 1,
+  "targetsUnder44": 10,
+  "smallTargetsEg": [
+   "APRICITY:154x22",
+   "DRINKS:59x32",
+   "WINE:40x32",
+   "A LA CARTE:90x32",
+   "TASTING:66x32",
+   "COCKTAILS:99x29"
+  ],
+  "lowContrastEg": [
+   "50ml:4.47@11.0px",
+   "A discretionary 13.5% ‘Apriciation’ goes:4.47@12.0px"
+  ],
+  "axe": [
+   {
+    "id": "color-contrast",
+    "impact": "serious",
+    "n": 2,
+    "help": "Elements must meet minimum color contrast ratio thresholds",
+    "eg": [
+     "small ::   Element has insufficient color contrast of 4.46 (foreground color: #5f5a59, background color: #f9c6ba, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+     "#foot > p ::   Element has insufficient color contrast of 4.46 (foreground color: #5f5a59, background color: #f9c6ba, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+    ]
+   },
+   {
+    "id": "page-has-heading-one",
+    "impact": "moderate",
+    "n": 1,
+    "help": "Page should contain a level-one heading",
+    "eg": [
+     "html ::   Page must have a level-one heading"
+    ]
+   }
+  ]
+ },
+ {
+  "view": "wine",
+  "textItems": 787,
+  "minPx": "11.0",
+  "medianPx": "16.0",
+  "pctCharsUnder14px": 6,
+  "pctCharsUnder16px": 52,
+  "pctCharsWeightUnder400": 77,
+  "pctCharsContrastUnder4_5": 2,
+  "minContrast": 4.47,
+  "targets": 16,
+  "targetsUnder24": 1,
+  "targetsUnder44": 15,
+  "smallTargetsEg": [
+   "APRICITY:154x22",
+   "DRINKS:58x32",
+   "WINE:40x32",
+   "A LA CARTE:90x32",
+   "TASTING:66x32",
+   "BY THE GLASS:121x29"
+  ],
+  "lowContrastEg": [
+   "♢ Wines with unique expressions:4.47@13.0px",
+   "125ml:4.47@11.0px",
+   "Sparkling:4.47@11.0px",
+   "Champagne:4.47@11.0px"
+  ],
+  "axe": [
+   {
+    "id": "color-contrast",
+    "impact": "serious",
+    "n": 15,
+    "help": "Elements must meet minimum color contrast ratio thresholds",
+    "eg": [
+     "#body > .note ::   Element has insufficient color contrast of 4.46 (foreground color: #5f5a59, background color: #f9c6ba, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1",
+     "#sec-glass > h2 > small ::   Element has insufficient color contrast of 4.46 (foreground color: #5f5a59, background color: #f9c6ba, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+    ]
+   },
+   {
+    "id": "page-has-heading-one",
+    "impact": "moderate",
+    "n": 1,
+    "help": "Page should contain a level-one heading",
+    "eg": [
+     "html ::   Page must have a level-one heading"
+    ]
+   }
+  ]
+ },
+ {
+  "view": "alacarte",
+  "textItems": 93,
+  "minPx": "11.0",
+  "medianPx": "13.0",
+  "pctCharsUnder14px": 38,
+  "pctCharsUnder16px": 42,
+  "pctCharsWeightUnder400": 34,
+  "pctCharsContrastUnder4_5": 30,
+  "minContrast": 4.47,
+  "targets": 13,
+  "targetsUnder24": 2,
+  "targetsUnder44": 12,
+  "smallTargetsEg": [
+   "APRICITY:154x22",
+   "DRINKS:58x32",
+   "WINE:40x32",
+   "A LA CARTE:93x32",
+   "TASTING:66x32",
+   "PLANT-BASED:116x29"
+  ],
+  "lowContrastEg": [
+   "Allergies? Please tell your server befor:4.47@13.0px",
+   "V, G, D:4.47@11.0px",
+   "V, D:4.47@11.0px",
+   ", Mu:4.47@11.0px"
+  ],
+  "axe": [
+   {
+    "id": "color-contrast",
+    "impact": "serious",
+    "n": 20,
+    "help": "Elements must meet minimum color contrast ratio thresholds",
+    "eg": [
+     "#body > .note ::   Element has insufficient color contrast of 4.46 (foreground color: #5f5a59, background color: #f9c6ba, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1",
+     "#sec-bread > ul > li > .name > .codes ::   Element has insufficient color contrast of 4.46 (foreground color: #5f5a59, background color: #f9c6ba, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+    ]
+   },
+   {
+    "id": "page-has-heading-one",
+    "impact": "moderate",
+    "n": 1,
+    "help": "Page should contain a level-one heading",
+    "eg": [
+     "html ::   Page must have a level-one heading"
+    ]
+   }
+  ]
+ },
+ {
+  "view": "tasting",
+  "textItems": 83,
+  "minPx": "11.0",
+  "medianPx": "13.0",
+  "pctCharsUnder14px": 48,
+  "pctCharsUnder16px": 52,
+  "pctCharsWeightUnder400": 41,
+  "pctCharsContrastUnder4_5": 37,
+  "minContrast": 4.47,
+  "targets": 13,
+  "targetsUnder24": 2,
+  "targetsUnder44": 10,
+  "smallTargetsEg": [
+   "APRICITY:154x22",
+   "DRINKS:58x32",
+   "WINE:40x32",
+   "A LA CARTE:90x32",
+   "TASTING:67x32",
+   "PLANT-BASED:116x29"
+  ],
+  "lowContrastEg": [
+   "Allergies? Please tell your server befor:4.47@13.0px",
+   "*Lunch & pre-booked early dinner, groups:4.47@13.0px",
+   "To start:4.47@11.0px",
+   ", Mu:4.47@11.0px"
+  ],
+  "axe": [
+   {
+    "id": "color-contrast",
+    "impact": "serious",
+    "n": 25,
+    "help": "Elements must meet minimum color contrast ratio thresholds",
+    "eg": [
+     ".note:nth-child(1) ::   Element has insufficient color contrast of 4.46 (foreground color: #5f5a59, background color: #f9c6ba, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1",
+     "#body > .note:nth-child(3) ::   Element has insufficient color contrast of 4.46 (foreground color: #5f5a59, background color: #f9c6ba, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+    ]
+   },
+   {
+    "id": "page-has-heading-one",
+    "impact": "moderate",
+    "n": 1,
+    "help": "Page should contain a level-one heading",
+    "eg": [
+     "html ::   Page must have a level-one heading"
+    ]
+   }
+  ]
+ }
+]

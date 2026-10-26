@@ -1,0 +1,42 @@
+[
+ {
+  "view": "wix-wine-list",
+  "textItems": 28,
+  "minPx": "9.0",
+  "medianPx": "14.0",
+  "pctCharsUnder14px": 58,
+  "pctCharsUnder16px": 99,
+  "pctCharsWeightUnder400": 0,
+  "pctCharsContrastUnder4_5": 48,
+  "minContrast": 1.52,
+  "targets": 23,
+  "targetsUnder24": 19,
+  "targetsUnder44": 21,
+  "smallTargetsEg": [
+   "Skip to Main Content:48x0",
+   "Open navigation menu:42x44",
+   ":247x37",
+   "A LA CARTE:87x22",
+   "TASTING MENUS:124x22",
+   "DRINKS:58x22"
+  ],
+  "lowContrastEg": [
+   "FOLLOW US:1.52@14.0px",
+   "CONTACT:1.52@14.0px",
+   "hello@apricityrestaurant.com:1.52@14.0px",
+   "0208 017 2780:1.52@14.0px"
+  ],
+  "axe": [
+   {
+    "id": "link-name",
+    "impact": "serious",
+    "n": 3,
+    "help": "Links must have discernible text",
+    "eg": [
+     "#dataItem-l0jffqob1-comp-l0jffqm3 > .twXk19[rel=\"noreferrer noopener\"][data-testid=\"linkElement\"] ::   Element is in tab order and does not have accessible text",
+     "#dataItem-l0jffqoo-comp-l0jffqm3 > .twXk19[rel=\"noreferrer noopener\"][data-testid=\"linkElement\"] ::   Element is in tab order and does not have accessible text"
+    ]
+   }
+  ]
+ }
+]

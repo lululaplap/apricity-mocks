@@ -5,6 +5,7 @@ A phone-first menu that guests open by scanning the QR code on their table.
 - `index.html`: the menu page. It loads its content, so open it through a web server rather than as a file, e.g. `python3 -m http.server` then http://localhost:8000/.
 - `sheets/*.csv`: the menu content, one file per Google Sheet tab. Import these to create the sheet.
 - `UPDATING-THE-MENU.md`: the guide for staff.
+- `accessibility/`: the accessibility comparison with the current website, raw results and the audit script.
 - `src/menu.html`: the source used for the hosted preview. Edit it, then run `./build.sh` to regenerate `index.html`.
 
 ## Menu content lives in Google Sheets
@@ -84,7 +85,7 @@ Older guests are a key audience, so the page sets a floor stricter than WCAG 2.2
 - Real headings and landmarks; the current menu tab carries `aria-current`; focus moves to the menu title after switching; loading and error messages are announced.
 - No dark mode, and no animated scrolling when the phone asks for reduced motion. Pinch zoom stays enabled.
 
-axe-core 4.10 (WCAG 2.0–2.2 A/AA and best-practice rules) reports no issues on any of the five screens. Run it again after design changes.
+axe-core 4.10 (WCAG 2.0–2.2 A/AA and best-practice rules) reports no issues on any of the five screens. The comparison with the current website, the before-and-after results and the audit script are in [`accessibility/`](accessibility/REPORT.md). Run it again after design changes.
 
 ## What was cut for clarity
 

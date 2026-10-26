@@ -1,0 +1,62 @@
+[
+ {
+  "view": "wix-wine-iframe",
+  "textItems": 965,
+  "minPx": "12.2",
+  "medianPx": "15.8",
+  "pctCharsUnder14px": 42,
+  "pctCharsUnder16px": 100,
+  "pctCharsWeightUnder400": 71,
+  "pctCharsContrastUnder4_5": 41,
+  "minContrast": 3.56,
+  "targets": 0,
+  "targetsUnder24": 0,
+  "targetsUnder44": 0,
+  "smallTargetsEg": [],
+  "lowContrastEg": [
+   "Negrette:3.56@13.4px",
+   "Fronton, FR:3.56@13.4px",
+   "Chardonnay, Pinot Noir & Pinot Meunier:3.56@13.4px",
+   "Sussex, ENG:3.56@13.4px"
+  ],
+  "axe": [
+   {
+    "id": "color-contrast",
+    "impact": "serious",
+    "n": 293,
+    "help": "Elements must meet minimum color contrast ratio thresholds",
+    "eg": [
+     ".wine-row:nth-child(3) > .wine-info > .wine-sub > span:nth-child(1) ::   Element has insufficient color contrast of 3.55 (foreground color: #6a6a6a, background color: #f9c6ba, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+     ".wine-row:nth-child(3) > .wine-info > .wine-sub > span:nth-child(2) ::   Element has insufficient color contrast of 3.55 (foreground color: #6a6a6a, background color: #f9c6ba, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+    ]
+   },
+   {
+    "id": "landmark-one-main",
+    "impact": "moderate",
+    "n": 1,
+    "help": "Document should have one main landmark",
+    "eg": [
+     "html ::   Document does not have a main landmark"
+    ]
+   },
+   {
+    "id": "page-has-heading-one",
+    "impact": "moderate",
+    "n": 1,
+    "help": "Page should contain a level-one heading",
+    "eg": [
+     "html ::   Page must have a level-one heading"
+    ]
+   },
+   {
+    "id": "region",
+    "impact": "moderate",
+    "n": 1,
+    "help": "All page content should be contained by landmarks",
+    "eg": [
+     "#wine-content ::   Some page content is not contained by landmarks"
+    ]
+   }
+  ]
+ }
+]
