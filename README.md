@@ -17,9 +17,28 @@ Staff update the menu in a Google Sheet, never in code. The page fetches each ta
 3. Paste the links into `SHEETS` at the top of the script in `src/menu.html`, then run `./build.sh`.
 4. For the wine list, point `SHEETS.wine` at the existing wine sheet's published CSV. The page expects the columns *Serve* (Glass/Bottle), *Section*, *Unique* (♢), *Vintage*, *Producer*, *Cuvée*, *Grapes*, *Region*, *Price*, *Glass price* and *Show*. If the existing sheet uses other headings, rename them or change the names in the `wine()` function.
 5. Host it. The repo root is the site (`index.html`, `sheets/`), so GitHub Pages can serve it as is. The menu is live at https://lululaplap.github.io/apricity-mocks/.
-6. Keep the existing QR codes. They open apricityrestaurant.com/menus, so add a 301 redirect from `/menus` to the menu's address in Wix (SEO settings → URL Redirect Manager). Deleting the redirect brings the old page back.
+6. Keep the existing QR codes. They open apricityrestaurant.com/menus, so move the website's Menus page to a new address and redirect `/menus` to this menu. See *Switching over, and switching back* below.
 
 If a sheet can't be reached, the page says the menu didn't load and offers *Try again*. It never shows stale or made-up content.
+
+## Switching over, and switching back
+
+The QR codes on the tables open `apricityrestaurant.com/menus`, which is also the website's Menus page. To send QR scans to this menu without changing the website, the website page moves to a new address and `/menus` is redirected here. Nothing is deleted, so switching back restores today's set-up exactly.
+
+**Switching over (about 10 minutes)**
+1. In the Wix editor, open the Menus page's settings and change its URL from `menus` to `our-menus`.
+2. Check that the website's Menus link now opens `/our-menus`. Wix menus link to pages, not addresses, so it should follow automatically.
+3. In the Wix dashboard, open **SEO settings → URL Redirect Manager** and add a single redirect from `/menus` to this menu's full address ([Wix help](https://support.wix.com/en/article/setting-up-301-redirects)). If Wix created a redirect from `/menus` to `/our-menus` in step 1, edit that one instead.
+4. Scan a table QR code and check it opens this menu.
+
+**Switching back (about 5 minutes)**
+1. In **URL Redirect Manager**, delete the `/menus` redirect.
+2. In the Wix editor, change the Menus page's URL back from `our-menus` to `menus`. Delete any redirect Wix offers to create from `/our-menus`.
+3. Scan a table QR code and check it opens the website's Menus page again.
+
+Effect on the website: visitors see no change, because the site's navigation follows the page to its new address. Only old links to `/menus` from outside the site (such as search results) open this menu while the redirect is in place.
+
+To keep switching back instant, keep the website's menu pages in Wix up to date during the trial, as today. If this menu is adopted, the website's menu pages could later read the same Google Sheet, leaving one place to update.
 
 ## Content
 
