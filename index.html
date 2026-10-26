@@ -424,20 +424,40 @@ details p { margin-top: 8px; }
     if (observer) observer.disconnect();
     if (!("IntersectionObserver" in window)) return;
     observer = new IntersectionObserver(function (entries) {
+      if (jumping) return;
       entries.forEach(function (e) { if (e.isIntersecting) setActive(e.target.dataset.sec); });
     }, { rootMargin: "-35% 0px -60% 0px" });
     body.querySelectorAll("[data-sec]").forEach(function (s) { observer.observe(s); });
     var first = body.querySelector("[data-sec]");
     if (first) setActive(first.dataset.sec);
   }
+  // Moves the chip row instantly: a second smooth scroll running alongside the page's can cancel it on some phones.
   function setActive(id) {
     chips.querySelectorAll("[data-jump]").forEach(function (c) {
       var on = c.dataset.jump === id;
       c.classList.toggle("active", on);
-      if (on && (c.offsetLeft < chips.scrollLeft || c.offsetLeft + c.offsetWidth > chips.scrollLeft + chips.clientWidth)) {
-        chips.scrollTo({ left: c.offsetLeft - 20, behavior: "smooth" });
-      }
+      if (!on) return;
+      var cr = c.getBoundingClientRect(), r = chips.getBoundingClientRect();
+      if (cr.left < r.left || cr.right > r.right) chips.scrollLeft += cr.left - r.left - 8;
     });
+  }
+
+  // ---------- jumping to a section ----------
+  var jumping = null, jumpTimer;
+  function jump(id) {
+    var s = document.getElementById("sec-" + id);
+    if (!s) return;
+    jumping = id;
+    setActive(id);
+    var start = s.getBoundingClientRect().top, distance = start - top.offsetHeight + 1;
+    var smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: Math.max(0, window.pageYOffset + distance), behavior: smooth ? "smooth" : "auto" });
+    // Where the window itself doesn't scroll (some embedded viewers), scroll whatever contains the page instead.
+    setTimeout(function () {
+      if (Math.abs(distance) > 2 && Math.abs(s.getBoundingClientRect().top - start) < 2) s.scrollIntoView({ block: "start" });
+    }, 150);
+    clearTimeout(jumpTimer);
+    jumpTimer = setTimeout(function () { jumping = null; }, 1000);
   }
 
   // ---------- events ----------
@@ -447,7 +467,7 @@ details p { margin-top: 8px; }
     if (t.id === "home") return show("home", true);
     if (t.hasAttribute("data-retry")) return show(state.view);
     if (t.dataset.view) { if (t.dataset.view !== state.view) show(t.dataset.view, true); else window.scrollTo({ top: 0, behavior: "smooth" }); return; }
-    if (t.dataset.jump) { var s = document.getElementById("sec-" + t.dataset.jump); if (s) s.scrollIntoView({ behavior: "smooth" }); setActive(t.dataset.jump); return; }
+    if (t.dataset.jump) return jump(t.dataset.jump);
     if (t.id === "plant") {
       state.plantOnly = !state.plantOnly;
       try { localStorage.setItem("apricity-menu", JSON.stringify({ plantOnly: state.plantOnly })); } catch (err) {}
