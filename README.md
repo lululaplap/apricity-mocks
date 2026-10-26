@@ -9,6 +9,18 @@ A phone-first menu that guests open by scanning the QR code on their table.
 - `screenshots/`: before-and-after phone screenshots and task boards showing the journey improvements.
 - `src/menu.html`: the source used for the hosted preview. Edit it, then run `./build.sh` to regenerate `index.html`.
 
+## Problems guests have at the table, and how this menu solves them
+
+The team sees these problems again and again during service.
+
+| What guests struggle with today | What this menu does |
+| --- | --- |
+| **Losing their place.** Guests find the wine they want, look at the food, then can't find the wine again when it's time to order drinks. | Each menu remembers where the guest was. Switch to the food and back, and the wine list reopens at the same wine (tabs, end-of-list links and the back button all work). The section buttons reach any part of the wine list in one tap. |
+| **Vegan guests overwhelmed, and unsure what is plant-based.** They scan every dish for a small "P-B" code. On the tasting menu there's often only one dish per course they can have, and that isn't obvious. | A *Plant-based* button hides everything else, on the a la carte and all tasting menus, and the phone remembers it. With it on, each tasting course shows its single plant-based dish, so a vegan guest sees their menu rather than choices they can't have. "P-B" is printed in bold on every dish. |
+| **Older guests struggling to read.** Thin, small, grey lettering, in a softly lit dining room, often without reading glasses. | At least 14px text (main text 17px), never thin, with contrast of at least 6.7:1 (the website: down to 12px, mostly thin, 3.6:1). A *Larger text* button (115% and 132%) on the start page and at the end of every menu, and tap targets of at least 44px. See [`accessibility/`](accessibility/REPORT.md). |
+
+The plant-based filter follows the restaurant's own "P-B" codes. Guests with a strict vegan diet or an allergy should still check with their server.
+
 ## Menu content lives in Google Sheets
 
 Staff update the menu in a Google Sheet, never in code. The page fetches each tab as CSV when a guest opens a menu, so changes appear within about 5 minutes. Rows with *Show* = `no` are hidden, which makes it quick to take a dish off for the night. See `UPDATING-THE-MENU.md`.
