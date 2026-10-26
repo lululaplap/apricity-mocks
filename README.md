@@ -74,7 +74,8 @@ flowchart LR
 4. **Wine.** By the glass first, then bottles by style.
 5. **Food.** One short allergy line and a Plant-based filter chip (remembered on the phone). Allergen codes sit beside each dish, and the full key is folded away at the bottom.
 6. **Tasting.** Three buttons (5 courses £85, 7 courses £99, Kids £36) switch the course list and pairing prices together. The *Kids' menu* link on the splash opens this screen with Kids selected; pairings and sides are hidden for the kids' menu.
-7. **Getting back.** Tap APRICITY or use the phone's back button to return to the splash.
+7. **Keeping your place.** Each menu remembers where the guest was. Find a wine, check the food, tap *Wine* again and the list opens at that wine, not the top (the back button does the same). Places are kept for the browser session, so they survive the phone reloading the page after switching apps. Tapping the tab you're already on still scrolls to the top.
+8. **Getting back.** Tap APRICITY or use the phone's back button to return to the splash.
 
 ## Accessibility
 

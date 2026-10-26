@@ -418,8 +418,23 @@ details dd { margin: 0; }
     }
   };
 
+  // ---------- remembering each menu's place ----------
+  // A guest who finds a wine, checks the food and comes back lands where they left the wine list, not at the top.
+  // Kept for the browser session, so it survives the phone reloading the page after switching apps.
+  var places = {};
+  try { places = JSON.parse(sessionStorage.getItem("apricity-places") || "{}"); } catch (e) {}
+  function rememberPlace() {
+    if (state.view !== "home" && !body.hidden) places[state.view] = Math.round(window.pageYOffset);
+    try { sessionStorage.setItem("apricity-places", JSON.stringify(places)); } catch (e) {}
+  }
+  window.addEventListener("pagehide", rememberPlace);
+  document.addEventListener("visibilitychange", function () { if (document.hidden) rememberPlace(); });
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+
   function show(view, push) {
     if (VIEWS.indexOf(view) < 0) view = "home";
+    var switching = view !== state.view;
+    if (switching) rememberPlace();
     state.view = view;
     var home = view === "home";
     splash.hidden = !home; top.hidden = home; body.hidden = home; foot.hidden = home;
@@ -442,6 +457,7 @@ details dd { margin: 0; }
       applySize();
       // After a tap on a menu, move screen-reader focus to the new menu's title.
       if (push) { var h = document.getElementById("view-title"); if (h) h.focus({ preventScroll: true }); }
+      if (switching && places[view]) window.scrollTo(0, places[view]);
       spy();
     }, function () {
       clearTimeout(pending);
