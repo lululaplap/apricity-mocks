@@ -124,7 +124,7 @@ main:focus { outline: none; }
 .empty { color: var(--mid); padding: 14px 0; margin: 0; font-size: 1rem; }
 
 /* tasting */
-.seg { display: grid; grid-template-columns: 1fr 1fr; margin-top: 20px; border: 1px solid var(--rule-strong); }
+.seg { display: grid; grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr)); margin-top: 20px; border: 1px solid var(--rule-strong); }
 .seg button { border: 0; background: transparent; padding: 14px 6px 12px; cursor: pointer; display: grid; gap: 4px; }
 .seg button + button { border-left: 1px solid var(--rule-strong); }
 .seg .big { font-size: 1.5rem; font-weight: 600; }
@@ -187,7 +187,8 @@ details dd { margin: 0; }
     <button type="button" data-view="drinks">Drinks</button>
     <button type="button" data-view="wine">Wine list</button>
     <button type="button" data-view="alacarte">A la carte</button>
-    <button type="button" data-view="tasting">Tasting menus</button>
+    <button type="button" data-view="tasting" data-courses="5">Tasting menus</button>
+    <button type="button" data-view="tasting" data-courses="kids">Kids’ menu</button>
   </nav>
   <p class="note">Allergies? Please tell your server before ordering.</p>
   <button class="textsize" type="button" data-textsize>Larger text</button>
@@ -206,9 +207,10 @@ details dd { margin: 0; }
     alacarte: "sheets/alacarte.csv",
     tasting: "sheets/tasting.csv",
     tastingPrices: "sheets/tasting-prices.csv",
+    kids: "sheets/kids.csv",
     wine: "sheets/wine.csv"
   };
-  var NEEDS = { drinks: ["drinks"], wine: ["wine"], alacarte: ["alacarte"], tasting: ["tasting", "tastingPrices"] };
+  var NEEDS = { drinks: ["drinks"], wine: ["wine"], alacarte: ["alacarte"], tasting: ["tasting", "tastingPrices", "kids"] };
 
   var CODES = { "V": "Vegetarian", "P-B": "Plant-based", "C": "Crustaceans", "Ce": "Celery", "D": "Dairy", "E": "Eggs", "F": "Fish", "P": "Peanuts",
     "G": "Gluten", "L": "Lupin", "N": "Nuts", "Mo": "Molluscs", "Mu": "Mustard", "S": "Soya", "SD": "Sulphur dioxide", "Se": "Sesame", "A": "Alcohol" };
@@ -369,17 +371,22 @@ details dd { margin: 0; }
     // Tasting tab: Course | Dish | Allergens | Supplement | Courses (Both / 7 only) | Add to 5-course | Description | Price | Show
     // Prices tab: Menu | Price | Lunch & early evening | Wine pairing | Alcohol-free pairing | Pairing glasses
     tasting: function (d) {
-      var menus = d.tastingPrices.map(function (r) { return { n: parseInt(r.menu, 10), r: r }; }).filter(function (m) { return m.n; });
-      if (!menus.some(function (m) { return m.n === state.courses; }) && menus.length) state.courses = menus[0].n;
-      var sel = (menus.filter(function (m) { return m.n === state.courses; })[0] || { r: {} }).r;
+      // Each row of the prices tab is one menu: "5 courses", "7 courses", or the kids' menu (any name containing "kid").
+      var menus = d.tastingPrices.map(function (r) {
+        var kids = /kid/i.test(r.menu);
+        return { id: kids ? "kids" : parseInt(r.menu, 10), kids: kids, r: r };
+      }).filter(function (m) { return m.id; });
+      if (!menus.some(function (m) { return m.id === state.courses; }) && menus.length) state.courses = menus[0].id;
+      var cur = menus.filter(function (m) { return m.id === state.courses; })[0] || { r: {} }, sel = cur.r;
 
-      var html = '<div class="seg" role="group" aria-label="Number of courses">' + menus.map(function (m) {
-        return '<button type="button" data-courses="' + m.n + '" aria-pressed="' + (state.courses === m.n) + '"><span class="caps">' + m.n +
-          ' courses</span><span class="big">' + esc(money(m.r.price)) + "</span>" +
-          (m.r["lunch & early evening"] ? "<small>Lunch &amp; early evening " + esc(money(m.r["lunch & early evening"])) + "*</small>" : "") + "</button>";
-      }).join("") + '</div><p class="note">*Lunch &amp; pre-booked early dinner, groups up to 6. Choose one dish per course.</p>';
+      var html = '<div class="seg" role="group" aria-label="Choose a tasting menu">' + menus.map(function (m) {
+        var sub = m.kids ? m.r.note : m.r["lunch & early evening"] && "Lunch & early evening " + money(m.r["lunch & early evening"]) + "*";
+        return '<button type="button" data-courses="' + m.id + '" aria-pressed="' + (state.courses === m.id) + '"><span class="caps">' +
+          (m.kids ? "Kids" : m.id + " courses") + '</span><span class="big">' + esc(money(m.r.price)) + "</span>" + (sub ? "<small>" + esc(sub) + "</small>" : "") + "</button>";
+      }).join("") + '</div><p class="note">' + (cur.kids ? "Choose one dish per course. We can cater for most dietary needs, so please ask your server."
+        : "*Lunch &amp; pre-booked early dinner, groups up to 6. Choose one dish per course.") + "</p>";
 
-      var groups = groupBy(d.tasting, "course"), courses = "", extras = [];
+      var groups = groupBy(cur.kids ? d.kids : d.tasting, "course"), courses = "", extras = [];
       groups.forEach(function (g) {
         if (g.rows.some(function (r) { return r.price; })) { extras.push(g); return; }
         var only7 = g.rows.some(function (r) { return /7/.test(r.courses || "") && !/both|5/i.test(r.courses); });
@@ -393,15 +400,20 @@ details dd { margin: 0; }
           return "<li>" + esc(r.dish) + codes(r.allergens) + (r.supplement ? ' <span class="codes">+' + esc(money(r.supplement)) + "</span>" : "") + "</li>";
         }).join("") + "</ul>";
       });
-      html += section("courses", state.courses + "-course menu", courses);
-      if (sel["wine pairing"] || sel["alcohol-free pairing"]) {
+      var nav = [["courses", "Courses"]];
+      html += section("courses", cur.kids ? "Culinary Kids’ menu" : state.courses + "-course menu", courses);
+      if (!cur.kids && (sel["wine pairing"] || sel["alcohol-free pairing"])) {
+        nav.push(["pairings", "Pairings"]);
         html += section("pairings", "Pairings", list([item("Wine", "", sel["wine pairing"]), item("Alcohol-free", "", sel["alcohol-free pairing"])]),
           sel["pairing glasses"] ? sel["pairing glasses"].replace(/^(\d+)$/, "$1 glasses") : "");
       }
-      extras.forEach(function (g) { html += section(slug(g.title), g.title, list(plantFilter(g.rows).map(rowItem))); });
+      extras.forEach(function (g) {
+        nav.push([slug(g.title), g.title.replace(/^Add on the side$/i, "Sides")]);
+        html += section(slug(g.title), g.title, list(plantFilter(g.rows).map(rowItem)));
+      });
 
       body.innerHTML = ALLERGY_NOTE + html + next("drinks", "Drinks", "Cocktails, wine & more");
-      setChips([["courses", "Courses"], ["pairings", "Pairings"]].concat(extras.map(function (g) { return [slug(g.title), g.title.replace(/^Add on the side$/i, "Sides")]; })), true);
+      setChips(nav, true);
       foot.innerHTML = ALLERGENS + FOOT;
     }
   };
@@ -482,20 +494,26 @@ details dd { margin: 0; }
     jumpTimer = setTimeout(function () { jumping = null; }, 1000);
   }
 
+  function courseChoice(t) { return t.dataset.courses === "kids" ? "kids" : +t.dataset.courses; }
+
   // ---------- events ----------
   document.addEventListener("click", function (e) {
     var t = e.target.closest("button");
     if (!t) return;
     if (t.id === "home") return show("home", true);
     if (t.hasAttribute("data-retry")) return show(state.view);
-    if (t.dataset.view) { if (t.dataset.view !== state.view) show(t.dataset.view, true); else window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+    if (t.dataset.view) {
+      if (t.dataset.courses) state.courses = courseChoice(t);
+      if (t.dataset.view !== state.view) show(t.dataset.view, true); else window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
     if (t.dataset.jump) return jump(t.dataset.jump);
     if (t.id === "plant") {
       state.plantOnly = !state.plantOnly;
       try { localStorage.setItem("apricity-menu", JSON.stringify({ plantOnly: state.plantOnly })); } catch (err) {}
       return rerender();
     }
-    if (t.dataset.courses) { state.courses = +t.dataset.courses; return rerender(); }
+    if (t.dataset.courses) { state.courses = courseChoice(t); return rerender(); }
     if (t.hasAttribute("data-key")) {
       var key = document.getElementById("key");
       if (key) { key.open = true; key.scrollIntoView({ block: "start" }); key.querySelector("summary").focus({ preventScroll: true }); }

@@ -11,7 +11,8 @@ The menu guests see after scanning the QR code is read from the **Apricity menus
 | **Drinks** | Cocktails, To start, Soft, Beer & cider, To finish |
 | **A la carte** | Bread, Starters, Mains, Sides, Puddings |
 | **Tasting** | The courses, the dish choices and the sides |
-| **Tasting prices** | The 5- and 7-course prices and pairing prices |
+| **Kids** | The Culinary Kids' tasting menu: courses and dish choices |
+| **Tasting prices** | The 5-course, 7-course and kids' prices, and pairing prices |
 | **Wine** | The wine list (your existing wine sheet) |
 
 ## Everyday changes
@@ -54,7 +55,9 @@ The menu guests see after scanning the QR code is read from the **Apricity menus
 | Description, Price | Only for the *Add on the side* rows (bread and sides) | £8 |
 | Show | `no` to hide | yes |
 
-**Tasting prices**: one row per menu, with columns *Menu*, *Price*, *Lunch & early evening*, *Wine pairing*, *Alcohol-free pairing* and *Pairing glasses*.
+**Kids**: the same columns as *Tasting*. Usually only *Course*, *Dish*, *Allergens* and *Show* are filled in.
+
+**Tasting prices**: one row per menu, with columns *Menu*, *Price*, *Lunch & early evening*, *Wine pairing*, *Alcohol-free pairing*, *Pairing glasses* and *Note*. The kids' row must have "Kids" somewhere in its *Menu* name (for example `Culinary Kids`), and its *Note* shows under the price (for example `Up to age 12`).
 
 ## Please don't
 
