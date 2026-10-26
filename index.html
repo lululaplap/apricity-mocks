@@ -57,7 +57,6 @@ button { font: inherit; color: inherit; letter-spacing: inherit; }
   display: grid; align-content: center; gap: 44px; text-align: center; padding-block: 40px;
 }
 .splash h1 { margin: 0; font-weight: 300; font-size: 2.25rem; letter-spacing: 0.3em; margin-right: -0.3em; line-height: 1; }
-.splash .table { display: block; margin-top: 14px; }
 .links { display: grid; border-top: 1px solid var(--rule-strong); }
 .links button {
   border: 0; border-bottom: 1px solid var(--rule-strong); background: none; padding: 20px 0 18px; cursor: pointer;
@@ -65,7 +64,6 @@ button { font: inherit; color: inherit; letter-spacing: inherit; }
 }
 .links button:hover, .links button:active { background: var(--ink); color: var(--page); }
 .splash .note { margin: 0; }
-.table { font-size: 0.6875rem; color: var(--light); }
 
 .tabs { display: flex; align-items: center; justify-content: space-between; padding-block: 10px 8px; }
 .tabs .group { display: flex; gap: 18px; }
@@ -149,7 +147,6 @@ details p { margin-top: 8px; }
   <div class="wrap">
     <div class="brandrow">
       <button class="wordmark" id="home" type="button" aria-label="Apricity, back to all menus">APRICITY</button>
-      <span class="table caps" data-table></span>
     </div>
     <nav class="tabs" role="tablist" aria-label="Menus">
       <div class="group">
@@ -169,7 +166,6 @@ details p { margin-top: 8px; }
 <section class="splash wrap" id="splash" hidden>
   <div>
     <h1>APRICITY</h1>
-    <span class="table caps" data-table></span>
   </div>
   <nav class="links" aria-label="Menus">
     <button type="button" data-view="drinks">Drinks</button>
@@ -261,10 +257,6 @@ details p { margin-top: 8px; }
 
   var $ = function (s) { return document.querySelector(s); };
   var chips = $("#chips"), body = $("#body"), foot = $("#foot"), top = $(".top"), splash = $("#splash");
-
-  // The table QR code opens ...?table=12
-  var tbl = (location.search.match(/table=(\d+)/) || [])[1];
-  document.querySelectorAll("[data-table]").forEach(function (el) { el.textContent = tbl ? "Table " + tbl : ""; });
 
   // ---------- building blocks ----------
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
