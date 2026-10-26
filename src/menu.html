@@ -1,4 +1,5 @@
 <title>Apricity Table Menu</title>
+<meta name="apricity-menu" content="main">
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="color-scheme" content="only light">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -98,7 +99,7 @@ main:focus { outline: none; }
 .section { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 160px); padding-top: 28px; }
 .section h2 {
   font-size: 0.9375rem; margin: 0; padding-bottom: 8px; border-bottom: 1px solid var(--rule-strong);
-  display: flex; justify-content: space-between; gap: 12px;
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px;
 }
 .section h2 small { font-size: 0.875rem; color: var(--light); letter-spacing: 0.08em; }
 .section h3 { font-size: 0.875rem; color: var(--light); margin: 18px 0 0; }
@@ -114,6 +115,20 @@ main:focus { outline: none; }
 .codes b { color: var(--ink); font-weight: 600; }
 .vin, .cuv { color: var(--mid); font-weight: 400; }
 .empty { color: var(--mid); padding: 14px 0; margin: 0; font-size: 1rem; }
+
+/* chefs' table */
+.event { display: grid; gap: 8px; }
+.event p { margin: 0; }
+.event-welcome { font-size: 0.9375rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); }
+.event-date { color: var(--mid); }
+.event-message, .event-inline { font-size: 1.375rem; font-weight: 600; letter-spacing: 0.04em; text-wrap: balance; }
+.event-message:empty, .event-date:empty { display: none; }
+.event-inline { margin: 20px 0 0; text-align: center; }
+.courses { list-style: none; margin: 0; padding: 0; counter-reset: course; }
+.courses li { counter-increment: course; display: grid; grid-template-columns: 2.25rem minmax(0, 1fr); padding: 14px 0; border-bottom: 1px solid var(--rule); font-weight: 600; }
+.courses li:last-child { border-bottom: 0; }
+.courses li::before { content: counter(course); color: var(--light); font-weight: 400; }
+.courses .desc { margin: 2px 0 0; color: var(--mid); font-size: 0.9375rem; font-weight: 400; }
 
 /* tasting */
 .seg { display: grid; grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr)); margin-top: 20px; border: 1px solid var(--rule-strong); }
@@ -161,12 +176,13 @@ details dd { margin: 0; }
     </div>
     <nav class="tabs" aria-label="Menus">
       <div class="group">
+        <button class="tab" data-view="chefs" data-mode="chefs" type="button">Chefs’ table</button>
         <button class="tab" data-view="drinks" type="button">Drinks</button>
         <button class="tab" data-view="wine" type="button">Wine</button>
       </div>
       <div class="group">
-        <button class="tab" data-view="alacarte" type="button">A la carte</button>
-        <button class="tab" data-view="tasting" type="button">Tasting</button>
+        <button class="tab" data-view="alacarte" data-mode="main" type="button">A la carte</button>
+        <button class="tab" data-view="tasting" data-mode="main" type="button">Tasting</button>
       </div>
     </nav>
     <div class="chips" id="chips" role="group" aria-label="Jump to a section"></div>
@@ -175,7 +191,17 @@ details dd { margin: 0; }
 
 <main class="splash wrap" id="splash" hidden>
   <h1>APRICITY</h1>
-  <nav class="links" aria-label="Menus">
+  <div class="event" data-mode="chefs">
+    <p class="event-welcome" id="event-welcome">Chefs’ table</p>
+    <p class="event-date" id="event-date"></p>
+    <p class="event-message" id="event-message"></p>
+  </div>
+  <nav class="links" aria-label="Menus" data-mode="chefs">
+    <button type="button" data-view="chefs">Tonight’s menu</button>
+    <button type="button" data-view="drinks">Drinks</button>
+    <button type="button" data-view="wine">Wine list</button>
+  </nav>
+  <nav class="links" aria-label="Menus" data-mode="main">
     <button type="button" data-view="drinks">Drinks</button>
     <button type="button" data-view="wine">Wine list</button>
     <button type="button" data-view="alacarte">A la carte</button>
@@ -200,9 +226,11 @@ details dd { margin: 0; }
     tasting: "sheets/tasting.csv",
     tastingPrices: "sheets/tasting-prices.csv",
     kids: "sheets/kids.csv",
+    chefs: "sheets/chefs-table.csv",
+    chefsDetails: "sheets/chefs-table-details.csv",
     wine: "sheets/wine.csv"
   };
-  var NEEDS = { drinks: ["drinks"], wine: ["wine"], alacarte: ["alacarte"], tasting: ["tasting", "tastingPrices", "kids"] };
+  var NEEDS = { drinks: ["drinks"], wine: ["wine"], alacarte: ["alacarte"], tasting: ["tasting", "tastingPrices", "kids"], chefs: ["chefs", "chefsDetails"] };
 
   var CODES = { "V": "Vegetarian", "P-B": "Plant-based", "C": "Crustaceans", "Ce": "Celery", "D": "Dairy", "E": "Eggs", "F": "Fish", "P": "Peanuts",
     "G": "Gluten", "L": "Lupin", "N": "Nuts", "Mo": "Molluscs", "Mu": "Mustard", "S": "Soya", "SD": "Sulphur dioxide", "Se": "Sesame", "A": "Alcohol" };
@@ -212,7 +240,13 @@ details dd { margin: 0; }
   var FOOT = "<p>A discretionary 13.5% ‘Apriciation’ goes to the whole team. 50p per person supports School Food Matters.</p>" +
     '<button class="textsize" type="button" data-textsize></button>';
   var ALLERGY_NOTE = '<p class="note">Allergies? Please tell your server before ordering. <button class="keylink" type="button" data-key>What the allergen codes mean</button></p>';
-  var TITLES = { drinks: "Drinks", wine: "Wine list", alacarte: "A la carte menu", tasting: "Tasting menus" };
+  var TITLES = { drinks: "Drinks", wine: "Wine list", alacarte: "A la carte menu", tasting: "Tasting menus", chefs: "Chefs’ table menu" };
+
+  // ---------- which set of pages ----------
+  // chefs-table.html is this same page with <meta name="apricity-menu" content="chefs-table">: its own menu, message and
+  // start page, sharing Drinks and Wine. Elements marked data-mode show only in their set of pages.
+  var MODE = (document.querySelector('meta[name="apricity-menu"]') || {}).content === "chefs-table" ? "chefs" : "main";
+  document.querySelectorAll("[data-mode]").forEach(function (el) { el.hidden = el.dataset.mode !== MODE; });
 
   // ---------- loading the sheets ----------
   function parseCSV(text) {
@@ -266,7 +300,7 @@ details dd { margin: 0; }
   }
 
   // ---------- state ----------
-  var VIEWS = ["home", "drinks", "wine", "alacarte", "tasting"];
+  var VIEWS = MODE === "chefs" ? ["home", "chefs", "drinks", "wine"] : ["home", "drinks", "wine", "alacarte", "tasting"];
   var state = { view: "home", plantOnly: false, courses: 5 };
   try { state.plantOnly = !!JSON.parse(localStorage.getItem("apricity-menu") || "{}").plantOnly; } catch (e) {}
 
@@ -308,9 +342,17 @@ details dd { margin: 0; }
   function next(view, label, hint) {
     return '<button class="next" type="button" data-view="' + view + '"><span class="caps">' + label + "</span><span>" + hint + " →</span></button>";
   }
+  function foodNext() {
+    return MODE === "chefs" ? next("chefs", "Tonight’s menu", "Chefs’ table") : next("alacarte", "Food menu", "A la carte & tasting");
+  }
+  // Chefs' table details tab: two columns, Item (Welcome, Date, Message) and Text.
+  function details(rows) {
+    var o = {}; rows.forEach(function (r) { o[(r.item || "").toLowerCase()] = r.text || ""; }); return o;
+  }
   function setChips(nav, filter) {
     chips.innerHTML = (filter ? '<button class="chip" type="button" id="plant" aria-pressed="' + state.plantOnly + '">Plant-based</button><span class="sep" aria-hidden="true"></span>' : "") +
       nav.map(function (s) { return '<button class="chip" type="button" data-jump="' + s[0] + '">' + esc(s[1]) + "</button>"; }).join("");
+    chips.hidden = !chips.children.length;
     updateFade();
   }
   function updateFade() { chips.classList.toggle("more", chips.scrollWidth - chips.scrollLeft - chips.clientWidth > 4); }
@@ -331,7 +373,7 @@ details dd { margin: 0; }
   // ---------- views ----------
   var render = {
     drinks: function (d) {
-      body.innerHTML = simpleMenu(d.drinks) + next("alacarte", "Food menu", "A la carte & tasting");
+      body.innerHTML = simpleMenu(d.drinks) + foodNext();
       foot.innerHTML = FOOT;
     },
     wine: function (d) {
@@ -352,13 +394,25 @@ details dd { margin: 0; }
           });
         }
       });
-      body.innerHTML = html + next("alacarte", "Food menu", "A la carte & tasting");
+      body.innerHTML = html + foodNext();
       setChips(nav);
       foot.innerHTML = FOOT;
     },
     alacarte: function (d) {
       body.innerHTML = ALLERGY_NOTE + simpleMenu(d.alacarte, true) + next("drinks", "Drinks", "Cocktails, wine & more");
       foot.innerHTML = ALLERGENS + FOOT;
+    },
+    // Chefs' table tab: Dish | Description | Allergens | Show, one row per course, in the order they're served.
+    chefs: function (d) {
+      var info = details(d.chefsDetails), coded = d.chefs.some(function (r) { return r.allergens; });
+      var courses = '<ol class="courses" role="list">' + d.chefs.map(function (r) {
+        return "<li><div>" + esc(r.dish) + codes(r.allergens) + (r.description ? '<p class="desc">' + esc(r.description) + "</p>" : "") + "</div></li>";
+      }).join("") + "</ol>";
+      body.innerHTML = (coded ? ALLERGY_NOTE : '<p class="note">Allergies? Please tell your server.</p>') +
+        (info.message ? '<p class="event-inline">' + esc(info.message) + "</p>" : "") +
+        section("menu", "Tonight’s menu", courses, info.date) + next("drinks", "Drinks", "Cocktails, wine & more");
+      setChips([]);
+      foot.innerHTML = (coded ? ALLERGENS : "") + FOOT;
     },
     // Tasting tab: Course | Dish | Allergens | Supplement | Courses (Both / 7 only) | Add to 5-course | Description | Price | Show
     // Prices tab: Menu | Price | Lunch & early evening | Wine pairing | Alcohol-free pairing | Pairing glasses
@@ -432,7 +486,16 @@ details dd { margin: 0; }
     splash.hidden = !home; top.hidden = home; body.hidden = home; foot.hidden = home;
     if (push) { try { history.pushState(null, "", home ? location.pathname + location.search : "#" + view); } catch (e) {} }
     window.scrollTo(0, 0);
-    if (home) { Object.keys(SHEETS).forEach(function (k) { load(k).catch(function () {}); }); return Promise.resolve(); }
+    if (home) {
+      Object.keys(SHEETS).forEach(function (k) { load(k).catch(function () {}); });
+      if (MODE === "chefs") load("chefsDetails").then(function (rows) {
+        var info = details(rows);
+        if (info.welcome) $("#event-welcome").textContent = info.welcome;
+        $("#event-date").textContent = info.date || "";
+        $("#event-message").textContent = info.message || "";
+      }, function () {});
+      return Promise.resolve();
+    }
 
     document.querySelectorAll(".tab").forEach(function (b) {
       if (b.dataset.view === view) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");

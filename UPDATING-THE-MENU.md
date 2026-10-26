@@ -14,6 +14,8 @@ The menu guests see after scanning the QR code is read from the **Apricity menus
 | **Kids** | The Culinary Kids' tasting menu: courses and dish choices |
 | **Tasting prices** | The 5-course, 7-course and kids' prices, and pairing prices |
 | **Wine** | The wine list (your existing wine sheet) |
+| **Chefs table** | Tonight's Chefs' Table courses, one row per course in the order served |
+| **Chefs table details** | The Chefs' Table welcome line, date and personal message |
 
 ## Everyday changes
 
@@ -26,6 +28,12 @@ The menu guests see after scanning the QR code is read from the **Apricity menus
 **Add a new section** (for example "Snacks"). Type the new name in the *Section* column. Sections appear in the order they first appear in the sheet.
 
 **Allergens.** Use the codes from the printed menu, separated by commas, for example `P-B, Mu`. Any dish with `P-B` appears when guests turn on the *Plant-based* filter.
+
+## Setting up the Chefs' Table for a booking
+
+1. In **Chefs table details**, type the date (for example `Saturday 24th October`) and the guests' message (for example `HAPPY 50th BIRTHDAY NICK!`). Leave *Message* blank for no message.
+2. In **Chefs table**, list tonight's courses in the order they're served, one per row. Add allergen codes if you have them; the allergen key then appears automatically.
+3. After the booking, clear the message so the next guests don't see it.
 
 ## Column guide
 

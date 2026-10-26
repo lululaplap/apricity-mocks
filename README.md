@@ -2,6 +2,7 @@
 
 A phone-first menu that guests open by scanning the QR code on their table.
 
+- `chefs-table.html`: the Chefs' Table menu, for that table's own QR code. See *Chefs' Table* below.
 - `index.html`: the menu page. It loads its content, so open it through a web server rather than as a file, e.g. `python3 -m http.server` then http://localhost:8000/.
 - `sheets/*.csv`: the menu content, one file per Google Sheet tab. Import these to create the sheet.
 - `UPDATING-THE-MENU.md`: the guide for staff.
@@ -27,14 +28,24 @@ The plant-based filter follows the restaurant's own "P-B" codes. Guests with a s
 Staff update the menu in a Google Sheet, never in code. The page fetches each tab as CSV when a guest opens a menu, so changes appear within about 5 minutes. Rows with *Show* = `no` are hidden, which makes it quick to take a dish off for the night. See `UPDATING-THE-MENU.md`.
 
 **One-off setup**
-1. Create a Google Sheet called *Apricity menus*. Import each file from `sheets/` as its own tab (File → Import → Upload → *Insert new sheet*): Drinks, A la carte, Tasting, Kids, Tasting prices. The wine list already lives in its own sheet.
+1. Create a Google Sheet called *Apricity menus*. Import each file from `sheets/` as its own tab (File → Import → Upload → *Insert new sheet*): Drinks, A la carte, Tasting, Kids, Tasting prices, Chefs table, Chefs table details. The wine list already lives in its own sheet.
 2. File → Share → Publish to web. For each tab, choose the tab and *Comma-separated values (.csv)*, then copy the link.
-3. Paste the links into `SHEETS` at the top of the script in `src/menu.html`, then run `./build.sh`.
+3. Paste the links into `SHEETS` at the top of the script in `src/menu.html`, then run `./build.sh` (it rebuilds both `index.html` and `chefs-table.html`).
 4. For the wine list, point `SHEETS.wine` at the existing wine sheet's published CSV. The page expects the columns *Serve* (Glass/Bottle), *Section*, *Unique* (♢), *Vintage*, *Producer*, *Cuvée*, *Grapes*, *Region*, *Price*, *Glass price* and *Show*. If the existing sheet uses other headings, rename them or change the names in the `wine()` function.
 5. Host it. The repo root is the site (`index.html`, `sheets/`), so GitHub Pages can serve it as is. The menu is live at https://lululaplap.github.io/apricity-mocks/.
 6. Keep the existing QR codes. They open apricityrestaurant.com/menus, so move the website's Menus page to a new address and redirect `/menus` to this menu. See *Switching over, and switching back* below.
 
 If a sheet can't be reached, the page says the menu didn't load and offers *Try again*. It never shows stale or made-up content.
+
+## Chefs' Table
+
+`chefs-table.html` is a separate set of pages for the Chefs' Table, built from the same source (`./build.sh` writes both). It has:
+- a start page with the welcome line, the date and a personal message (for example a birthday), then links to *Tonight's menu*, *Drinks* and *Wine list*;
+- tabs for *Chefs' table · Drinks · Wine*, with no a la carte or tasting menus;
+- tonight's courses as a numbered list, with the message repeated at the top;
+- the same Drinks and Wine pages and sheets as the main menu.
+
+Staff set it up for each booking in two sheet tabs: **Chefs table** (one row per course: *Dish*, *Description*, *Allergens*, *Show*) and **Chefs table details** (*Item* and *Text* rows for *Welcome*, *Date* and *Message*). Leave *Message* blank for no message. The Chefs' Table needs its own QR code pointing at `chefs-table.html`, or at a Wix redirect from the address its current QR code uses.
 
 ## Switching over, and switching back
 

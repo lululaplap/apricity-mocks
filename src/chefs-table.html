@@ -1,0 +1,615 @@
+<title>Apricity Chefs’ Table</title>
+<meta name="apricity-menu" content="chefs-table">
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="color-scheme" content="only light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600&display=swap">
+<style>
+/* Layout: a bare splash (wordmark + four menu links) leads to the menus: one sticky header (wordmark, four tabs, section chips) over a single peach column.
+   Readability floor for older guests: no text under 14px, regular weight or heavier, contrast of at least 6:1, tap targets of at least 44px. */
+:root {
+  --page: #F9C6BA;          /* apricityrestaurant.com peach */
+  --ink: #000000;           /* 14:1 on peach */
+  --mid: #333333;           /* 8:1 on peach */
+  --light: #45403F;         /* 6.6:1 on peach */
+  --rule: rgba(0, 0, 0, 0.18);
+  --rule-strong: rgba(0, 0, 0, 0.55);
+  --font: "Josefin Sans", "Brandon Grotesque", "Futura", "Century Gothic", sans-serif;
+  --tap: 44px;
+  /* Always the website's peach look: no dark mode, and browsers are asked not to auto-darken it. */
+  color-scheme: only light;
+}
+/* The "Larger text" button scales everything, because every size is in rem. */
+html.text-large { font-size: 115%; }
+html.text-largest { font-size: 132%; }
+
+* { box-sizing: border-box; }
+body {
+  background: var(--page); color: var(--ink);
+  font-family: var(--font); font-weight: 400; font-size: 1.0625rem; line-height: 1.6;
+  letter-spacing: 0.02em; -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--page);
+}
+button { font: inherit; color: inherit; letter-spacing: inherit; }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+.wrap {
+  max-width: 560px; margin: 0 auto;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+.caps { text-transform: uppercase; letter-spacing: 0.14em; font-weight: 400; }
+.textsize {
+  min-height: var(--tap); padding: 0 14px; border: 1px solid var(--rule-strong); border-radius: 999px;
+  background: transparent; cursor: pointer; font-size: 0.875rem; white-space: nowrap;
+}
+
+/* ---------- header ---------- */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--page); border-bottom: 1px solid var(--rule-strong); }
+.brandrow { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 8px 0; }
+.wordmark { font-size: 1.375rem; letter-spacing: 0.24em; line-height: 1; min-height: var(--tap); background: none; border: 0; padding: 0; cursor: pointer; }
+
+/* ---------- splash ---------- */
+.splash {
+  min-height: calc(100svh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+  display: grid; align-content: center; gap: 40px; text-align: center; padding-block: 40px;
+}
+.splash h1 { margin: 0; font-weight: 400; font-size: 2.25rem; letter-spacing: 0.3em; margin-right: -0.3em; line-height: 1; }
+.links { display: grid; border-top: 1px solid var(--rule-strong); }
+.links button {
+  border: 0; border-bottom: 1px solid var(--rule-strong); background: none; padding: 20px 0 18px; cursor: pointer;
+  font-size: 1.0625rem; text-transform: uppercase; letter-spacing: 0.2em; transition: background .2s, color .2s;
+}
+.links button:hover, .links button:active { background: var(--ink); color: var(--page); }
+.splash .note { margin: 0; font-size: 1rem; }
+.splash .textsize { justify-self: center; }
+
+/* Drinks and food sit in two groups; with large text the food group wraps onto its own line. */
+.tabs { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; column-gap: 28px; }
+.tabs .group { display: flex; gap: 16px; }
+.tab {
+  border: 0; background: none; min-height: var(--tap); min-width: var(--tap); padding: 0; cursor: pointer;
+  font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--mid);
+  text-underline-offset: 7px;
+}
+.tab[aria-current="page"] { color: var(--ink); font-weight: 600; text-decoration: underline; text-decoration-thickness: 2px; }
+
+.chips { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding-block: 4px 12px; }
+.chips::-webkit-scrollbar { display: none; }
+/* A fade on the right edge shows there are more sections to scroll to. */
+.chips.more { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent); }
+.chip {
+  flex: none; min-height: var(--tap); border: 1px solid var(--rule-strong); background: transparent; border-radius: 999px;
+  padding: 2px 16px 0; font-size: 0.875rem; cursor: pointer; color: var(--ink);
+  white-space: nowrap; text-transform: uppercase; letter-spacing: 0.08em;
+}
+.chip.active, .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--page); }
+.chips .sep { flex: none; width: 1px; background: var(--rule-strong); margin: 8px 2px; }
+
+/* ---------- lists ---------- */
+main { padding-block: 4px 8px; }
+main:focus { outline: none; }
+.note { color: var(--light); font-size: 0.9375rem; margin: 16px 0 0; }
+.keylink { display: inline-block; background: none; border: 0; padding: 0; min-height: var(--tap); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; color: var(--ink); }
+.section { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 160px); padding-top: 28px; }
+.section h2 {
+  font-size: 0.9375rem; margin: 0; padding-bottom: 8px; border-bottom: 1px solid var(--rule-strong);
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px;
+}
+.section h2 small { font-size: 0.875rem; color: var(--light); letter-spacing: 0.08em; }
+.section h3 { font-size: 0.875rem; color: var(--light); margin: 18px 0 0; }
+.group-title { font-size: 1.25rem; text-align: center; letter-spacing: 0.24em; margin: 44px 0 0; }
+.items { list-style: none; margin: 0; padding: 0; }
+.item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 20px; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.item:last-child { border-bottom: 0; }
+.item .name { min-width: 0; font-weight: 600; }
+.item .desc { grid-column: 1; color: var(--mid); font-size: 0.9375rem; margin: 0; }
+.price { grid-column: 2; grid-row: 1 / span 2; align-self: start; white-space: nowrap; text-align: right; font-weight: 600; font-variant-numeric: lining-nums; }
+.price small { display: block; color: var(--light); font-size: 0.875rem; font-weight: 400; }
+.codes { font-size: 0.875rem; color: var(--light); letter-spacing: 0.06em; white-space: nowrap; font-weight: 400; }
+.codes b { color: var(--ink); font-weight: 600; }
+.vin, .cuv { color: var(--mid); font-weight: 400; }
+.empty { color: var(--mid); padding: 14px 0; margin: 0; font-size: 1rem; }
+
+/* chefs' table */
+.event { display: grid; gap: 8px; }
+.event p { margin: 0; }
+.event-welcome { font-size: 0.9375rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); }
+.event-date { color: var(--mid); }
+.event-message, .event-inline { font-size: 1.375rem; font-weight: 600; letter-spacing: 0.04em; text-wrap: balance; }
+.event-message:empty, .event-date:empty { display: none; }
+.event-inline { margin: 20px 0 0; text-align: center; }
+.courses { list-style: none; margin: 0; padding: 0; counter-reset: course; }
+.courses li { counter-increment: course; display: grid; grid-template-columns: 2.25rem minmax(0, 1fr); padding: 14px 0; border-bottom: 1px solid var(--rule); font-weight: 600; }
+.courses li:last-child { border-bottom: 0; }
+.courses li::before { content: counter(course); color: var(--light); font-weight: 400; }
+.courses .desc { margin: 2px 0 0; color: var(--mid); font-size: 0.9375rem; font-weight: 400; }
+
+/* tasting */
+.seg { display: grid; grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr)); margin-top: 20px; border: 1px solid var(--rule-strong); }
+.seg button { border: 0; background: transparent; padding: 14px 6px 12px; cursor: pointer; display: grid; gap: 4px; }
+.seg button + button { border-left: 1px solid var(--rule-strong); }
+.seg .big { font-size: 1.5rem; font-weight: 600; }
+.seg small { font-size: 0.875rem; color: var(--mid); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--page); }
+.seg button[aria-pressed="true"] small { color: var(--page); }
+.opts { list-style: none; margin: 0; padding: 0; }
+.opts li { padding: 14px 0; border-bottom: 1px solid var(--rule); font-weight: 600; }
+.opts li:last-child { border-bottom: 0; }
+.opts .desc { display: block; color: var(--mid); font-size: 0.9375rem; font-weight: 400; }
+
+/* cross-link between drinks and food */
+.next {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px; width: 100%;
+  margin-top: 36px; padding: 18px 20px; cursor: pointer; min-height: 56px;
+  border: 1px solid var(--ink); background: transparent; text-align: left;
+}
+.next span { font-size: 0.9375rem; }
+.next:hover, .next:active { background: var(--ink); color: var(--page); }
+
+/* footer */
+.foot { padding-block: 28px 32px; color: var(--light); font-size: 0.875rem; display: grid; gap: 12px; text-align: center; }
+.foot p { margin: 0; }
+.foot .textsize { justify-self: center; }
+details { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 160px); }
+summary { cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.875rem; color: var(--ink); min-height: var(--tap); display: flex; align-items: center; }
+details p { margin: 0 0 12px; color: var(--mid); }
+details dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; margin: 4px 0 12px; color: var(--mid); }
+details dt { font-weight: 600; color: var(--ink); }
+details dd { margin: 0; }
+
+.status { padding-block: 48px; text-align: center; color: var(--mid); }
+.status .next { justify-content: center; margin-top: 20px; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brandrow">
+      <button class="wordmark" id="home" type="button" aria-label="Apricity, back to all menus">APRICITY</button>
+    </div>
+    <nav class="tabs" aria-label="Menus">
+      <div class="group">
+        <button class="tab" data-view="chefs" data-mode="chefs" type="button">Chefs’ table</button>
+        <button class="tab" data-view="drinks" type="button">Drinks</button>
+        <button class="tab" data-view="wine" type="button">Wine</button>
+      </div>
+      <div class="group">
+        <button class="tab" data-view="alacarte" data-mode="main" type="button">A la carte</button>
+        <button class="tab" data-view="tasting" data-mode="main" type="button">Tasting</button>
+      </div>
+    </nav>
+    <div class="chips" id="chips" role="group" aria-label="Jump to a section"></div>
+  </div>
+</header>
+
+<main class="splash wrap" id="splash" hidden>
+  <h1>APRICITY</h1>
+  <div class="event" data-mode="chefs">
+    <p class="event-welcome" id="event-welcome">Chefs’ table</p>
+    <p class="event-date" id="event-date"></p>
+    <p class="event-message" id="event-message"></p>
+  </div>
+  <nav class="links" aria-label="Menus" data-mode="chefs">
+    <button type="button" data-view="chefs">Tonight’s menu</button>
+    <button type="button" data-view="drinks">Drinks</button>
+    <button type="button" data-view="wine">Wine list</button>
+  </nav>
+  <nav class="links" aria-label="Menus" data-mode="main">
+    <button type="button" data-view="drinks">Drinks</button>
+    <button type="button" data-view="wine">Wine list</button>
+    <button type="button" data-view="alacarte">A la carte</button>
+    <button type="button" data-view="tasting" data-courses="5">Tasting menus</button>
+    <button type="button" data-view="tasting" data-courses="kids">Kids’ menu</button>
+  </nav>
+  <p class="note">Allergies? Please tell your server before ordering.</p>
+  <button class="textsize" type="button" data-textsize>Larger text</button>
+</main>
+
+<main class="wrap" id="body" tabindex="-1"></main>
+<footer class="wrap foot" id="foot"></footer>
+<p class="sr-only" id="announce" aria-live="polite"></p>
+<script>
+(function () {
+  // ---------- where the menus come from ----------
+  // Each menu is one tab of a Google Sheet. In Google Sheets: File → Share → Publish to web,
+  // choose the tab and "Comma-separated values (.csv)", then paste the link here.
+  var SHEETS = {
+    drinks: "sheets/drinks.csv",
+    alacarte: "sheets/alacarte.csv",
+    tasting: "sheets/tasting.csv",
+    tastingPrices: "sheets/tasting-prices.csv",
+    kids: "sheets/kids.csv",
+    chefs: "sheets/chefs-table.csv",
+    chefsDetails: "sheets/chefs-table-details.csv",
+    wine: "sheets/wine.csv"
+  };
+  var NEEDS = { drinks: ["drinks"], wine: ["wine"], alacarte: ["alacarte"], tasting: ["tasting", "tastingPrices", "kids"], chefs: ["chefs", "chefsDetails"] };
+
+  var CODES = { "V": "Vegetarian", "P-B": "Plant-based", "C": "Crustaceans", "Ce": "Celery", "D": "Dairy", "E": "Eggs", "F": "Fish", "P": "Peanuts",
+    "G": "Gluten", "L": "Lupin", "N": "Nuts", "Mo": "Molluscs", "Mu": "Mustard", "S": "Soya", "SD": "Sulphur dioxide", "Se": "Sesame", "A": "Alcohol" };
+  var TRACES = "We prepare our food in an environment with allergens and can’t guarantee that a dish is completely free of any allergen as traces may remain.";
+  var ALLERGENS = '<details id="key"><summary>What the allergen codes mean</summary><dl>' +
+    Object.keys(CODES).map(function (k) { return "<dt>" + k + "</dt><dd>" + CODES[k] + "</dd>"; }).join("") + "</dl><p>" + TRACES + "</p></details>";
+  var FOOT = "<p>A discretionary 13.5% ‘Apriciation’ goes to the whole team. 50p per person supports School Food Matters.</p>" +
+    '<button class="textsize" type="button" data-textsize></button>';
+  var ALLERGY_NOTE = '<p class="note">Allergies? Please tell your server before ordering. <button class="keylink" type="button" data-key>What the allergen codes mean</button></p>';
+  var TITLES = { drinks: "Drinks", wine: "Wine list", alacarte: "A la carte menu", tasting: "Tasting menus", chefs: "Chefs’ table menu" };
+
+  // ---------- which set of pages ----------
+  // chefs-table.html is this same page with <meta name="apricity-menu" content="chefs-table">: its own menu, message and
+  // start page, sharing Drinks and Wine. Elements marked data-mode show only in their set of pages.
+  var MODE = (document.querySelector('meta[name="apricity-menu"]') || {}).content === "chefs-table" ? "chefs" : "main";
+  document.querySelectorAll("[data-mode]").forEach(function (el) { el.hidden = el.dataset.mode !== MODE; });
+
+  // ---------- loading the sheets ----------
+  function parseCSV(text) {
+    var rows = [], row = [], cell = "", q = false;
+    for (var i = 0; i < text.length; i++) {
+      var ch = text[i];
+      if (q) {
+        if (ch === '"') { if (text[i + 1] === '"') { cell += '"'; i++; } else q = false; }
+        else cell += ch;
+      } else if (ch === '"') q = true;
+      else if (ch === ",") { row.push(cell); cell = ""; }
+      else if (ch === "\n" || ch === "\r") {
+        if (ch === "\r" && text[i + 1] === "\n") i++;
+        row.push(cell); rows.push(row); row = []; cell = "";
+      } else cell += ch;
+    }
+    if (cell || row.length) { row.push(cell); rows.push(row); }
+    return rows;
+  }
+  // Rows become objects keyed by the lower-case column heading. Blank rows and rows with Show = "no" are left out.
+  function toRows(text) {
+    var all = parseCSV(text.replace(/^﻿/, ""));
+    var head = (all.shift() || []).map(function (h) { return h.trim().toLowerCase(); });
+    return all.map(function (r) {
+      var o = {};
+      head.forEach(function (h, i) { o[h] = (r[i] || "").trim(); });
+      return o;
+    }).filter(function (o) {
+      var filled = Object.keys(o).some(function (k) { return k !== "show" && o[k]; });
+      return filled && !/^(no|n|hide|hidden|false)$/i.test(o.show || "");
+    });
+  }
+  var cache = {};
+  function load(key) {
+    if (!cache[key]) {
+      cache[key] = fetch(SHEETS[key], { cache: "no-store" }).then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        return r.text();
+      }).then(toRows).catch(function (e) { delete cache[key]; throw e; });
+    }
+    return cache[key];
+  }
+  function groupBy(rows, key) {
+    var out = [], idx = {};
+    rows.forEach(function (r) {
+      var k = r[key] || "Other";
+      if (!(k in idx)) { idx[k] = out.length; out.push({ title: k, rows: [] }); }
+      out[idx[k]].rows.push(r);
+    });
+    return out;
+  }
+
+  // ---------- state ----------
+  var VIEWS = MODE === "chefs" ? ["home", "chefs", "drinks", "wine"] : ["home", "drinks", "wine", "alacarte", "tasting"];
+  var state = { view: "home", plantOnly: false, courses: 5 };
+  try { state.plantOnly = !!JSON.parse(localStorage.getItem("apricity-menu") || "{}").plantOnly; } catch (e) {}
+
+  var $ = function (s) { return document.querySelector(s); };
+  var chips = $("#chips"), body = $("#body"), foot = $("#foot"), top = $(".top"), splash = $("#splash");
+
+  // ---------- building blocks ----------
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function slug(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "s"; }
+  function money(v) { return /^\d+(\.\d+)?$/.test(v) ? "£" + v : v; }
+  // Codes are shown as printed on the website; screen readers hear them in words instead ("plant-based; contains mustard").
+  function codes(c) {
+    if (!c) return "";
+    var list = c.split(/\s*,\s*/).filter(Boolean), diet = [], contains = [];
+    list.forEach(function (x) { (x === "V" || x === "P-B" ? diet : contains).push((CODES[x] || x).toLowerCase()); });
+    var spoken = [diet.join(", "), contains.length ? "contains " + contains.join(", ") : ""].filter(Boolean).join("; ");
+    return ' <span class="codes" aria-hidden="true">' + list.map(function (x) { return x === "P-B" ? "<b>P-B</b>" : esc(x); }).join(", ") + "</span>" +
+      '<span class="sr-only"> (' + esc(spoken) + ")</span>";
+  }
+  function isPB(r) { return /\bP-B\b/.test((r.allergens || "") + " " + (r.description || "")); }
+  function plantFilter(rows) { return rows.filter(function (r) { return !state.plantOnly || isPB(r); }); }
+  function item(name, allergens, price, priceNote, desc) {
+    return '<li class="item"><span class="name">' + esc(name) + codes(allergens) + '</span><span class="price">' + esc(money(price || "")) +
+      (priceNote ? "<small>" + esc(priceNote) + "</small>" : "") + "</span>" + (desc ? '<p class="desc">' + esc(desc) + "</p>" : "") + "</li>";
+  }
+  function rowItem(r) { return item(r.item || r.dish, r.allergens, r.price, r["price note"], r.description); }
+  function wine(w) {
+    var unique = w.unique && !/^(no|n)$/i.test(w.unique);
+    return '<li class="item"><span class="name">' + (unique ? '<span aria-hidden="true">♢ </span><span class="sr-only">Unique expression: </span>' : "") + '<span class="vin">' + esc(w.vintage) + "</span> " + esc(w.producer) +
+      (w["cuvée"] || w.cuvee ? ' <span class="cuv">/ ' + esc(w["cuvée"] || w.cuvee) + "</span>" : "") + '</span><span class="price">' + esc(money(w.price)) +
+      (w["glass price"] ? "<small>" + esc(w["glass price"]) + "</small>" : "") + '</span><p class="desc">' +
+      esc([w.grapes, w.region].filter(Boolean).join(" · ")) + "</p></li>";
+  }
+  function section(id, title, inner, note) {
+    return '<section class="section" id="sec-' + id + '" data-sec="' + id + '"><h2 class="caps">' + esc(title) +
+      (note ? "<small>" + esc(note) + "</small>" : "") + "</h2>" + inner + "</section>";
+  }
+  function list(items) { return '<ul class="items">' + items.join("") + "</ul>"; }
+  function next(view, label, hint) {
+    return '<button class="next" type="button" data-view="' + view + '"><span class="caps">' + label + "</span><span>" + hint + " →</span></button>";
+  }
+  function foodNext() {
+    return MODE === "chefs" ? next("chefs", "Tonight’s menu", "Chefs’ table") : next("alacarte", "Food menu", "A la carte & tasting");
+  }
+  // Chefs' table details tab: two columns, Item (Welcome, Date, Message) and Text.
+  function details(rows) {
+    var o = {}; rows.forEach(function (r) { o[(r.item || "").toLowerCase()] = r.text || ""; }); return o;
+  }
+  function setChips(nav, filter) {
+    chips.innerHTML = (filter ? '<button class="chip" type="button" id="plant" aria-pressed="' + state.plantOnly + '">Plant-based</button><span class="sep" aria-hidden="true"></span>' : "") +
+      nav.map(function (s) { return '<button class="chip" type="button" data-jump="' + s[0] + '">' + esc(s[1]) + "</button>"; }).join("");
+    chips.hidden = !chips.children.length;
+    updateFade();
+  }
+  function updateFade() { chips.classList.toggle("more", chips.scrollWidth - chips.scrollLeft - chips.clientWidth > 4); }
+  chips.addEventListener("scroll", updateFade, { passive: true });
+  window.addEventListener("resize", updateFade);
+  // A plain menu tab (drinks, a la carte): Section | Item | Description | Allergens | Price | Price note | Section note | Show
+  function simpleMenu(rows, food) {
+    var groups = groupBy(rows, "section");
+    var html = groups.map(function (g) {
+      var shown = food ? plantFilter(g.rows) : g.rows;
+      var note = (g.rows.filter(function (r) { return r["section note"]; })[0] || {})["section note"];
+      return section(slug(g.title), g.title, shown.length ? list(shown.map(rowItem)) : '<p class="empty">No plant-based ' + esc(g.title.toLowerCase()) + " today.</p>", note);
+    }).join("");
+    setChips(groups.map(function (g) { return [slug(g.title), g.title]; }), food);
+    return html;
+  }
+
+  // ---------- views ----------
+  var render = {
+    drinks: function (d) {
+      body.innerHTML = simpleMenu(d.drinks) + foodNext();
+      foot.innerHTML = FOOT;
+    },
+    wine: function (d) {
+      var html = '<p class="note"><span aria-hidden="true">♢</span> Wines with unique expressions</p>', nav = [];
+      groupBy(d.wine, "serve").forEach(function (serve) {
+        var sections = groupBy(serve.rows, "section");
+        if (/glass/i.test(serve.title)) {
+          nav.push(["glass", "By the glass"]);
+          html += section("glass", "By the glass", sections.map(function (s) {
+            return '<h3 class="caps">' + esc(s.title) + "</h3>" + list(s.rows.map(wine));
+          }).join(""), "125ml");
+        } else {
+          html += '<h2 class="caps group-title">Bottles</h2>';
+          sections.forEach(function (s, i) {
+            var id = "b-" + slug(s.title);
+            nav.push([id, s.title.replace(/^(White|Red)\s*[—–-]\s*/, "$1: ").replace(/^Orange\s*\/.*/, "Orange")]);
+            html += section(id, s.title, list(s.rows.map(wine)), i === 0 ? "750ml" : "");
+          });
+        }
+      });
+      body.innerHTML = html + foodNext();
+      setChips(nav);
+      foot.innerHTML = FOOT;
+    },
+    alacarte: function (d) {
+      body.innerHTML = ALLERGY_NOTE + simpleMenu(d.alacarte, true) + next("drinks", "Drinks", "Cocktails, wine & more");
+      foot.innerHTML = ALLERGENS + FOOT;
+    },
+    // Chefs' table tab: Dish | Description | Allergens | Show, one row per course, in the order they're served.
+    chefs: function (d) {
+      var info = details(d.chefsDetails), coded = d.chefs.some(function (r) { return r.allergens; });
+      var courses = '<ol class="courses" role="list">' + d.chefs.map(function (r) {
+        return "<li><div>" + esc(r.dish) + codes(r.allergens) + (r.description ? '<p class="desc">' + esc(r.description) + "</p>" : "") + "</div></li>";
+      }).join("") + "</ol>";
+      body.innerHTML = (coded ? ALLERGY_NOTE : '<p class="note">Allergies? Please tell your server.</p>') +
+        (info.message ? '<p class="event-inline">' + esc(info.message) + "</p>" : "") +
+        section("menu", "Tonight’s menu", courses, info.date) + next("drinks", "Drinks", "Cocktails, wine & more");
+      setChips([]);
+      foot.innerHTML = (coded ? ALLERGENS : "") + FOOT;
+    },
+    // Tasting tab: Course | Dish | Allergens | Supplement | Courses (Both / 7 only) | Add to 5-course | Description | Price | Show
+    // Prices tab: Menu | Price | Lunch & early evening | Wine pairing | Alcohol-free pairing | Pairing glasses
+    tasting: function (d) {
+      // Each row of the prices tab is one menu: "5 courses", "7 courses", or the kids' menu (any name containing "kid").
+      var menus = d.tastingPrices.map(function (r) {
+        var kids = /kid/i.test(r.menu);
+        return { id: kids ? "kids" : parseInt(r.menu, 10), kids: kids, r: r };
+      }).filter(function (m) { return m.id; });
+      if (!menus.some(function (m) { return m.id === state.courses; }) && menus.length) state.courses = menus[0].id;
+      var cur = menus.filter(function (m) { return m.id === state.courses; })[0] || { r: {} }, sel = cur.r;
+
+      var html = '<div class="seg" role="group" aria-label="Choose a tasting menu">' + menus.map(function (m) {
+        var sub = m.kids ? m.r.note : m.r["lunch & early evening"] && "Lunch & early evening " + money(m.r["lunch & early evening"]) + "*";
+        return '<button type="button" data-courses="' + m.id + '" aria-pressed="' + (state.courses === m.id) + '"><span class="caps">' +
+          (m.kids ? "Kids" : m.id + " courses") + '</span><span class="big">' + esc(money(m.r.price)) + "</span>" + (sub ? "<small>" + esc(sub) + "</small>" : "") + "</button>";
+      }).join("") + '</div><p class="note">' + (cur.kids ? "Choose one dish per course. We can cater for most dietary needs, so please ask your server."
+        : "*Lunch &amp; pre-booked early dinner, groups up to 6. Choose one dish per course.") + "</p>";
+
+      var groups = groupBy(cur.kids ? d.kids : d.tasting, "course"), courses = "", extras = [];
+      groups.forEach(function (g) {
+        if (g.rows.some(function (r) { return r.price; })) { extras.push(g); return; }
+        var only7 = g.rows.some(function (r) { return /7/.test(r.courses || "") && !/both|5/i.test(r.courses); });
+        if (only7 && state.courses !== 7) {
+          var add = (g.rows.filter(function (r) { return r["add to 5-course"]; })[0] || {})["add to 5-course"];
+          if (add) courses += '<h3 class="caps">' + esc(g.title) + " · add " + esc(money(add)) + "</h3>";
+          return;
+        }
+        // A course with one dish (the pre dessert) is served to everyone, so the plant-based filter leaves it alone.
+        courses += '<h3 class="caps">' + esc(g.title) + '</h3><ul class="opts">' + (g.rows.length > 1 ? plantFilter(g.rows) : g.rows).map(function (r) {
+          return "<li>" + esc(r.dish) + codes(r.allergens) + (r.supplement ? ' <span class="codes">+' + esc(money(r.supplement)) + "</span>" : "") + "</li>";
+        }).join("") + "</ul>";
+      });
+      var nav = [["courses", "Courses"]];
+      html += section("courses", cur.kids ? "Culinary Kids’ menu" : state.courses + "-course menu", courses);
+      if (!cur.kids && (sel["wine pairing"] || sel["alcohol-free pairing"])) {
+        nav.push(["pairings", "Pairings"]);
+        html += section("pairings", "Pairings", list([item("Wine", "", sel["wine pairing"]), item("Alcohol-free", "", sel["alcohol-free pairing"])]),
+          sel["pairing glasses"] ? sel["pairing glasses"].replace(/^(\d+)$/, "$1 glasses") : "");
+      }
+      extras.forEach(function (g) {
+        nav.push([slug(g.title), g.title.replace(/^Add on the side$/i, "Sides")]);
+        html += section(slug(g.title), g.title, list(plantFilter(g.rows).map(rowItem)));
+      });
+
+      body.innerHTML = ALLERGY_NOTE + html + next("drinks", "Drinks", "Cocktails, wine & more");
+      setChips(nav, true);
+      foot.innerHTML = ALLERGENS + FOOT;
+    }
+  };
+
+  // ---------- remembering each menu's place ----------
+  // A guest who finds a wine, checks the food and comes back lands where they left the wine list, not at the top.
+  // Kept for the browser session, so it survives the phone reloading the page after switching apps.
+  var places = {};
+  try { places = JSON.parse(sessionStorage.getItem("apricity-places") || "{}"); } catch (e) {}
+  function rememberPlace() {
+    if (state.view !== "home" && !body.hidden) places[state.view] = Math.round(window.pageYOffset);
+    try { sessionStorage.setItem("apricity-places", JSON.stringify(places)); } catch (e) {}
+  }
+  window.addEventListener("pagehide", rememberPlace);
+  document.addEventListener("visibilitychange", function () { if (document.hidden) rememberPlace(); });
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+
+  function show(view, push) {
+    if (VIEWS.indexOf(view) < 0) view = "home";
+    var switching = view !== state.view;
+    if (switching) rememberPlace();
+    state.view = view;
+    var home = view === "home";
+    splash.hidden = !home; top.hidden = home; body.hidden = home; foot.hidden = home;
+    if (push) { try { history.pushState(null, "", home ? location.pathname + location.search : "#" + view); } catch (e) {} }
+    window.scrollTo(0, 0);
+    if (home) {
+      Object.keys(SHEETS).forEach(function (k) { load(k).catch(function () {}); });
+      if (MODE === "chefs") load("chefsDetails").then(function (rows) {
+        var info = details(rows);
+        if (info.welcome) $("#event-welcome").textContent = info.welcome;
+        $("#event-date").textContent = info.date || "";
+        $("#event-message").textContent = info.message || "";
+      }, function () {});
+      return Promise.resolve();
+    }
+
+    document.querySelectorAll(".tab").forEach(function (b) {
+      if (b.dataset.view === view) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
+    });
+    chips.innerHTML = ""; foot.innerHTML = "";
+    var title = '<h1 class="sr-only" id="view-title" tabindex="-1">' + TITLES[view] + "</h1>";
+    var keys = NEEDS[view], pending = setTimeout(function () { body.innerHTML = title + '<p class="status" role="status">Loading menu…</p>'; }, 150);
+    return Promise.all(keys.map(load)).then(function (res) {
+      clearTimeout(pending);
+      if (state.view !== view) return;
+      var d = {}; keys.forEach(function (k, i) { d[k] = res[i]; });
+      render[view](d);
+      body.insertAdjacentHTML("afterbegin", title);
+      applySize();
+      // After a tap on a menu, move screen-reader focus to the new menu's title.
+      if (push) { var h = document.getElementById("view-title"); if (h) h.focus({ preventScroll: true }); }
+      if (switching && places[view]) window.scrollTo(0, places[view]);
+      spy();
+    }, function () {
+      clearTimeout(pending);
+      if (state.view !== view) return;
+      body.innerHTML = title + '<div class="status" role="alert"><p>The menu didn’t load. Check your connection, or ask your server.</p><button class="next" type="button" data-retry>Try again</button></div>';
+    });
+  }
+  function rerender() { var y = window.scrollY; show(state.view).then(function () { window.scrollTo(0, y); }); }
+
+  // ---------- section scroll-spy ----------
+  var observer;
+  function spy() {
+    if (observer) observer.disconnect();
+    if (!("IntersectionObserver" in window)) return;
+    observer = new IntersectionObserver(function (entries) {
+      if (jumping) return;
+      entries.forEach(function (e) { if (e.isIntersecting) setActive(e.target.dataset.sec); });
+    }, { rootMargin: "-35% 0px -60% 0px" });
+    body.querySelectorAll("[data-sec]").forEach(function (s) { observer.observe(s); });
+    var first = body.querySelector("[data-sec]");
+    if (first) setActive(first.dataset.sec);
+  }
+  // Moves the chip row instantly: a second smooth scroll running alongside the page's can cancel it on some phones.
+  function setActive(id) {
+    chips.querySelectorAll("[data-jump]").forEach(function (c) {
+      var on = c.dataset.jump === id;
+      c.classList.toggle("active", on);
+      if (!on) return;
+      var cr = c.getBoundingClientRect(), r = chips.getBoundingClientRect();
+      if (cr.left < r.left || cr.right > r.right) chips.scrollLeft += cr.left - r.left - 8;
+    });
+    updateFade();
+  }
+
+  // ---------- jumping to a section ----------
+  var jumping = null, jumpTimer;
+  function jump(id) {
+    var s = document.getElementById("sec-" + id);
+    if (!s) return;
+    jumping = id;
+    setActive(id);
+    var start = s.getBoundingClientRect().top, distance = start - top.offsetHeight + 1;
+    var smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: Math.max(0, window.pageYOffset + distance), behavior: smooth ? "smooth" : "auto" });
+    // Where the window itself doesn't scroll (some embedded viewers), scroll whatever contains the page instead.
+    setTimeout(function () {
+      if (Math.abs(distance) > 2 && Math.abs(s.getBoundingClientRect().top - start) < 2) s.scrollIntoView({ block: "start" });
+    }, 150);
+    clearTimeout(jumpTimer);
+    jumpTimer = setTimeout(function () { jumping = null; }, 1000);
+  }
+
+  function courseChoice(t) { return t.dataset.courses === "kids" ? "kids" : +t.dataset.courses; }
+
+  // ---------- events ----------
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest("button");
+    if (!t) return;
+    if (t.id === "home") return show("home", true);
+    if (t.hasAttribute("data-retry")) return show(state.view);
+    if (t.dataset.view) {
+      if (t.dataset.courses) state.courses = courseChoice(t);
+      if (t.dataset.view !== state.view) show(t.dataset.view, true); else window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+    if (t.dataset.jump) return jump(t.dataset.jump);
+    if (t.id === "plant") {
+      state.plantOnly = !state.plantOnly;
+      try { localStorage.setItem("apricity-menu", JSON.stringify({ plantOnly: state.plantOnly })); } catch (err) {}
+      return rerender();
+    }
+    if (t.dataset.courses) { state.courses = courseChoice(t); return rerender(); }
+    if (t.hasAttribute("data-key")) {
+      var key = document.getElementById("key");
+      if (key) { key.open = true; key.scrollIntoView({ block: "start" }); key.querySelector("summary").focus({ preventScroll: true }); }
+      return;
+    }
+    if (t.hasAttribute("data-textsize")) {
+      size = (size + 1) % SIZES.length;
+      try { localStorage.setItem("apricity-text", SIZES[size]); } catch (err) {}
+      applySize();
+      $("#announce").textContent = ["Normal text size", "Large text", "Largest text"][size];
+    }
+  });
+
+  // ---------- text size ----------
+  // Three steps: normal, large (115%) and largest (132%). The button names the next step and the phone remembers the choice.
+  var SIZES = ["", "text-large", "text-largest"], LABELS = ["Larger text", "Largest text", "Normal text"], size = 0;
+  try { size = Math.max(0, SIZES.indexOf(localStorage.getItem("apricity-text") || "")); } catch (e) {}
+  function applySize() {
+    SIZES.forEach(function (c) { if (c) document.documentElement.classList.toggle(c, c === SIZES[size]); });
+    document.querySelectorAll("[data-textsize]").forEach(function (b) { b.textContent = LABELS[size]; });
+    updateFade();
+  }
+  applySize();
+  window.addEventListener("popstate", function () { show(location.hash.slice(1)); });
+
+  show(location.hash.slice(1));
+})();
+</script>
