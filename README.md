@@ -74,6 +74,18 @@ flowchart LR
 6. **Tasting.** Two buttons (5 courses £85 / 7 courses £99, with the lunch & early-evening prices) switch the course list and the pairing prices together.
 7. **Getting back.** Tap APRICITY or use the phone's back button to return to the splash.
 
+## Accessibility
+
+Older guests are a key audience, so the page sets a floor stricter than WCAG 2.2 AA:
+- No text under 14px (body 17px), regular weight or heavier, and text contrast of at least 6.7:1 on the peach.
+- Every tab, section button and link is at least 44px tall.
+- A *Larger text* button (115%, then 132%) on the start page and at the end of every menu, remembered on the phone. Every size is in rem, so it scales everything, and the page still fits a 320px screen at the largest size.
+- Allergen codes are read out in words by screen readers ("plant-based; contains mustard"), and the allergy note links to the code key.
+- Real headings and landmarks; the current menu tab carries `aria-current`; focus moves to the menu title after switching; loading and error messages are announced.
+- No dark mode, and no animated scrolling when the phone asks for reduced motion. Pinch zoom stays enabled.
+
+axe-core 4.10 (WCAG 2.0–2.2 A/AA and best-practice rules) reports no issues on any of the five screens. Run it again after design changes.
+
 ## What was cut for clarity
 
 Hero photo, menu intro paragraphs, the long Apriciation and School Food Matters paragraphs (now one line), the non-alcoholic pairing description and spirits blurb, the "♢ unique only" wine filter and the teal bands.
