@@ -148,6 +148,9 @@ details { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1p
 summary { cursor: pointer; text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.6875rem; color: var(--mid); }
 details p { margin-top: 8px; }
 
+.status { padding-block: 48px; text-align: center; color: var(--mid); }
+.status .next { justify-content: center; margin-top: 20px; }
+
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
 </style>
 
@@ -191,125 +194,74 @@ details p { margin-top: 8px; }
 
 <script>
 (function () {
-  // ---------- content (from apricityrestaurant.com, 25 Oct 2026) ----------
-  var BREAD = { n: "Wildfarmed sourdough, Estate Dairy butter", c: "V, G, D", d: "or Citizens of Soil olive oil", dc: "P-B, G", p: "£6", pb: true };
-
-  var DRINKS = [
-    { id: "cocktails", t: "Cocktails", items: [
-      { n: "Fig Leaf Sbagliato", d: "Fig leaf gin, Campari, sweet vermouth, sparkling wine", p: "£18" },
-      { n: "Pickled Pine Martini", d: "Pickled pine vodka, dry vermouth", p: "£19" },
-      { n: "Todoli Citrus Highball", d: "Citrus vodka, tonic", p: "£16" },
-      { n: "Preserved Basil Spritz", d: "Gin, basil, sparkling wine", p: "£17" },
-      { n: "Perfect Cherry Manhattan", d: "English whisky, maraschino, sweet & dry vermouth", p: "£19" },
-      { n: "Spent Coffee Old Fashioned", d: "English whisky, spent coffee, bitters", p: "£19" },
-      { n: "Summers End", d: "Roast tomato gin, apple ice wine, rosemary, pear", p: "£19" }
-    ]},
-    { id: "tostart", t: "To start", items: [
-      { n: "Apricity Sweet Vermouth & tonic", p: "£9" },
-      { n: "Beesou & tonic", p: "£13" },
-      { n: "58 and Co. Gin & tonic", p: "£14" },
-      { n: "58 and Co. Apple & Hibiscus Gin & tonic", p: "£16" }
-    ]},
-    { id: "soft", t: "Soft", items: [
-      { n: "Foreva Farmers Spiced Apple Cola", p: "£6" },
-      { n: "Seasonal Soda", p: "£7" },
-      { n: "Sharp Functional Wine Alternative", p: "£12" },
-      { n: "Botivo & tonic", p: "£12" },
-      { n: "Belu still or sparkling water", d: "Unlimited, per person", p: "£2.50" }
-    ]},
-    { id: "beer", t: "Beer & cider", items: [
-      { n: "Lucky Saint Lager", d: "0.5% · 330ml", p: "£8" },
-      { n: "Toast Rise Up Lager", d: "4.6% · 330ml", p: "£8" },
-      { n: "Toast New Dawn Session IPA", d: "3.4% · 440ml", p: "£8" },
-      { n: "Crafty Apple Session Cider", d: "4.5% · 330ml", p: "£10" }
-    ]},
-    { id: "finish", t: "To finish", note: "50ml", items: [
-      { n: "Rosehip Schnapps", p: "£8" },
-      { n: "Avallen Calvados", p: "£12" },
-      { n: "Blind Summit The Lochend Blend", d: "25ml", p: "£7.5" },
-      { n: "Blind Summit Linkwood 10y", d: "25ml", p: "£12" },
-      { n: "Blind Summit Caol Ila 10y", d: "25ml", p: "£14" },
-      { n: "Fielden English Rye Whiskey", p: "£16" },
-      { n: "Baron de Sigognac 10 year", p: "£17" },
-      { n: "Rémy Martin Tercet", p: "£27" }
-    ]}
-  ];
-
-  var ALACARTE = [
-    { id: "bread", t: "Bread", items: [ BREAD ] },
-    { id: "starters", t: "Starters", items: [
-      { n: "Tempura kuri squash, Westcombe ricotta, chilli oil", c: "V, D", p: "£17" },
-      { n: "Roasted Sussex carrot, vadouvan, carrot top pesto, Bombay mix", c: "P-B, Mu", p: "£17" },
-      { n: "London butterhead lettuce, miso, pickled rhubarb, crispy kale", c: "P-B, Mu", p: "£17" },
-      { n: "Slow-cooked ox tongue terrine, beetroot ketchup, mustard mayo", c: "Mu, G", p: "£19" },
-      { n: "Cured chalk stream trout, greengage, crème fraîche, bergamot", c: "F, D", p: "£20" },
-      { n: "Scottish hand-dived scallops, caramelised celeriac, sudachi lime", c: "D, F, Mo", p: "£27", alt: "main £49" }
-    ]},
-    { id: "mains", t: "Mains", items: [
-      { n: "Flourish cabbage, watercress, shallot, marrowfat pea puree", c: "P-B, Mu", p: "£34" },
-      { n: "Flourish beetroot, black barley, smoked emulsion, sunflower seed granola", c: "P-B, G, Mu", p: "£36" },
-      { n: "Black pearl & shiitake mushrooms, Jerusalem artichoke, koji, 'XO', Flanders wheat", c: "P-B, G, Mu", p: "£37" },
-      { n: "Butter-poached pollack, borlotti beans, preserved tomato", c: "F, D", p: "£38" },
-      { n: "Venison loin, parsnip gratin, Sussex treviso, elderberry ketchup", c: "D", p: "£42" }
-    ]},
-    { id: "sides", t: "Sides", items: [
-      { n: "La Ratte potatoes, brown butter", c: "V, D", d: "or yellow pea hummus, chilli", dc: "P-B", p: "£8", pb: true },
-      { n: "Kimchi & Westcombe cheddar 'lasagne'", c: "V, G, D, E", p: "£8" },
-      { n: "London toscano kale salad, hemp tahini, crispy onions", c: "P-B", p: "£8" },
-      { n: "Purple sprouting broccoli, almond butter, linseed cracker", c: "P-B", p: "£8" }
-    ]},
-    { id: "puddings", t: "Puddings", items: [
-      { n: "Treacle pudding, brown butter caramel, pear and rosemary ice cream", c: "V, E, D, Se", p: "£15" },
-      { n: "Baked Win-Win milk choc' mousse, brown sugar & miso custard", c: "V, E, D", d: "Allow 10 minutes", p: "£17" },
-      { n: "Basil panna cotta, apple sorbet, sesame crumb, basil", c: "P-B, Se", p: "£15" },
-      { n: "Hafod & Ogleshield cheese custard, apple loaf, pickled blackberries", c: "V, G, D, E", p: "£14" }
-    ]}
-  ];
-
-  var TASTING = {
-    menus: {
-      5: { price: "£85", special: "£65", wine: "£68", na: "£36", glasses: "4 glasses" },
-      7: { price: "£99", special: "£79", wine: "£95", na: "£54", glasses: "6 glasses" }
-    },
-    courses: [
-      { t: "To start", o: [
-        { n: "Roasted Sussex carrot, vadouvan, carrot top pesto, Bombay mix", c: "P-B, Mu" },
-        { n: "Slow-cooked ox tongue terrine, beetroot ketchup, mustard mayo", c: "Mu, G" } ]},
-      { t: "Second starter", o: [
-        { n: "Black pearl & shiitake mushrooms, Jerusalem artichoke, koji, 'XO'", c: "P-B, Mu" },
-        { n: "Cured chalk stream trout, greengage, crème fraîche, bergamot", c: "F, D" },
-        { n: "Scottish hand-dived scallops, caramelised celeriac, sudachi lime", c: "D, F, Mo", s: "+£14" } ]},
-      { t: "Middle course", only7: true, o: [
-        { n: "London butterhead lettuce, miso, pickled rhubarb, crispy kale", c: "P-B, Mu" },
-        { n: "Tempura kuri squash, Westcombe ricotta, chilli oil", c: "V, D, Se" } ]},
-      { t: "Main course", o: [
-        { n: "Flourish beetroot, black barley, smoked emulsion, sunflower seed granola", c: "P-B, G" },
-        { n: "Venison loin, parsnip gratin, Sussex treviso, elderberry ketchup", c: "D" },
-        { n: "Butter-poached pollack, borlotti beans, preserved tomato", c: "F, D" } ]},
-      { t: "Cheese course", only7: true, add5: "+£8", o: [
-        { n: "Hafod & Ogleshield cheese custard, apple loaf, pickled blackberries", c: "D, G, V, E" },
-        { n: "Koji cashew cheese, apple loaf, pickled blackberries", c: "P-B, N, G" } ]},
-      { t: "Pre dessert", fixed: true },
-      { t: "Dessert", o: [
-        { n: "Treacle pudding, brown butter caramel, pear and rosemary ice cream", c: "V, E, D, Se" },
-        { n: "Basil panna cotta, sesame crumb, apple sorbet", c: "P-B, Se" },
-        { n: "Baked Win-Win milk choc' mousse, brown sugar & miso custard", c: "V, E, D", s: "+£5" } ]}
-    ],
-    sides: [
-      { n: "La Ratte potatoes, brown butter", c: "V, D", d: "or yellow pea hummus, sesame & chilli", dc: "P-B, Se", p: "£8", pb: true },
-      { n: "Kimchi & Westcombe cheddar 'lasagne'", c: "V, G, D, E", p: "£8" },
-      { n: "London kale salad, hemp tahini, crispy onions", c: "P-B", p: "£8" },
-      { n: "Purple sprouting broccoli, almond butter, linseed cracker", c: "P-B", p: "£8" }
-    ]
+  // ---------- where the menus come from ----------
+  // Each menu is one tab of a Google Sheet. In Google Sheets: File → Share → Publish to web,
+  // choose the tab and "Comma-separated values (.csv)", then paste the link here.
+  var SHEETS = {
+    drinks: "sheets/drinks.csv",
+    alacarte: "sheets/alacarte.csv",
+    tasting: "sheets/tasting.csv",
+    tastingPrices: "sheets/tasting-prices.csv",
+    wine: "sheets/wine.csv"
   };
-
-  // Wine list from the website. u = ♢ unique expression, v vintage, p producer, c cuvée, g grapes, r region, $ price, gl glass price
-  var WINES = [{"t":"Wines by the Glass","s":[{"t":"Sparkling","w":[{"u":1,"v":"2024","p":"Chateau Le Roc","c":"Roc Ambulle","g":"Negrette","r":"Fronton, FR","$":"£16"},{"v":"2020","p":"Roebuck Estates","c":"Classic Cuvée","g":"Chardonnay, Pinot Noir & Pinot Meunier","r":"Sussex, ENG","$":"£22"}]},{"t":"Champagne","w":[{"v":"2022","p":"Thibaud Brocard","c":"Dits-Lieux","g":"Pinot Noir, Pinot Blanc & Chardonnay","r":"Champagne, FR","$":"£29"}]},{"t":"White","w":[{"u":1,"v":"NV","p":"Apricity × Wasted Wine Club","c":"Riesling+","r":"Mosel, GER","$":"£14"},{"v":"2023","p":"Davenport","c":"Horsmonden","g":"Bacchus, Ortega+","r":"East Sussex, UK","$":"£15"},{"v":"2025","p":"Mas Foulaquier","c":"L'Oiseau","g":"Clairette, Grenache Gris, Grenache Blanc & Bourboulenc","r":"Languedoc, FR","$":"£18"},{"v":"2023","p":"Gili","c":"Villo","g":"Grillo","r":"Sicily, IT","$":"£19"},{"v":"2023","p":"Montanet-Thoden","c":"Vezelay","g":"Chardonnay","r":"Burgundy, FR","$":"£20"}]},{"t":"Rosé","w":[{"v":"2025","p":"Valérie Courrèges","c":"Le Vent dans les Voiles","g":"Grenache, Cinsaut","r":"Provence, FR","$":"£16"}]},{"t":"Skin Contact","w":[{"u":1,"v":"2025","p":"Radikon","c":"Pop Bianco","g":"Malvasia, Ribolla Gialla, Tocai Friulano","r":"Fruili, IT","$":"£20"}]},{"t":"Red","w":[{"v":"2024","p":"Mas du Libian","c":"Bout d'Zan","g":"Grenache & Syrah","r":"Rhone, FR","$":"£15"},{"v":"2024","p":"Ferdinando Principiano","c":"Langhe","g":"Nebbiolo","r":"Piemonte, IT","$":"£17"},{"v":"2024","p":"Pranzegg","c":"Rosso per tutti","g":"Vernatsch & Lagrein","r":"Trentino Alto-Adige, IT","$":"£19"},{"v":"2020","p":"Matthieu Cosse","c":"Fronsac","g":"Cabernet Sauvignon, Merlot, Cabernet Franc","r":"Bordeaux, FR","$":"£20"},{"v":"2023","p":"Montanet-Thoden","c":"Garance","g":"Pinot Noir","r":"Burgundy, FR","$":"£23"}]}]},{"t":"Bottles · 750ml","s":[{"t":"Sparkling","w":[{"v":"2021","p":"Entre Vinyes","c":"Funambul Brut Nature","g":"Macabeo, Parellada, Xarel-lo","r":"Penedes, ESP","$":"£75"},{"u":1,"v":"2022","p":"Kamara Estate","c":"Blooming Island","g":"Assyrtiko, Malagousia & Xinomavro","r":"Thessaloniki, GRE","$":"£95"},{"u":1,"v":"2023/2024","p":"Domaine Rietsch","c":"Cremant D'Alsace","g":"Auxerrois, Chardonnay & Pinot Gris","r":"Alsace, FR","$":"£110"},{"v":"2020","p":"Roebuck Estates","c":"Classic Cuvée","g":"Chardonnay, Pinot Noir & Pinot Meunier","r":"Sussex, ENG","$":"£130"},{"v":"NV","p":"Langham Estate","c":"Culver","g":"Pinot Noir, Chardonnay & Pinot Meunier","r":"Dorset, ENG","$":"£130"},{"v":"2015","p":"Staffelter Hof","c":"Brut Sekt","g":"Riesling","r":"Mosel, GER","$":"£140"},{"v":"2015","p":"Roebuck Estates","c":"Rare Expressions No.19","g":"Pinot Noir","r":"Sussex, ENG","$":"£190"}]},{"t":"Champagne","w":[{"v":"2022","p":"Thibaud Brocard","c":"Dits-Lieux","g":"Pinot Noir, Pinot Blanc & Chardonnay","r":"Champagne, FR","$":"£170"},{"v":"2018","p":"Franck Pascal","c":"Tolérance (Rose)","g":"Chardonnay & Pinot Meunier","r":"Champagne, FR","$":"£220"},{"v":"NV","p":"Domaine Les Monts Furnois","c":"Côte","g":"Chardonnay","r":"Champagne, FR","$":"£230"},{"v":"NV","p":"La Rogerie","c":"Le Burgh Sud","g":"Chardonnay","r":"Champagne, FR","$":"£245"},{"v":"2023","p":"Georges Laval","c":"Cumieres Premier Cru Brut Nature","g":"Pinot Noir, Chardonnay & Pinot Meunier","r":"Champagne, FR","$":"£260"},{"v":"NV","p":"Vincent Laval","c":"Les Vignes de mon Oncle","g":"Pinot Noir, Chardonnay & Pinot Meunier","r":"Champagne, FR","$":"£340"},{"v":"NV (2019 base)","p":"Guillame Selosse","c":"Largillier","g":"Pinot Noir","r":"Champagne, FR","$":"£475"}]},{"t":"White — Aromatic & Fresh","w":[{"u":1,"v":"NV","p":"Apricity × Wasted Wine Club","c":"Riesling+","r":"Mosel, GER","$":"£68"},{"u":1,"v":"2023","p":"Michael Gindl","c":"Michi's Farm","g":"Grüner Veltliner","r":"Weinviertel, AUT","$":"£72"},{"v":"2023","p":"Davenport","c":"Horsemonden","g":"Bacchus, Ortega+","r":"East Sussex, UK","$":"£77"},{"v":"2025","p":"Clos du Tue-Beouf","c":"Vin Blanc","g":"Sauvignon Blanc","r":"Loire, FR","$":"£78"},{"v":"2023","p":"Vignoble de L'Écu","c":"Classic","g":"Melon Blanc","r":"Loire, FR","$":"£88"},{"v":"2023","p":"Frantz Saumon","c":"Vin de Frantz","g":"Chenin Blanc","r":"Loire, FR","$":"£93"},{"v":"2025","p":"Josmeyer","c":"Mise du Printemps","g":"Pinot Blanc","r":"Alsace, FR","$":"£95"},{"u":1,"v":"2023","p":"Titerok-Akaet","c":"Ye-Ye","g":"Malvasia Volcánica","r":"Lanzarote, ESP","$":"£95"},{"v":"2023","p":"Domaine Rietsch","c":"Vieille Vigne","g":"Sylvaner","r":"Alsace, FR","$":"£105"},{"u":1,"v":"2023","p":"Ham Street","g":"Chardonnay, Bacchus","r":"Kent, UK","$":"£105"},{"u":1,"v":"2024","p":"Alice et Oliver De Moor","c":"Le Meme Azimut","g":"Riesling, Gewurztraminer, Muscat, Pinot Blanc","r":"Alsace, FR","$":"£100"},{"v":"2023","p":"Montanet-Thoden","c":"Galerne","g":"Chardonnay","r":"Burgundy, FR","$":"£110"},{"u":1,"v":"2022","p":"Token","c":"Ribolla Gialla","r":"Friuli, IT","$":"£110"},{"v":"2024","p":"Domaine Henri Bourgeois","c":"Sancerre, La Vigne Blanche","g":"Sauvignon Blanc","r":"Loire, FR","$":"£110"},{"v":"2024","p":"Domaine Giachino","c":"Monfarina","g":"Jacquère","r":"Savoie, FR","$":"£110"},{"v":"2023","p":"Marie-Pierre Chevassu-Fassenet","c":"Ouille","g":"Savagnin","r":"Jura, FR","$":"£115"},{"u":1,"v":"2023","p":"Bott Frigyes","c":"Furmint","r":"Garam Valley, SK","$":"£115"},{"v":"2024","p":"Domaine Les Enfants Sauvages","c":"Cool Moon","g":"Grenache Blanc, Maccabeu, Vermentino","r":"Languedoc, FR","$":"£120"},{"v":"2023","p":"Correntin Houillon","c":"Force of Nature","g":"Altesse","r":"Savoie, FR","$":"£130"},{"v":"2024","p":"Enviante","c":"Palo Blanco","g":"Listan Bianco (Palomino)","r":"Tenerife, ESP","$":"£140"},{"v":"2024","p":"Alberto Nanclares","c":"Albarino","r":"Rias Baxias, ESP","$":"£140"},{"v":"2022","p":"Vignes du Maynes","c":"Aligo-Rhythm","g":"Aligoté","r":"Burgundy, FR","$":"£140"},{"u":1,"v":"2021","p":"Maria & Sepp Muster","c":"Graf","g":"Sauvignon Blanc","r":"Styria, AUT","$":"£140"},{"v":"2023","p":"R&R Trossen","c":"Madonna Purus","g":"Riesling","r":"Mosel, GER","$":"£150"},{"v":"2024","p":"Simon Faure","c":"Saint Veran","g":"Chardonnay","r":"Burgundy, FR","$":"£155"},{"u":1,"v":"2021","p":"Tony Bornard","c":"Au fil des générations","g":"Chardonnay","r":"Jura, FR","$":"£165"},{"u":1,"v":"2024","p":"Chantereves","c":"Yume Utai","g":"Chardonnay","r":"Burgundy, FR","$":"£170"},{"u":1,"v":"2024","p":"Chantereves","c":"Bas Des Ees","g":"Aligote","r":"Burgundy, FR","$":"£180"},{"v":"2023","p":"Philippe Pacalet","c":"Ladoix","g":"Chardonnay","r":"Burgundy, FR","$":"£255"}]},{"t":"White — Round & Textured","w":[{"v":"2023","p":"Valdibella Cooperative","c":"Bianco","g":"Cataratto","r":"Sicily, IT","$":"£45"},{"v":"2025","p":"Mas Foulaquier","c":"L'Oiseau","g":"Clairette, Grenache Gris, Grenache Blanc & Bourboulenc","r":"Languedoc, FR","$":"£87"},{"v":"2023","p":"Domaine Tessier","c":"Sables","g":"Romarantin","r":"Loire, FR","$":"£90"},{"v":"2020","p":"Chapel Down","c":"Kit's Coty","g":"Chardonnay","r":"Kent, ENG","$":"£90"},{"v":"2024","p":"Gili","c":"Bislacco","g":"Catarratto","r":"Sicily, IT","$":"£95"},{"v":"2024","p":"Domaine Les Bruyeres","c":"L'Envie","g":"Marsanne","r":"Rhone, FR","$":"£95"},{"v":"2021","p":"Bodegas Moraza","c":"Moraza Dia Sol","g":"Viura","r":"Rioja, ESP","$":"£98"},{"v":"2025","p":"Forjas del Salnés","c":"Leirana","g":"Albariño","r":"Rías Baixas, ESP","$":"£98"},{"u":1,"v":"2022","p":"Strekov 1075","c":"Richard","g":"Chardonnay","r":"Strekov, SK","$":"£105"},{"v":"2023","p":"De Fermo","c":"Don Carlino","g":"Pecorino","r":"Abruzzo, IT","$":"£110"},{"u":1,"v":"2023","p":"Pierre Frick","c":"Chasselas sans soufre","g":"Chasselas","r":"Alsace, FR","$":"£115"},{"u":1,"v":"2023","p":"António Madeira","c":"Vinhas Velhas Branco","g":"Native Varieties","r":"Dão, PT","$":"£120"},{"v":"2022","p":"Blackbook","c":"Painter of Light","g":"Chardonnay","r":"Essex, UK","$":"£120"},{"v":"2023","p":"Selvadolce","c":"Crescendo","g":"Pigato","r":"Liguria, IT","$":"£130"},{"v":"2021","p":"Johannes Zillinger, Neumen","c":"Fume Blanc","g":"Sauvignon Blanc","r":"Weinviertel, AUT","$":"£140"},{"u":1,"v":"2021","p":"Leon Barral","c":"Le Blanc","g":"Terret Blanc, Terret Gris & Roussane","r":"Languedoc, FR","$":"£150"},{"u":1,"v":"2024","p":"Matassa","c":"Rufo","g":"Macabeo","r":"Roussillon, FR","$":"£150"},{"v":"2022","p":"Pyramid Valley","c":"Chardonnay","r":"North Canterbury, NZ","$":"£160"},{"v":"2021","p":"Anne et Jean-Francois Ganevat","c":"Victor de la Combe","g":"Chardonnay","r":"Jura, FR","$":"£180"},{"u":1,"v":"2023","p":"La Porte Saint Jean","c":"Les Pouches","g":"Chenin Blanc","r":"Loire, FR","$":"£190"},{"u":1,"v":"2023","p":"Chantereves","c":"Mainbey","g":"Chardonnay","r":"Burgundy, FR","$":"£230"},{"u":1,"v":"2023","p":"Chantereves","c":"Les Monts de Fussey","g":"Chardonnay","r":"Burgundy, FR","$":"£240"},{"v":"2022","p":"Emidio Pepe","c":"Pecorino","r":"Abruzzo, IT","$":"£280"},{"u":1,"v":"2019","p":"Domaine Miroirs","c":"Sonortie du Vent","g":"Chardonnay","r":"Jura, FR","$":"£475"}]},{"t":"Rosé","w":[{"v":"2025","p":"Valérie Courrèges","c":"Le Vent dans les Voiles","g":"Grenache, Cinsaut","r":"Provence, FR","$":"£79"},{"u":1,"v":"2021","p":"Azul y Garanza","c":"Naturaleza Salvaje Clarete","g":"Garnacha Blanca & Garnacha","r":"Navarra, ESP","$":"£84"},{"v":"2024","p":"Marabino","c":"Rosanera","g":"Nero d'Avola","r":"Silicy, IT","$":"£85"},{"v":"2021","p":"Blackbook","c":"I'd Rather Be a Rebel","g":"Pinot Noir","r":"London, ENG","$":"£98"},{"u":1,"v":"2023","p":"Sophie Evans","c":"Pinot Pinot","g":"Pinot Noir, Pinot Gris","r":"Kent, ENG","$":"£114"}]},{"t":"Orange / Skin Contact","w":[{"u":1,"v":"2023","p":"Ham Street","c":"Field Blend","g":"Pinot Noir, Pinot Meunier","r":"Kent, UK","$":"£95"},{"u":1,"v":"2025","p":"Gili","c":"N5","g":"Muscat","r":"Sicily, IT","$":"£99"},{"u":1,"v":"2025","p":"Radikon","c":"Pop Bianco","g":"Malvasia, Ribolla Gialla, Tocai Friulano","r":"Fruili, IT","$":"£105"},{"u":1,"v":"2024","p":"Matassa","c":"Cuvée Marguerite","g":"Muscat, Muscat di Alexandria, Macabeo","r":"Roussillon, FR","$":"£130"},{"u":1,"v":"2024","p":"La Stoppa","c":"Costabosco","g":"Malvasia di Candia Aromatica","r":"Emilia-Romagna, IT","$":"£130"},{"u":1,"v":"2022","p":"Weingut Werlitsch","c":"Glück","g":"Sauvignon Blanc","r":"Styria, AUT","$":"£155"},{"u":1,"v":"2023","p":"Massa Vecchia","c":"Ariento","g":"Vermentino","r":"Tuscany, IT","$":"£190"}]},{"t":"Red — Soft & Juicy","w":[{"v":"2023","p":"Valdibella Cooperative","c":"Rosso","g":"Nero d'Avola","r":"Sicily, IT","$":"£45"},{"u":1,"v":"2017","p":"Syfany","c":"André","r":"Moravia, CZ","$":"£55"},{"u":1,"v":"2024","p":"I Foresteri","c":"Girotondo","g":"Sangiovese","r":"Tuscany, IT","$":"£80"},{"v":"2024","p":"Domaine Breton","c":"Le Grolleau","g":"Grolleau","r":"Loire, FR","$":"£82"},{"u":1,"v":"2020","p":"Wachter Wiesler","c":"Bela-Joska","g":"Blaufränkisch","r":"Burgenland, AUT","$":"£94"},{"u":1,"v":"2021","p":"Domaine Inebriati","c":"Naia","g":"Carignan","r":"Languedoc, FR","$":"£95"},{"v":"2023","p":"Fedellos","c":"Ax Xaras","g":"Mencia","r":"Galicia, ESP","$":"£95"},{"u":1,"v":"2024","p":"Pranzegg","c":"Rosso per tutti","g":"Vernatsch & Lagrein","r":"Trentino Alto-Adige, IT","$":"£99"},{"u":1,"v":"NV","p":"Milan Nestarec","c":"Postmoderna","g":"Blaufrankisch","r":"Moravia, CZ","$":"£110"},{"u":1,"v":"2023","p":"Etienne Seignovert","c":"Gentil Monstre","g":"Syrah & Merlot","r":"Ardeche, FR","$":"£110"},{"u":1,"v":"2021","p":"Ktima Ligas","c":"XI-RO","g":"Xinomavro","r":"Pella, GR","$":"£116"},{"v":"2021","p":"Christof Ruof","c":"Steingut","g":"Pinot Noir","r":"Valais, SUI","$":"£120"},{"u":1,"v":"2023","p":"Domaine Thillardon","c":"Chenas Vibrations","g":"Gamay","r":"Beaujolais, FR","$":"£120"},{"u":1,"v":"2024","p":"Pierre Frick","c":"Physalis","g":"Pinot Noir","r":"Alsace, FR","$":"£120"},{"u":1,"v":"2022","p":"Walgate Wines","c":"Pinot Meunier","r":"East Sussex, UK","$":"£127"},{"u":1,"v":"2024","p":"Matassa","c":"River","g":"Syrah","r":"Rousillon, FR","$":"£130"},{"u":1,"v":"2022","p":"Correntin Houillon","c":"Arcane","g":"Pinot Noir","r":"Savoie, FR","$":"£130"},{"v":"2024","p":"Fanny Sabre","c":"Bourgogne XXIV","g":"Pinot Noir","r":"Burgundy, FR","$":"£140"},{"u":1,"v":"2022","p":"Cailloux du Paradis","c":"Racines Rouge","g":"Pineau d'Aunis, Cot, Gamay +","r":"Loire, FR","$":"£140"},{"u":1,"v":"2021","p":"Matassa","c":"French Disko","g":"Cinsault","r":"Roussillon, FR","$":"£160"},{"u":1,"v":"2023","p":"Domaine Dandellion","c":"Sur La Plage","g":"Pinot Noir","r":"Burgundy, FR","$":"£175"},{"v":"2024","p":"Anne et Jean-Francois Ganevat","c":"La Croix des Batailles","g":"Pinot Noir & Gamay","r":"Jura, FR","$":"£195"},{"v":"2024","p":"Chantereves","c":"La Maladerote","g":"Pinot Noir","r":"Burgundy, FR","$":"£210"},{"v":"2024","p":"Chantereves","c":"Dessus De Montchenevoy","g":"Pinot Noir","r":"Burgundy, FR","$":"£230"},{"u":1,"v":"2021","p":"Yann Durieux","c":"Les 1ers Ponts","g":"Pinot Noir","r":"Burgundy, FR","$":"£280"},{"v":"2023","p":"Philippe Pacalet","c":"Nuits-Saint-Georges Village","g":"Pinot Noir","r":"Burgundy, FR","$":"£310"},{"v":"2023","p":"Preurie Roch","c":"VDF Rouge","g":"Pinot Noir","r":"Burgundy, FR","$":"£310"}]},{"t":"Red — Rich & Structured","w":[{"v":"2023","p":"Fabrizio Iuli","c":"Umberta","g":"Barbera","r":"Piemonte, IT","$":"£70"},{"v":"2024","p":"Mas du Libian","c":"Bout d'Zan","g":"Grenache & Syrah","r":"Ardèche, FR","$":"£74"},{"u":1,"v":"NV","p":"Slobodne","c":"Majer 3","g":"Field Blend","r":"Trnava, SK","$":"£81"},{"v":"2018","p":"Vino Magula","c":"Baccara","g":"Dunaj, Frankovka & Rosa","r":"Trnava, SK","$":"£85"},{"v":"2024","p":"Ferdinando Principiano","c":"Langhe","g":"Nebbiolo","r":"Piemonte, IT","$":"£90"},{"v":"2019","p":"Dva Duby","c":"Vox Silentum","g":"Frankovka (Blaufränkisch)","r":"Moravia, CZ","$":"£90"},{"v":"2021","p":"Clos Fantine","c":"Faugéres Tradition","g":"Carignan, Grenache, Syrah","r":"Languedoc, FR","$":"£90"},{"v":"2024","p":"Domaine Breton","c":"Les Beaux Monts","g":"Cabernet Franc","r":"Loire, FR","$":"£95"},{"v":"2023","p":"Agricola Foradori","c":"Foradori","g":"Teroldego","r":"Trentino, IT","$":"£105"},{"v":"2020","p":"Matthieu Cosse","c":"Fronsac","g":"Cabernet Sauvignon, Merlot, Malbec, Cabernet Franc","r":"Bordeaux, FR","$":"£105"},{"v":"2014","p":"Claus Preisinger","c":"Pannobile","g":"Blaufränkisch, Zweigelt","r":"Burgenland, AUT","$":"£110"},{"v":"2023","p":"Bott Frigyes","c":"Kékfrankos","g":"Blaufränkisch","r":"Garam Valley, SK","$":"£115"},{"u":1,"v":"2022","p":"Cantine Matrone","c":"A Muntagna","g":"Cascaveglia & Piedirosso","r":"Campania, IT","$":"£120"},{"v":"2020","p":"Matthieu Dumarcher","c":"Réserve","g":"Syrah, Grenache & Carignan","r":"Rhône, FR","$":"£120"},{"v":"2017","p":"Louis Magnin","c":"La Brova","g":"Mondeuse","r":"Savoie, FR","$":"£130"},{"v":"2023","p":"La Porte Saint Jean","c":"Saumur-Champigny","g":"Cabernet Franc","r":"Loire, FR","$":"£155"},{"u":1,"v":"2023","p":"Dard et Ribo","c":"Crozes-Hermitage Rouge","g":"Syrah","r":"Rhône, FR","$":"£160"},{"v":"2020","p":"Fonterenza","c":"Rosso di Montalcino","g":"Sangiovese","r":"Tuscany, IT","$":"£160"},{"v":"2019","p":"Olivier Riviere","c":"Ganko","g":"Garanacha & Mazuelo","r":"Rhône, FR","$":"£160"},{"v":"2022","p":"Pyramid Valley","c":"Snake's Tongue","g":"Pinot Noir","r":"Central Otago, NZ","$":"£220"},{"u":1,"v":"2022","p":"Massa Vecchia","c":"Poggio a'Venti","g":"Sangiovese","r":"Tuscany, IT","$":"£260"},{"v":"2021","p":"Philippe Pacalet","c":"Cornas","g":"Syrah","r":"Rhône, FR","$":"£260"}]},{"t":"Sweet & Afters","w":[{"v":"2024","p":"L'Archetipo","c":"Moscatello Selvatico","r":"Puglia, IT","$":"£80","gl":"£15 / 125ml"},{"v":"NV","p":"Szolo","c":"Dolce","g":"Furmint +","r":"Tokaj, HUN","$":"£90","gl":"£10 / 75ml"},{"v":"2023","p":"Mas Amiel","c":"Maury Vintage","g":"Grenache","r":"Rousillon, FR","$":"£118","gl":"£12 / 75ml"},{"v":"2024","p":"La Stoppa","c":"Vino del volta","g":"Malvasia di Candia Aromatica","r":"Emiglia Romagna, IT","$":"£150","gl":"£17 / 75ml"},{"v":"2022","p":"Domaine de Souch","c":"Cuvee Marie-Kattalyn","g":"Petit Manseng","r":"Jurancon, FR","$":"£210","gl":"£21 / 75ml"},{"u":1,"v":"2005","p":"Staffelter Hof","c":"Riesling Auslese","g":"Riesling","r":"Mosel, GER","$":"£85"}]}]}];
+  var NEEDS = { drinks: ["drinks"], wine: ["wine"], alacarte: ["alacarte"], tasting: ["tasting", "tastingPrices"] };
 
   var KEY = "V Vegetarian · P-B Plant-Based · C Crustaceans · Ce Celery · D Dairy · E Eggs · F Fish · P Peanuts · G Gluten · L Lupin · N Nuts · Mo Molluscs · Mu Mustard · S Soya · SD Sulphur Dioxide · Se Sesame · A Alcohol";
   var TRACES = "We prepare our food in an environment with allergens and can’t guarantee that a dish is completely free of any allergen as traces may remain.";
   var ALLERGENS = "<details><summary>Allergen key</summary><p>" + KEY + "</p><p>" + TRACES + "</p></details>";
   var FOOT = "<p>A discretionary 13.5% ‘Apriciation’ goes to the whole team. 50p per person supports School Food Matters.</p>";
+  var ALLERGY_NOTE = '<p class="note">Allergies? Please tell your server before ordering.</p>';
+
+  // ---------- loading the sheets ----------
+  function parseCSV(text) {
+    var rows = [], row = [], cell = "", q = false;
+    for (var i = 0; i < text.length; i++) {
+      var ch = text[i];
+      if (q) {
+        if (ch === '"') { if (text[i + 1] === '"') { cell += '"'; i++; } else q = false; }
+        else cell += ch;
+      } else if (ch === '"') q = true;
+      else if (ch === ",") { row.push(cell); cell = ""; }
+      else if (ch === "\n" || ch === "\r") {
+        if (ch === "\r" && text[i + 1] === "\n") i++;
+        row.push(cell); rows.push(row); row = []; cell = "";
+      } else cell += ch;
+    }
+    if (cell || row.length) { row.push(cell); rows.push(row); }
+    return rows;
+  }
+  // Rows become objects keyed by the lower-case column heading. Blank rows and rows with Show = "no" are left out.
+  function toRows(text) {
+    var all = parseCSV(text.replace(/^﻿/, ""));
+    var head = (all.shift() || []).map(function (h) { return h.trim().toLowerCase(); });
+    return all.map(function (r) {
+      var o = {};
+      head.forEach(function (h, i) { o[h] = (r[i] || "").trim(); });
+      return o;
+    }).filter(function (o) {
+      var filled = Object.keys(o).some(function (k) { return k !== "show" && o[k]; });
+      return filled && !/^(no|n|hide|hidden|false)$/i.test(o.show || "");
+    });
+  }
+  var cache = {};
+  function load(key) {
+    if (!cache[key]) {
+      cache[key] = fetch(SHEETS[key], { cache: "no-store" }).then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        return r.text();
+      }).then(toRows).catch(function (e) { delete cache[key]; throw e; });
+    }
+    return cache[key];
+  }
+  function groupBy(rows, key) {
+    var out = [], idx = {};
+    rows.forEach(function (r) {
+      var k = r[key] || "Other";
+      if (!(k in idx)) { idx[k] = out.length; out.push({ title: k, rows: [] }); }
+      out[idx[k]].rows.push(r);
+    });
+    return out;
+  }
 
   // ---------- state ----------
   var VIEWS = ["home", "drinks", "wine", "alacarte", "tasting"];
@@ -323,27 +275,32 @@ details p { margin-top: 8px; }
   var tbl = (location.search.match(/table=(\d+)/) || [])[1];
   document.querySelectorAll("[data-table]").forEach(function (el) { el.textContent = tbl ? "Table " + tbl : ""; });
 
+  // ---------- building blocks ----------
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function slug(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "s"; }
+  function money(v) { return /^\d+(\.\d+)?$/.test(v) ? "£" + v : v; }
   function codes(c) {
-    return c ? ' <span class="codes">' + c.split(", ").map(function (x) { return x === "P-B" ? "<b>P-B</b>" : esc(x); }).join(", ") + "</span>" : "";
+    return c ? ' <span class="codes">' + c.split(/\s*,\s*/).map(function (x) { return x === "P-B" ? "<b>P-B</b>" : esc(x); }).join(", ") + "</span>" : "";
   }
-  function isPB(i) { return i.pb || /P-B/.test(i.c || ""); }
-  function item(i) {
-    return '<li class="item"><span class="name">' + esc(i.n) + codes(i.c) + '</span><span class="price">' + esc(i.p) +
-      (i.alt ? "<small>" + esc(i.alt) + "</small>" : "") + "</span>" +
-      (i.d ? '<p class="desc">' + esc(i.d) + codes(i.dc) + "</p>" : "") + "</li>";
+  function isPB(r) { return /\bP-B\b/.test((r.allergens || "") + " " + (r.description || "")); }
+  function plantFilter(rows) { return rows.filter(function (r) { return !state.plantOnly || isPB(r); }); }
+  function item(name, allergens, price, priceNote, desc) {
+    return '<li class="item"><span class="name">' + esc(name) + codes(allergens) + '</span><span class="price">' + esc(money(price || "")) +
+      (priceNote ? "<small>" + esc(priceNote) + "</small>" : "") + "</span>" + (desc ? '<p class="desc">' + esc(desc) + "</p>" : "") + "</li>";
   }
+  function rowItem(r) { return item(r.item || r.dish, r.allergens, r.price, r["price note"], r.description); }
   function wine(w) {
-    return '<li class="item"><span class="name">' + (w.u ? "♢ " : "") + '<span class="vin">' + esc(w.v) + "</span> " + esc(w.p) +
-      (w.c ? ' <span class="cuv">/ ' + esc(w.c) + "</span>" : "") + '</span><span class="price">' + esc(w.$) +
-      (w.gl ? "<small>" + esc(w.gl) + "</small>" : "") + '</span><p class="desc">' + esc([w.g, w.r].filter(Boolean).join(" · ")) + "</p></li>";
+    var unique = w.unique && !/^(no|n)$/i.test(w.unique);
+    return '<li class="item"><span class="name">' + (unique ? "♢ " : "") + '<span class="vin">' + esc(w.vintage) + "</span> " + esc(w.producer) +
+      (w["cuvée"] || w.cuvee ? ' <span class="cuv">/ ' + esc(w["cuvée"] || w.cuvee) + "</span>" : "") + '</span><span class="price">' + esc(money(w.price)) +
+      (w["glass price"] ? "<small>" + esc(w["glass price"]) + "</small>" : "") + '</span><p class="desc">' +
+      esc([w.grapes, w.region].filter(Boolean).join(" · ")) + "</p></li>";
   }
   function section(id, title, inner, note) {
     return '<section class="section" id="sec-' + id + '" data-sec="' + id + '"><h2 class="caps">' + esc(title) +
       (note ? "<small>" + esc(note) + "</small>" : "") + "</h2>" + inner + "</section>";
   }
   function list(items) { return '<ul class="items">' + items.join("") + "</ul>"; }
-  function plantFilter(items) { return items.filter(function (i) { return !state.plantOnly || isPB(i); }); }
   function next(view, label, hint) {
     return '<button class="next" type="button" data-view="' + view + '"><span class="caps">' + label + "</span><span>" + hint + " →</span></button>";
   }
@@ -351,28 +308,39 @@ details p { margin-top: 8px; }
     chips.innerHTML = (filter ? '<button class="chip" type="button" id="plant" aria-pressed="' + state.plantOnly + '">Plant-based</button><span class="sep" aria-hidden="true"></span>' : "") +
       nav.map(function (s) { return '<button class="chip" type="button" data-jump="' + s[0] + '">' + esc(s[1]) + "</button>"; }).join("");
   }
-  var ALLERGY_NOTE = '<p class="note">Allergies? Please tell your server before ordering.</p>';
+  // A plain menu tab (drinks, a la carte): Section | Item | Description | Allergens | Price | Price note | Section note | Show
+  function simpleMenu(rows, food) {
+    var groups = groupBy(rows, "section");
+    var html = groups.map(function (g) {
+      var shown = food ? plantFilter(g.rows) : g.rows;
+      var note = (g.rows.filter(function (r) { return r["section note"]; })[0] || {})["section note"];
+      return section(slug(g.title), g.title, shown.length ? list(shown.map(rowItem)) : '<p class="empty">No plant-based ' + esc(g.title.toLowerCase()) + " today.</p>", note);
+    }).join("");
+    setChips(groups.map(function (g) { return [slug(g.title), g.title]; }), food);
+    return html;
+  }
 
   // ---------- views ----------
   var render = {
-    drinks: function () {
-      body.innerHTML = DRINKS.map(function (s) { return section(s.id, s.t, list(s.items.map(item)), s.note); }).join("") +
-        next("alacarte", "Food menu", "A la carte & tasting");
-      setChips(DRINKS.map(function (s) { return [s.id, s.t]; }));
-      foot.innerHTML = "<p>Alcohol-free pairing for the tasting menu: 4 glasses £36 · 6 glasses £54</p>" + FOOT;
+    drinks: function (d) {
+      body.innerHTML = simpleMenu(d.drinks) + next("alacarte", "Food menu", "A la carte & tasting");
+      foot.innerHTML = FOOT;
     },
-    wine: function () {
+    wine: function (d) {
       var html = '<p class="note">♢ Wines with unique expressions</p>', nav = [];
-      WINES.forEach(function (g, gi) {
-        if (gi === 0) {
+      groupBy(d.wine, "serve").forEach(function (serve) {
+        var sections = groupBy(serve.rows, "section");
+        if (/glass/i.test(serve.title)) {
           nav.push(["glass", "By the glass"]);
-          html += section("glass", "By the glass", g.s.map(function (s) { return '<h3 class="caps">' + esc(s.t) + "</h3>" + list(s.w.map(wine)); }).join(""), "125ml");
+          html += section("glass", "By the glass", sections.map(function (s) {
+            return '<h3 class="caps">' + esc(s.title) + "</h3>" + list(s.rows.map(wine));
+          }).join(""), "125ml");
         } else {
           html += '<h2 class="caps group-title">Bottles</h2>';
-          g.s.forEach(function (s, i) {
-            var id = "b" + i;
-            nav.push([id, s.t.replace(/^(White|Red) — /, "$1: ").replace("Orange / Skin Contact", "Orange")]);
-            html += section(id, s.t, list(s.w.map(wine)), i === 0 ? "750ml" : "");
+          sections.forEach(function (s, i) {
+            var id = "b-" + slug(s.title);
+            nav.push([id, s.title.replace(/^(White|Red)\s*[—–-]\s*/, "$1: ").replace(/^Orange\s*\/.*/, "Orange")]);
+            html += section(id, s.title, list(s.rows.map(wine)), i === 0 ? "750ml" : "");
           });
         }
       });
@@ -380,39 +348,46 @@ details p { margin-top: 8px; }
       setChips(nav);
       foot.innerHTML = FOOT;
     },
-    alacarte: function () {
-      body.innerHTML = ALLERGY_NOTE + ALACARTE.map(function (s) {
-        var items = plantFilter(s.items);
-        return section(s.id, s.t, items.length ? list(items.map(item)) : '<p class="empty">No plant-based ' + s.t.toLowerCase() + " today.</p>");
-      }).join("") + next("drinks", "Drinks", "Cocktails, wine & more");
-      setChips(ALACARTE.map(function (s) { return [s.id, s.t]; }), true);
+    alacarte: function (d) {
+      body.innerHTML = ALLERGY_NOTE + simpleMenu(d.alacarte, true) + next("drinks", "Drinks", "Cocktails, wine & more");
       foot.innerHTML = ALLERGENS + FOOT;
     },
-    tasting: function () {
-      var sel = TASTING.menus[state.courses];
-      var html = '<div class="seg" role="group" aria-label="Number of courses">' + [5, 7].map(function (n) {
-        var t = TASTING.menus[n];
-        return '<button type="button" data-courses="' + n + '" aria-pressed="' + (state.courses === n) + '"><span class="caps">' + n +
-          ' courses</span><span class="big">' + t.price + "</span><small>Lunch &amp; early evening " + t.special + "*</small></button>";
+    // Tasting tab: Course | Dish | Allergens | Supplement | Courses (Both / 7 only) | Add to 5-course | Description | Price | Show
+    // Prices tab: Menu | Price | Lunch & early evening | Wine pairing | Alcohol-free pairing | Pairing glasses
+    tasting: function (d) {
+      var menus = d.tastingPrices.map(function (r) { return { n: parseInt(r.menu, 10), r: r }; }).filter(function (m) { return m.n; });
+      if (!menus.some(function (m) { return m.n === state.courses; }) && menus.length) state.courses = menus[0].n;
+      var sel = (menus.filter(function (m) { return m.n === state.courses; })[0] || { r: {} }).r;
+
+      var html = '<div class="seg" role="group" aria-label="Number of courses">' + menus.map(function (m) {
+        return '<button type="button" data-courses="' + m.n + '" aria-pressed="' + (state.courses === m.n) + '"><span class="caps">' + m.n +
+          ' courses</span><span class="big">' + esc(money(m.r.price)) + "</span>" +
+          (m.r["lunch & early evening"] ? "<small>Lunch &amp; early evening " + esc(money(m.r["lunch & early evening"])) + "*</small>" : "") + "</button>";
       }).join("") + '</div><p class="note">*Lunch &amp; pre-booked early dinner, groups up to 6. Choose one dish per course.</p>';
 
-      var courses = "";
-      TASTING.courses.forEach(function (c) {
-        if (c.only7 && state.courses !== 7) {
-          if (c.add5) courses += '<h3 class="caps">' + c.t + " · add " + c.add5 + "</h3>";
+      var groups = groupBy(d.tasting, "course"), courses = "", extras = [];
+      groups.forEach(function (g) {
+        if (g.rows.some(function (r) { return r.price; })) { extras.push(g); return; }
+        var only7 = g.rows.some(function (r) { return /7/.test(r.courses || "") && !/both|5/i.test(r.courses); });
+        if (only7 && state.courses !== 7) {
+          var add = (g.rows.filter(function (r) { return r["add to 5-course"]; })[0] || {})["add to 5-course"];
+          if (add) courses += '<h3 class="caps">' + esc(g.title) + " · add " + esc(money(add)) + "</h3>";
           return;
         }
-        courses += '<h3 class="caps">' + c.t + '</h3><ul class="opts">';
-        if (c.fixed) { courses += '<li><span class="desc">Served to everyone</span></li></ul>'; return; }
-        courses += plantFilter(c.o).map(function (o) {
-          return "<li>" + esc(o.n) + codes(o.c) + (o.s ? ' <span class="codes">' + o.s + "</span>" : "") + "</li>";
+        // A course with one dish (the pre dessert) is served to everyone, so the plant-based filter leaves it alone.
+        courses += '<h3 class="caps">' + esc(g.title) + '</h3><ul class="opts">' + (g.rows.length > 1 ? plantFilter(g.rows) : g.rows).map(function (r) {
+          return "<li>" + esc(r.dish) + codes(r.allergens) + (r.supplement ? ' <span class="codes">+' + esc(money(r.supplement)) + "</span>" : "") + "</li>";
         }).join("") + "</ul>";
       });
       html += section("courses", state.courses + "-course menu", courses);
-      html += section("pairings", "Pairings", list([item({ n: "Wine", p: sel.wine }), item({ n: "Alcohol-free", p: sel.na })]), sel.glasses);
-      html += section("sides", "Add on the side", list(plantFilter([BREAD].concat(TASTING.sides)).map(item)));
+      if (sel["wine pairing"] || sel["alcohol-free pairing"]) {
+        html += section("pairings", "Pairings", list([item("Wine", "", sel["wine pairing"]), item("Alcohol-free", "", sel["alcohol-free pairing"])]),
+          sel["pairing glasses"] ? sel["pairing glasses"].replace(/^(\d+)$/, "$1 glasses") : "");
+      }
+      extras.forEach(function (g) { html += section(slug(g.title), g.title, list(plantFilter(g.rows).map(rowItem))); });
+
       body.innerHTML = ALLERGY_NOTE + html + next("drinks", "Drinks", "Cocktails, wine & more");
-      setChips([["courses", "Courses"], ["pairings", "Pairings"], ["sides", "Sides"]], true);
+      setChips([["courses", "Courses"], ["pairings", "Pairings"]].concat(extras.map(function (g) { return [slug(g.title), g.title.replace(/^Add on the side$/i, "Sides")]; })), true);
       foot.innerHTML = ALLERGENS + FOOT;
     }
   };
@@ -422,15 +397,26 @@ details p { margin-top: 8px; }
     state.view = view;
     var home = view === "home";
     splash.hidden = !home; top.hidden = home; body.hidden = home; foot.hidden = home;
-    if (!home) {
-      document.querySelectorAll(".tab").forEach(function (b) { b.setAttribute("aria-selected", b.dataset.view === view); });
-      render[view]();
-      spy();
-    }
     if (push) { try { history.pushState(null, "", home ? location.pathname + location.search : "#" + view); } catch (e) {} }
     window.scrollTo(0, 0);
+    if (home) { Object.keys(SHEETS).forEach(function (k) { load(k).catch(function () {}); }); return Promise.resolve(); }
+
+    document.querySelectorAll(".tab").forEach(function (b) { b.setAttribute("aria-selected", b.dataset.view === view); });
+    chips.innerHTML = ""; foot.innerHTML = "";
+    var keys = NEEDS[view], pending = setTimeout(function () { body.innerHTML = '<p class="status">Loading menu…</p>'; }, 150);
+    return Promise.all(keys.map(load)).then(function (res) {
+      clearTimeout(pending);
+      if (state.view !== view) return;
+      var d = {}; keys.forEach(function (k, i) { d[k] = res[i]; });
+      render[view](d);
+      spy();
+    }, function () {
+      clearTimeout(pending);
+      if (state.view !== view) return;
+      body.innerHTML = '<div class="status"><p>The menu didn’t load. Check your connection, or ask your server.</p><button class="next" type="button" data-retry>Try again</button></div>';
+    });
   }
-  function rerender() { var y = window.scrollY; show(state.view); window.scrollTo(0, y); }
+  function rerender() { var y = window.scrollY; show(state.view).then(function () { window.scrollTo(0, y); }); }
 
   // ---------- section scroll-spy ----------
   var observer;
@@ -459,6 +445,7 @@ details p { margin-top: 8px; }
     var t = e.target.closest("button");
     if (!t) return;
     if (t.id === "home") return show("home", true);
+    if (t.hasAttribute("data-retry")) return show(state.view);
     if (t.dataset.view) { if (t.dataset.view !== state.view) show(t.dataset.view, true); else window.scrollTo({ top: 0, behavior: "smooth" }); return; }
     if (t.dataset.jump) { var s = document.getElementById("sec-" + t.dataset.jump); if (s) s.scrollIntoView({ behavior: "smooth" }); setActive(t.dataset.jump); return; }
     if (t.id === "plant") {

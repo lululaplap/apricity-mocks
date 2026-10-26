@@ -2,12 +2,27 @@
 
 A phone-first menu that guests open by scanning the QR code on their table.
 
-- `index.html`: open it in a browser (or a phone-sized dev-tools window). Add `?table=12` to the URL to see how a table-specific QR code works.
+- `index.html`: the menu page. It loads its content, so open it through a web server rather than as a file, e.g. `python3 -m http.server` then http://localhost:8000/?table=12.
+- `sheets/*.csv`: the menu content, one file per Google Sheet tab. Import these to create the sheet.
+- `UPDATING-THE-MENU.md`: the guide for staff.
 - `src/menu.html`: the source used for the hosted preview. Edit it, then run `./build.sh` to regenerate `index.html`.
+
+## Menu content lives in Google Sheets
+
+Staff update the menu in a Google Sheet, never in code. The page fetches each tab as CSV when a guest opens a menu, so changes appear within about 5 minutes. Rows with *Show* = `no` are hidden, which makes it quick to take a dish off for the night. See `UPDATING-THE-MENU.md`.
+
+**One-off setup**
+1. Create a Google Sheet called *Apricity menus*. Import each file from `sheets/` as its own tab (File → Import → Upload → *Insert new sheet*): Drinks, A la carte, Tasting, Tasting prices. The wine list already lives in its own sheet.
+2. File → Share → Publish to web. For each tab, choose the tab and *Comma-separated values (.csv)*, then copy the link.
+3. Paste the links into `SHEETS` at the top of the script in `src/menu.html`, then run `./build.sh`.
+4. For the wine list, point `SHEETS.wine` at the existing wine sheet's published CSV. The page expects the columns *Serve* (Glass/Bottle), *Section*, *Unique* (♢), *Vintage*, *Producer*, *Cuvée*, *Grapes*, *Region*, *Price*, *Glass price* and *Show*. If the existing sheet uses other headings, rename them or change the names in the `wine()` function.
+5. Host `index.html` anywhere static (e.g. Netlify or Cloudflare Pages, on `menu.apricityrestaurant.com`). Point the QR codes at `…/?table=N`.
+
+If a sheet can't be reached, the page says the menu didn't load and offers *Try again*. It never shows stale or made-up content.
 
 ## Content
 
-All menu content is copied from apricityrestaurant.com (captured 25 Oct 2026): the menus intro, the à la carte, tasting and drinks menus, the allergen key and trace warning, the 13.5% 'Apriciation' note, the 50p School Food Matters donation and the Belu water note.
+The starting content in `sheets/` is copied from apricityrestaurant.com (captured 25 Oct 2026): the menus intro, the à la carte, tasting and drinks menus, the allergen key and trace warning, the 13.5% 'Apriciation' note, the 50p School Food Matters donation and the Belu water note.
 
 The wine list (149 wines: by the glass and bottles, with ♢ "unique expression" markers, grapes, regions and sweet-wine glass prices) was extracted from a saved copy of the website's wine-list page.
 
