@@ -3,136 +3,155 @@
 <meta name="color-scheme" content="only light">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600&display=swap">
 <style>
-/* Layout: a bare splash (wordmark + four menu links) leads to the menus: one sticky header (wordmark, four tabs, section chips) over a single peach column. */
+/* Layout: a bare splash (wordmark + four menu links) leads to the menus: one sticky header (wordmark, four tabs, section chips) over a single peach column.
+   Readability floor for older guests: no text under 14px, regular weight or heavier, contrast of at least 6:1, tap targets of at least 44px. */
 :root {
   --page: #F9C6BA;          /* apricityrestaurant.com peach */
-  --ink: #000000;
-  --mid: #3A3A3A;
-  --light: #5F5A59;
-  --rule: rgba(0, 0, 0, 0.14);
-  --rule-strong: rgba(0, 0, 0, 0.5);
+  --ink: #000000;           /* 14:1 on peach */
+  --mid: #333333;           /* 8:1 on peach */
+  --light: #45403F;         /* 6.6:1 on peach */
+  --rule: rgba(0, 0, 0, 0.18);
+  --rule-strong: rgba(0, 0, 0, 0.55);
   --font: "Josefin Sans", "Brandon Grotesque", "Futura", "Century Gothic", sans-serif;
+  --tap: 44px;
   /* Always the website's peach look: no dark mode, and browsers are asked not to auto-darken it. */
   color-scheme: only light;
 }
+/* The "Larger text" button scales everything, because every size is in rem. */
+html.text-large { font-size: 115%; }
+html.text-largest { font-size: 132%; }
 
 * { box-sizing: border-box; }
 body {
   background: var(--page); color: var(--ink);
-  font-family: var(--font); font-weight: 300; font-size: 1rem; line-height: 1.55;
-  letter-spacing: 0.03em; -webkit-font-smoothing: antialiased;
+  font-family: var(--font); font-weight: 400; font-size: 1.0625rem; line-height: 1.6;
+  letter-spacing: 0.02em; -webkit-font-smoothing: antialiased;
 }
 body::before {
   content: ""; position: fixed; inset: 0 0 auto;
   height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--page);
 }
 button { font: inherit; color: inherit; letter-spacing: inherit; }
-:focus-visible { outline: 1px solid var(--ink); outline-offset: 3px; }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
 .wrap {
   max-width: 560px; margin: 0 auto;
   padding-left: max(20px, env(safe-area-inset-left, 0px));
   padding-right: max(20px, env(safe-area-inset-right, 0px));
 }
-.caps { text-transform: uppercase; letter-spacing: 0.18em; font-weight: 400; }
+.caps { text-transform: uppercase; letter-spacing: 0.14em; font-weight: 400; }
+.textsize {
+  min-height: var(--tap); padding: 0 14px; border: 1px solid var(--rule-strong); border-radius: 999px;
+  background: transparent; cursor: pointer; font-size: 0.875rem; white-space: nowrap;
+}
 
 /* ---------- header ---------- */
 .top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--page); border-bottom: 1px solid var(--rule-strong); }
-.brandrow { display: flex; align-items: baseline; justify-content: space-between; padding-block: 14px 4px; }
-.wordmark { font-weight: 300; font-size: 1.375rem; letter-spacing: 0.3em; line-height: 1; background: none; border: 0; padding: 0; cursor: pointer; }
+.brandrow { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 8px 0; }
+.wordmark { font-size: 1.375rem; letter-spacing: 0.24em; line-height: 1; min-height: var(--tap); background: none; border: 0; padding: 0; cursor: pointer; }
 
 /* ---------- splash ---------- */
 .splash {
   min-height: calc(100svh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
-  display: grid; align-content: center; gap: 44px; text-align: center; padding-block: 40px;
+  display: grid; align-content: center; gap: 40px; text-align: center; padding-block: 40px;
 }
-.splash h1 { margin: 0; font-weight: 300; font-size: 2.25rem; letter-spacing: 0.3em; margin-right: -0.3em; line-height: 1; }
+.splash h1 { margin: 0; font-weight: 400; font-size: 2.25rem; letter-spacing: 0.3em; margin-right: -0.3em; line-height: 1; }
 .links { display: grid; border-top: 1px solid var(--rule-strong); }
 .links button {
   border: 0; border-bottom: 1px solid var(--rule-strong); background: none; padding: 20px 0 18px; cursor: pointer;
-  font-size: 0.9375rem; text-transform: uppercase; letter-spacing: 0.22em; transition: background .2s, color .2s;
+  font-size: 1.0625rem; text-transform: uppercase; letter-spacing: 0.2em; transition: background .2s, color .2s;
 }
 .links button:hover, .links button:active { background: var(--ink); color: var(--page); }
-.splash .note { margin: 0; }
+.splash .note { margin: 0; font-size: 1rem; }
+.splash .textsize { justify-self: center; }
 
-.tabs { display: flex; align-items: center; justify-content: space-between; padding-block: 10px 8px; }
-.tabs .group { display: flex; gap: 18px; }
-.tabs .divider { width: 1px; height: 14px; background: var(--rule-strong); }
+/* Drinks and food sit in two groups; with large text the food group wraps onto its own line. */
+.tabs { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; column-gap: 28px; }
+.tabs .group { display: flex; gap: 16px; }
 .tab {
-  border: 0; background: none; padding: 6px 0; cursor: pointer;
-  font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--mid);
-  text-underline-offset: 6px;
+  border: 0; background: none; min-height: var(--tap); min-width: var(--tap); padding: 0; cursor: pointer;
+  font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--mid);
+  text-underline-offset: 7px;
 }
-.tab[aria-selected="true"] { color: var(--ink); font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; }
+.tab[aria-current="page"] { color: var(--ink); font-weight: 600; text-decoration: underline; text-decoration-thickness: 2px; }
 
-.chips { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding-block: 2px 12px; }
+.chips { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding-block: 4px 12px; }
 .chips::-webkit-scrollbar { display: none; }
+/* A fade on the right edge shows there are more sections to scroll to. */
+.chips.more { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent); }
 .chip {
-  flex: none; border: 1px solid var(--rule-strong); background: transparent; border-radius: 999px;
-  padding: 6px 12px 4px; font-size: 0.6875rem; cursor: pointer; color: var(--mid);
-  white-space: nowrap; text-transform: uppercase; letter-spacing: 0.12em;
+  flex: none; min-height: var(--tap); border: 1px solid var(--rule-strong); background: transparent; border-radius: 999px;
+  padding: 2px 16px 0; font-size: 0.875rem; cursor: pointer; color: var(--ink);
+  white-space: nowrap; text-transform: uppercase; letter-spacing: 0.08em;
 }
 .chip.active, .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--page); }
-.chips .sep { flex: none; width: 1px; background: var(--rule-strong); margin: 4px 2px; }
+.chips .sep { flex: none; width: 1px; background: var(--rule-strong); margin: 8px 2px; }
 
 /* ---------- lists ---------- */
 main { padding-block: 4px 8px; }
-.note { color: var(--light); font-size: 0.8125rem; margin: 16px 0 0; }
-.section { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 140px); padding-top: 26px; }
+main:focus { outline: none; }
+.note { color: var(--light); font-size: 0.9375rem; margin: 16px 0 0; }
+.keylink { display: inline-block; background: none; border: 0; padding: 0; min-height: var(--tap); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; color: var(--ink); }
+.section { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 160px); padding-top: 28px; }
 .section h2 {
-  font-size: 0.8125rem; margin: 0; padding-bottom: 8px; border-bottom: 1px solid var(--rule-strong);
+  font-size: 0.9375rem; margin: 0; padding-bottom: 8px; border-bottom: 1px solid var(--rule-strong);
   display: flex; justify-content: space-between; gap: 12px;
 }
-.section h2 small { font-size: 0.6875rem; color: var(--light); letter-spacing: 0.12em; }
-.section h3 { font-size: 0.6875rem; color: var(--light); margin: 16px 0 0; }
-.group-title { font-size: 1.125rem; text-align: center; letter-spacing: 0.24em; margin: 40px 0 0; }
+.section h2 small { font-size: 0.875rem; color: var(--light); letter-spacing: 0.08em; }
+.section h3 { font-size: 0.875rem; color: var(--light); margin: 18px 0 0; }
+.group-title { font-size: 1.25rem; text-align: center; letter-spacing: 0.24em; margin: 44px 0 0; }
 .items { list-style: none; margin: 0; padding: 0; }
-.item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 20px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 20px; padding: 14px 0; border-bottom: 1px solid var(--rule); }
 .item:last-child { border-bottom: 0; }
-.item .name { min-width: 0; font-weight: 400; }
-.item .desc { grid-column: 1; color: var(--mid); font-size: 0.875rem; margin: 0; }
-.price { grid-column: 2; grid-row: 1 / span 2; align-self: start; white-space: nowrap; text-align: right; font-weight: 400; font-variant-numeric: lining-nums; }
-.price small { display: block; color: var(--light); font-size: 0.6875rem; font-weight: 300; }
-.codes { font-size: 0.6875rem; color: var(--light); letter-spacing: 0.08em; white-space: nowrap; font-weight: 400; }
+.item .name { min-width: 0; font-weight: 600; }
+.item .desc { grid-column: 1; color: var(--mid); font-size: 0.9375rem; margin: 0; }
+.price { grid-column: 2; grid-row: 1 / span 2; align-self: start; white-space: nowrap; text-align: right; font-weight: 600; font-variant-numeric: lining-nums; }
+.price small { display: block; color: var(--light); font-size: 0.875rem; font-weight: 400; }
+.codes { font-size: 0.875rem; color: var(--light); letter-spacing: 0.06em; white-space: nowrap; font-weight: 400; }
 .codes b { color: var(--ink); font-weight: 600; }
-.vin, .cuv { color: var(--mid); font-weight: 300; }
-.empty { color: var(--mid); padding: 12px 0; margin: 0; font-size: 0.9375rem; }
+.vin, .cuv { color: var(--mid); font-weight: 400; }
+.empty { color: var(--mid); padding: 14px 0; margin: 0; font-size: 1rem; }
 
 /* tasting */
 .seg { display: grid; grid-template-columns: 1fr 1fr; margin-top: 20px; border: 1px solid var(--rule-strong); }
-.seg button { border: 0; background: transparent; padding: 12px 6px 10px; cursor: pointer; display: grid; gap: 2px; }
+.seg button { border: 0; background: transparent; padding: 14px 6px 12px; cursor: pointer; display: grid; gap: 4px; }
 .seg button + button { border-left: 1px solid var(--rule-strong); }
-.seg .big { font-size: 1.375rem; font-weight: 400; }
-.seg small { font-size: 0.75rem; color: var(--mid); }
+.seg .big { font-size: 1.5rem; font-weight: 600; }
+.seg small { font-size: 0.875rem; color: var(--mid); }
 .seg button[aria-pressed="true"] { background: var(--ink); color: var(--page); }
 .seg button[aria-pressed="true"] small { color: var(--page); }
 .opts { list-style: none; margin: 0; padding: 0; }
-.opts li { padding: 12px 0; border-bottom: 1px solid var(--rule); font-weight: 400; }
+.opts li { padding: 14px 0; border-bottom: 1px solid var(--rule); font-weight: 600; }
 .opts li:last-child { border-bottom: 0; }
-.opts .desc { display: block; color: var(--mid); font-size: 0.875rem; font-weight: 300; }
+.opts .desc { display: block; color: var(--mid); font-size: 0.9375rem; font-weight: 400; }
 
 /* cross-link between drinks and food */
 .next {
   display: flex; justify-content: space-between; align-items: center; gap: 12px; width: 100%;
-  margin-top: 36px; padding: 18px 20px; cursor: pointer;
+  margin-top: 36px; padding: 18px 20px; cursor: pointer; min-height: 56px;
   border: 1px solid var(--ink); background: transparent; text-align: left;
 }
-.next span { font-size: 0.8125rem; }
+.next span { font-size: 0.9375rem; }
 .next:hover, .next:active { background: var(--ink); color: var(--page); }
 
 /* footer */
-.foot { padding-block: 28px 32px; color: var(--light); font-size: 0.75rem; display: grid; gap: 10px; text-align: center; }
+.foot { padding-block: 28px 32px; color: var(--light); font-size: 0.875rem; display: grid; gap: 12px; text-align: center; }
 .foot p { margin: 0; }
-details { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 10px 0; }
-summary { cursor: pointer; text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.6875rem; color: var(--mid); }
-details p { margin-top: 8px; }
+.foot .textsize { justify-self: center; }
+details { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 160px); }
+summary { cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.875rem; color: var(--ink); min-height: var(--tap); display: flex; align-items: center; }
+details p { margin: 0 0 12px; color: var(--mid); }
+details dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; margin: 4px 0 12px; color: var(--mid); }
+details dt { font-weight: 600; color: var(--ink); }
+details dd { margin: 0; }
 
 .status { padding-block: 48px; text-align: center; color: var(--mid); }
 .status .next { justify-content: center; margin-top: 20px; }
 
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
 </style>
 
 <header class="top">
@@ -140,25 +159,22 @@ details p { margin-top: 8px; }
     <div class="brandrow">
       <button class="wordmark" id="home" type="button" aria-label="Apricity, back to all menus">APRICITY</button>
     </div>
-    <nav class="tabs" role="tablist" aria-label="Menus">
+    <nav class="tabs" aria-label="Menus">
       <div class="group">
-        <button class="tab" role="tab" data-view="drinks" type="button">Drinks</button>
-        <button class="tab" role="tab" data-view="wine" type="button">Wine</button>
+        <button class="tab" data-view="drinks" type="button">Drinks</button>
+        <button class="tab" data-view="wine" type="button">Wine</button>
       </div>
-      <span class="divider" aria-hidden="true"></span>
       <div class="group">
-        <button class="tab" role="tab" data-view="alacarte" type="button">A la carte</button>
-        <button class="tab" role="tab" data-view="tasting" type="button">Tasting</button>
+        <button class="tab" data-view="alacarte" type="button">A la carte</button>
+        <button class="tab" data-view="tasting" type="button">Tasting</button>
       </div>
     </nav>
-    <div class="chips" id="chips" aria-label="Jump to section"></div>
+    <div class="chips" id="chips" role="group" aria-label="Jump to a section"></div>
   </div>
 </header>
 
-<section class="splash wrap" id="splash" hidden>
-  <div>
-    <h1>APRICITY</h1>
-  </div>
+<main class="splash wrap" id="splash" hidden>
+  <h1>APRICITY</h1>
   <nav class="links" aria-label="Menus">
     <button type="button" data-view="drinks">Drinks</button>
     <button type="button" data-view="wine">Wine list</button>
@@ -166,11 +182,12 @@ details p { margin-top: 8px; }
     <button type="button" data-view="tasting">Tasting menus</button>
   </nav>
   <p class="note">Allergies? Please tell your server before ordering.</p>
-</section>
+  <button class="textsize" type="button" data-textsize>Larger text</button>
+</main>
 
-<main class="wrap" id="body"></main>
+<main class="wrap" id="body" tabindex="-1"></main>
 <footer class="wrap foot" id="foot"></footer>
-
+<p class="sr-only" id="announce" aria-live="polite"></p>
 <script>
 (function () {
   // ---------- where the menus come from ----------
@@ -185,11 +202,15 @@ details p { margin-top: 8px; }
   };
   var NEEDS = { drinks: ["drinks"], wine: ["wine"], alacarte: ["alacarte"], tasting: ["tasting", "tastingPrices"] };
 
-  var KEY = "V Vegetarian · P-B Plant-Based · C Crustaceans · Ce Celery · D Dairy · E Eggs · F Fish · P Peanuts · G Gluten · L Lupin · N Nuts · Mo Molluscs · Mu Mustard · S Soya · SD Sulphur Dioxide · Se Sesame · A Alcohol";
+  var CODES = { "V": "Vegetarian", "P-B": "Plant-based", "C": "Crustaceans", "Ce": "Celery", "D": "Dairy", "E": "Eggs", "F": "Fish", "P": "Peanuts",
+    "G": "Gluten", "L": "Lupin", "N": "Nuts", "Mo": "Molluscs", "Mu": "Mustard", "S": "Soya", "SD": "Sulphur dioxide", "Se": "Sesame", "A": "Alcohol" };
   var TRACES = "We prepare our food in an environment with allergens and can’t guarantee that a dish is completely free of any allergen as traces may remain.";
-  var ALLERGENS = "<details><summary>Allergen key</summary><p>" + KEY + "</p><p>" + TRACES + "</p></details>";
-  var FOOT = "<p>A discretionary 13.5% ‘Apriciation’ goes to the whole team. 50p per person supports School Food Matters.</p>";
-  var ALLERGY_NOTE = '<p class="note">Allergies? Please tell your server before ordering.</p>';
+  var ALLERGENS = '<details id="key"><summary>What the allergen codes mean</summary><dl>' +
+    Object.keys(CODES).map(function (k) { return "<dt>" + k + "</dt><dd>" + CODES[k] + "</dd>"; }).join("") + "</dl><p>" + TRACES + "</p></details>";
+  var FOOT = "<p>A discretionary 13.5% ‘Apriciation’ goes to the whole team. 50p per person supports School Food Matters.</p>" +
+    '<button class="textsize" type="button" data-textsize></button>';
+  var ALLERGY_NOTE = '<p class="note">Allergies? Please tell your server before ordering. <button class="keylink" type="button" data-key>What the allergen codes mean</button></p>';
+  var TITLES = { drinks: "Drinks", wine: "Wine list", alacarte: "A la carte menu", tasting: "Tasting menus" };
 
   // ---------- loading the sheets ----------
   function parseCSV(text) {
@@ -254,8 +275,14 @@ details p { margin-top: 8px; }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function slug(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "s"; }
   function money(v) { return /^\d+(\.\d+)?$/.test(v) ? "£" + v : v; }
+  // Codes are shown as printed on the website; screen readers hear them in words instead ("plant-based; contains mustard").
   function codes(c) {
-    return c ? ' <span class="codes">' + c.split(/\s*,\s*/).map(function (x) { return x === "P-B" ? "<b>P-B</b>" : esc(x); }).join(", ") + "</span>" : "";
+    if (!c) return "";
+    var list = c.split(/\s*,\s*/).filter(Boolean), diet = [], contains = [];
+    list.forEach(function (x) { (x === "V" || x === "P-B" ? diet : contains).push((CODES[x] || x).toLowerCase()); });
+    var spoken = [diet.join(", "), contains.length ? "contains " + contains.join(", ") : ""].filter(Boolean).join("; ");
+    return ' <span class="codes" aria-hidden="true">' + list.map(function (x) { return x === "P-B" ? "<b>P-B</b>" : esc(x); }).join(", ") + "</span>" +
+      '<span class="sr-only"> (' + esc(spoken) + ")</span>";
   }
   function isPB(r) { return /\bP-B\b/.test((r.allergens || "") + " " + (r.description || "")); }
   function plantFilter(rows) { return rows.filter(function (r) { return !state.plantOnly || isPB(r); }); }
@@ -266,7 +293,7 @@ details p { margin-top: 8px; }
   function rowItem(r) { return item(r.item || r.dish, r.allergens, r.price, r["price note"], r.description); }
   function wine(w) {
     var unique = w.unique && !/^(no|n)$/i.test(w.unique);
-    return '<li class="item"><span class="name">' + (unique ? "♢ " : "") + '<span class="vin">' + esc(w.vintage) + "</span> " + esc(w.producer) +
+    return '<li class="item"><span class="name">' + (unique ? '<span aria-hidden="true">♢ </span><span class="sr-only">Unique expression: </span>' : "") + '<span class="vin">' + esc(w.vintage) + "</span> " + esc(w.producer) +
       (w["cuvée"] || w.cuvee ? ' <span class="cuv">/ ' + esc(w["cuvée"] || w.cuvee) + "</span>" : "") + '</span><span class="price">' + esc(money(w.price)) +
       (w["glass price"] ? "<small>" + esc(w["glass price"]) + "</small>" : "") + '</span><p class="desc">' +
       esc([w.grapes, w.region].filter(Boolean).join(" · ")) + "</p></li>";
@@ -282,7 +309,11 @@ details p { margin-top: 8px; }
   function setChips(nav, filter) {
     chips.innerHTML = (filter ? '<button class="chip" type="button" id="plant" aria-pressed="' + state.plantOnly + '">Plant-based</button><span class="sep" aria-hidden="true"></span>' : "") +
       nav.map(function (s) { return '<button class="chip" type="button" data-jump="' + s[0] + '">' + esc(s[1]) + "</button>"; }).join("");
+    updateFade();
   }
+  function updateFade() { chips.classList.toggle("more", chips.scrollWidth - chips.scrollLeft - chips.clientWidth > 4); }
+  chips.addEventListener("scroll", updateFade, { passive: true });
+  window.addEventListener("resize", updateFade);
   // A plain menu tab (drinks, a la carte): Section | Item | Description | Allergens | Price | Price note | Section note | Show
   function simpleMenu(rows, food) {
     var groups = groupBy(rows, "section");
@@ -302,7 +333,7 @@ details p { margin-top: 8px; }
       foot.innerHTML = FOOT;
     },
     wine: function (d) {
-      var html = '<p class="note">♢ Wines with unique expressions</p>', nav = [];
+      var html = '<p class="note"><span aria-hidden="true">♢</span> Wines with unique expressions</p>', nav = [];
       groupBy(d.wine, "serve").forEach(function (serve) {
         var sections = groupBy(serve.rows, "section");
         if (/glass/i.test(serve.title)) {
@@ -376,19 +407,26 @@ details p { margin-top: 8px; }
     window.scrollTo(0, 0);
     if (home) { Object.keys(SHEETS).forEach(function (k) { load(k).catch(function () {}); }); return Promise.resolve(); }
 
-    document.querySelectorAll(".tab").forEach(function (b) { b.setAttribute("aria-selected", b.dataset.view === view); });
+    document.querySelectorAll(".tab").forEach(function (b) {
+      if (b.dataset.view === view) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
+    });
     chips.innerHTML = ""; foot.innerHTML = "";
-    var keys = NEEDS[view], pending = setTimeout(function () { body.innerHTML = '<p class="status">Loading menu…</p>'; }, 150);
+    var title = '<h1 class="sr-only" id="view-title" tabindex="-1">' + TITLES[view] + "</h1>";
+    var keys = NEEDS[view], pending = setTimeout(function () { body.innerHTML = title + '<p class="status" role="status">Loading menu…</p>'; }, 150);
     return Promise.all(keys.map(load)).then(function (res) {
       clearTimeout(pending);
       if (state.view !== view) return;
       var d = {}; keys.forEach(function (k, i) { d[k] = res[i]; });
       render[view](d);
+      body.insertAdjacentHTML("afterbegin", title);
+      applySize();
+      // After a tap on a menu, move screen-reader focus to the new menu's title.
+      if (push) { var h = document.getElementById("view-title"); if (h) h.focus({ preventScroll: true }); }
       spy();
     }, function () {
       clearTimeout(pending);
       if (state.view !== view) return;
-      body.innerHTML = '<div class="status"><p>The menu didn’t load. Check your connection, or ask your server.</p><button class="next" type="button" data-retry>Try again</button></div>';
+      body.innerHTML = title + '<div class="status" role="alert"><p>The menu didn’t load. Check your connection, or ask your server.</p><button class="next" type="button" data-retry>Try again</button></div>';
     });
   }
   function rerender() { var y = window.scrollY; show(state.view).then(function () { window.scrollTo(0, y); }); }
@@ -415,6 +453,7 @@ details p { margin-top: 8px; }
       var cr = c.getBoundingClientRect(), r = chips.getBoundingClientRect();
       if (cr.left < r.left || cr.right > r.right) chips.scrollLeft += cr.left - r.left - 8;
     });
+    updateFade();
   }
 
   // ---------- jumping to a section ----------
@@ -449,7 +488,29 @@ details p { margin-top: 8px; }
       return rerender();
     }
     if (t.dataset.courses) { state.courses = +t.dataset.courses; return rerender(); }
+    if (t.hasAttribute("data-key")) {
+      var key = document.getElementById("key");
+      if (key) { key.open = true; key.scrollIntoView({ block: "start" }); key.querySelector("summary").focus({ preventScroll: true }); }
+      return;
+    }
+    if (t.hasAttribute("data-textsize")) {
+      size = (size + 1) % SIZES.length;
+      try { localStorage.setItem("apricity-text", SIZES[size]); } catch (err) {}
+      applySize();
+      $("#announce").textContent = ["Normal text size", "Large text", "Largest text"][size];
+    }
   });
+
+  // ---------- text size ----------
+  // Three steps: normal, large (115%) and largest (132%). The button names the next step and the phone remembers the choice.
+  var SIZES = ["", "text-large", "text-largest"], LABELS = ["Larger text", "Largest text", "Normal text"], size = 0;
+  try { size = Math.max(0, SIZES.indexOf(localStorage.getItem("apricity-text") || "")); } catch (e) {}
+  function applySize() {
+    SIZES.forEach(function (c) { if (c) document.documentElement.classList.toggle(c, c === SIZES[size]); });
+    document.querySelectorAll("[data-textsize]").forEach(function (b) { b.textContent = LABELS[size]; });
+    updateFade();
+  }
+  applySize();
   window.addEventListener("popstate", function () { show(location.hash.slice(1)); });
 
   show(location.hash.slice(1));
