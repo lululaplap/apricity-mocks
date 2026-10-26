@@ -16,7 +16,7 @@ Staff update the menu in a Google Sheet, never in code. The page fetches each ta
 2. File → Share → Publish to web. For each tab, choose the tab and *Comma-separated values (.csv)*, then copy the link.
 3. Paste the links into `SHEETS` at the top of the script in `src/menu.html`, then run `./build.sh`.
 4. For the wine list, point `SHEETS.wine` at the existing wine sheet's published CSV. The page expects the columns *Serve* (Glass/Bottle), *Section*, *Unique* (♢), *Vintage*, *Producer*, *Cuvée*, *Grapes*, *Region*, *Price*, *Glass price* and *Show*. If the existing sheet uses other headings, rename them or change the names in the `wine()` function.
-5. Host `index.html` anywhere static (e.g. Netlify or Cloudflare Pages, on `menu.apricityrestaurant.com`). Point the QR codes at `…/?table=N`.
+5. Host it. The repo root is the site (`index.html`, `sheets/`), so GitHub Pages can serve it as is. Point the QR codes at `https://lululaplap.github.io/apricity-mocks/?table=N`, or at a custom domain such as `menu.apricityrestaurant.com`.
 
 If a sheet can't be reached, the page says the menu didn't load and offers *Try again*. It never shows stale or made-up content.
 
