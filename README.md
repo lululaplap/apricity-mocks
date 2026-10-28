@@ -31,7 +31,7 @@ Staff update the menu in a Google Sheet, never in code. The page fetches each ta
 1. Create a Google Sheet called *Apricity menus*. Import each file from `sheets/` as its own tab (File → Import → Upload → *Insert new sheet*): Drinks, A la carte, Tasting, Kids, Tasting prices, Chefs table, Chefs table details. The wine list already lives in its own sheet.
 2. File → Share → Publish to web. For each tab, choose the tab and *Comma-separated values (.csv)*, then copy the link.
 3. Paste the links into `SHEETS` at the top of the script in `src/menu.html`, then run `./build.sh` (it rebuilds both `index.html` and `chefs-table.html`).
-4. For the wine list, point `SHEETS.wine` at the existing wine sheet's published CSV. The page expects the columns *Serve* (Glass/Bottle), *Section*, *Unique* (♢), *Vintage*, *Producer*, *Cuvée*, *Grapes*, *Region*, *Price*, *Glass price* and *Show*. If the existing sheet uses other headings, rename them or change the names in the `wine()` function.
+4. The wine list is already connected. The live pages read the restaurant's existing published **apricity_wines** sheet as it is (columns *Section*, *Subsection*, *Unique Expression (♢)*, *Vintage*, *Producer*, *Cuvée*, *Grape Varieties*, *Region*, *Bottle Price (£)*, *Glass Price (£)*, *Glass Size*). `build.sh` puts its CSV link into `index.html` and `chefs-table.html`. The preview and local testing read the copy in `sheets/wine.csv` (taken from the sheet on 28 Oct 2026).
 5. Host it. The repo root is the site (`index.html`, `sheets/`), so GitHub Pages can serve it as is. The menu is live at https://lululaplap.github.io/apricity-mocks/.
 6. Keep the existing QR codes. They open apricityrestaurant.com/menus, so move the website's Menus page to a new address and redirect `/menus` to this menu. See *Switching over, and switching back* below.
 
@@ -70,7 +70,7 @@ To keep switching back instant, keep the website's menu pages in Wix up to date 
 
 The starting content in `sheets/` is copied from apricityrestaurant.com (captured 25 Oct 2026): the menus intro, the à la carte, tasting and drinks menus, the allergen key and trace warning, the 13.5% 'Apriciation' note, the 50p School Food Matters donation and the Belu water note.
 
-The wine list (149 wines: by the glass and bottles, with ♢ "unique expression" markers, grapes, regions and sweet-wine glass prices) was extracted from a saved copy of the website's wine-list page.
+The wine list comes from the restaurant's own published wine sheet (148 wines on 28 Oct 2026), the same sheet that feeds the website's wine list, so the two always match.
 
 The Culinary Kids' tasting menu (£36, five courses, up to age 12) was taken from a saved copy of its website page (26 Oct 2026). The website doesn't name its courses, so the course names follow the adult tasting menu.
 

@@ -11,5 +11,8 @@ wrap() {
   cat "$1"
   printf '\n</body>\n</html>\n'
 }
-wrap src/menu.html > index.html
-wrap src/chefs-table.html > chefs-table.html
+# The live pages read the wine list straight from the restaurant's published "apricity_wines" sheet.
+WINE_CSV='https://docs.google.com/spreadsheets/d/e/2PACX-1vSH5PMPgMOSJTzJ3FnKJmZxY3lI0loTNugZsmD6_U7PeT4LHiYJY75BtW-mFIgpeVbuDoZ8x724M6i1/pub?gid=652214147\&single=true\&output=csv'
+live() { sed "s#wine: \"sheets/wine.csv\"#wine: \"$WINE_CSV\"#"; }
+wrap src/menu.html | live > index.html
+wrap src/chefs-table.html | live > chefs-table.html

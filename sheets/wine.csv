@@ -1,150 +1,149 @@
-Serve,Section,Unique,Vintage,Producer,Cuvée,Grapes,Region,Price,Glass price,Show
-Glass,Sparkling,♢,2024,Chateau Le Roc,Roc Ambulle,Negrette,"Fronton, FR",£16,,yes
-Glass,Sparkling,,2020,Roebuck Estates,Classic Cuvée,"Chardonnay, Pinot Noir & Pinot Meunier","Sussex, ENG",£22,,yes
-Glass,Champagne,,2022,Thibaud Brocard,Dits-Lieux,"Pinot Noir, Pinot Blanc & Chardonnay","Champagne, FR",£29,,yes
-Glass,White,♢,NV,Apricity × Wasted Wine Club,Riesling+,,"Mosel, GER",£14,,yes
-Glass,White,,2023,Davenport,Horsmonden,"Bacchus, Ortega+","East Sussex, UK",£15,,yes
-Glass,White,,2025,Mas Foulaquier,L'Oiseau,"Clairette, Grenache Gris, Grenache Blanc & Bourboulenc","Languedoc, FR",£18,,yes
-Glass,White,,2023,Gili,Villo,Grillo,"Sicily, IT",£19,,yes
-Glass,White,,2023,Montanet-Thoden,Vezelay,Chardonnay,"Burgundy, FR",£20,,yes
-Glass,Rosé,,2025,Valérie Courrèges,Le Vent dans les Voiles,"Grenache, Cinsaut","Provence, FR",£16,,yes
-Glass,Skin Contact,♢,2025,Radikon,Pop Bianco,"Malvasia, Ribolla Gialla, Tocai Friulano","Fruili, IT",£20,,yes
-Glass,Red,,2024,Mas du Libian,Bout d'Zan,Grenache & Syrah,"Rhone, FR",£15,,yes
-Glass,Red,,2024,Ferdinando Principiano,Langhe,Nebbiolo,"Piemonte, IT",£17,,yes
-Glass,Red,,2024,Pranzegg,Rosso per tutti,Vernatsch & Lagrein,"Trentino Alto-Adige, IT",£19,,yes
-Glass,Red,,2020,Matthieu Cosse,Fronsac,"Cabernet Sauvignon, Merlot, Cabernet Franc","Bordeaux, FR",£20,,yes
-Glass,Red,,2023,Montanet-Thoden,Garance,Pinot Noir,"Burgundy, FR",£23,,yes
-Bottle,Sparkling,,2021,Entre Vinyes,Funambul Brut Nature,"Macabeo, Parellada, Xarel-lo","Penedes, ESP",£75,,yes
-Bottle,Sparkling,♢,2022,Kamara Estate,Blooming Island,"Assyrtiko, Malagousia & Xinomavro","Thessaloniki, GRE",£95,,yes
-Bottle,Sparkling,♢,2023/2024,Domaine Rietsch,Cremant D'Alsace,"Auxerrois, Chardonnay & Pinot Gris","Alsace, FR",£110,,yes
-Bottle,Sparkling,,2020,Roebuck Estates,Classic Cuvée,"Chardonnay, Pinot Noir & Pinot Meunier","Sussex, ENG",£130,,yes
-Bottle,Sparkling,,NV,Langham Estate,Culver,"Pinot Noir, Chardonnay & Pinot Meunier","Dorset, ENG",£130,,yes
-Bottle,Sparkling,,2015,Staffelter Hof,Brut Sekt,Riesling,"Mosel, GER",£140,,yes
-Bottle,Sparkling,,2015,Roebuck Estates,Rare Expressions No.19,Pinot Noir,"Sussex, ENG",£190,,yes
-Bottle,Champagne,,2022,Thibaud Brocard,Dits-Lieux,"Pinot Noir, Pinot Blanc & Chardonnay","Champagne, FR",£170,,yes
-Bottle,Champagne,,2018,Franck Pascal,Tolérance (Rose),Chardonnay & Pinot Meunier,"Champagne, FR",£220,,yes
-Bottle,Champagne,,NV,Domaine Les Monts Furnois,Côte,Chardonnay,"Champagne, FR",£230,,yes
-Bottle,Champagne,,NV,La Rogerie,Le Burgh Sud,Chardonnay,"Champagne, FR",£245,,yes
-Bottle,Champagne,,2023,Georges Laval,Cumieres Premier Cru Brut Nature,"Pinot Noir, Chardonnay & Pinot Meunier","Champagne, FR",£260,,yes
-Bottle,Champagne,,NV,Vincent Laval,Les Vignes de mon Oncle,"Pinot Noir, Chardonnay & Pinot Meunier","Champagne, FR",£340,,yes
-Bottle,Champagne,,NV (2019 base),Guillame Selosse,Largillier,Pinot Noir,"Champagne, FR",£475,,yes
-Bottle,White — Aromatic & Fresh,♢,NV,Apricity × Wasted Wine Club,Riesling+,,"Mosel, GER",£68,,yes
-Bottle,White — Aromatic & Fresh,♢,2023,Michael Gindl,Michi's Farm,Grüner Veltliner,"Weinviertel, AUT",£72,,yes
-Bottle,White — Aromatic & Fresh,,2023,Davenport,Horsemonden,"Bacchus, Ortega+","East Sussex, UK",£77,,yes
-Bottle,White — Aromatic & Fresh,,2025,Clos du Tue-Beouf,Vin Blanc,Sauvignon Blanc,"Loire, FR",£78,,yes
-Bottle,White — Aromatic & Fresh,,2023,Vignoble de L'Écu,Classic,Melon Blanc,"Loire, FR",£88,,yes
-Bottle,White — Aromatic & Fresh,,2023,Frantz Saumon,Vin de Frantz,Chenin Blanc,"Loire, FR",£93,,yes
-Bottle,White — Aromatic & Fresh,,2025,Josmeyer,Mise du Printemps,Pinot Blanc,"Alsace, FR",£95,,yes
-Bottle,White — Aromatic & Fresh,♢,2023,Titerok-Akaet,Ye-Ye,Malvasia Volcánica,"Lanzarote, ESP",£95,,yes
-Bottle,White — Aromatic & Fresh,,2023,Domaine Rietsch,Vieille Vigne,Sylvaner,"Alsace, FR",£105,,yes
-Bottle,White — Aromatic & Fresh,♢,2023,Ham Street,,"Chardonnay, Bacchus","Kent, UK",£105,,yes
-Bottle,White — Aromatic & Fresh,♢,2024,Alice et Oliver De Moor,Le Meme Azimut,"Riesling, Gewurztraminer, Muscat, Pinot Blanc","Alsace, FR",£100,,yes
-Bottle,White — Aromatic & Fresh,,2023,Montanet-Thoden,Galerne,Chardonnay,"Burgundy, FR",£110,,yes
-Bottle,White — Aromatic & Fresh,♢,2022,Token,Ribolla Gialla,,"Friuli, IT",£110,,yes
-Bottle,White — Aromatic & Fresh,,2024,Domaine Henri Bourgeois,"Sancerre, La Vigne Blanche",Sauvignon Blanc,"Loire, FR",£110,,yes
-Bottle,White — Aromatic & Fresh,,2024,Domaine Giachino,Monfarina,Jacquère,"Savoie, FR",£110,,yes
-Bottle,White — Aromatic & Fresh,,2023,Marie-Pierre Chevassu-Fassenet,Ouille,Savagnin,"Jura, FR",£115,,yes
-Bottle,White — Aromatic & Fresh,♢,2023,Bott Frigyes,Furmint,,"Garam Valley, SK",£115,,yes
-Bottle,White — Aromatic & Fresh,,2024,Domaine Les Enfants Sauvages,Cool Moon,"Grenache Blanc, Maccabeu, Vermentino","Languedoc, FR",£120,,yes
-Bottle,White — Aromatic & Fresh,,2023,Correntin Houillon,Force of Nature,Altesse,"Savoie, FR",£130,,yes
-Bottle,White — Aromatic & Fresh,,2024,Enviante,Palo Blanco,Listan Bianco (Palomino),"Tenerife, ESP",£140,,yes
-Bottle,White — Aromatic & Fresh,,2024,Alberto Nanclares,Albarino,,"Rias Baxias, ESP",£140,,yes
-Bottle,White — Aromatic & Fresh,,2022,Vignes du Maynes,Aligo-Rhythm,Aligoté,"Burgundy, FR",£140,,yes
-Bottle,White — Aromatic & Fresh,♢,2021,Maria & Sepp Muster,Graf,Sauvignon Blanc,"Styria, AUT",£140,,yes
-Bottle,White — Aromatic & Fresh,,2023,R&R Trossen,Madonna Purus,Riesling,"Mosel, GER",£150,,yes
-Bottle,White — Aromatic & Fresh,,2024,Simon Faure,Saint Veran,Chardonnay,"Burgundy, FR",£155,,yes
-Bottle,White — Aromatic & Fresh,♢,2021,Tony Bornard,Au fil des générations,Chardonnay,"Jura, FR",£165,,yes
-Bottle,White — Aromatic & Fresh,♢,2024,Chantereves,Yume Utai,Chardonnay,"Burgundy, FR",£170,,yes
-Bottle,White — Aromatic & Fresh,♢,2024,Chantereves,Bas Des Ees,Aligote,"Burgundy, FR",£180,,yes
-Bottle,White — Aromatic & Fresh,,2023,Philippe Pacalet,Ladoix,Chardonnay,"Burgundy, FR",£255,,yes
-Bottle,White — Round & Textured,,2023,Valdibella Cooperative,Bianco,Cataratto,"Sicily, IT",£45,,yes
-Bottle,White — Round & Textured,,2025,Mas Foulaquier,L'Oiseau,"Clairette, Grenache Gris, Grenache Blanc & Bourboulenc","Languedoc, FR",£87,,yes
-Bottle,White — Round & Textured,,2023,Domaine Tessier,Sables,Romarantin,"Loire, FR",£90,,yes
-Bottle,White — Round & Textured,,2020,Chapel Down,Kit's Coty,Chardonnay,"Kent, ENG",£90,,yes
-Bottle,White — Round & Textured,,2024,Gili,Bislacco,Catarratto,"Sicily, IT",£95,,yes
-Bottle,White — Round & Textured,,2024,Domaine Les Bruyeres,L'Envie,Marsanne,"Rhone, FR",£95,,yes
-Bottle,White — Round & Textured,,2021,Bodegas Moraza,Moraza Dia Sol,Viura,"Rioja, ESP",£98,,yes
-Bottle,White — Round & Textured,,2025,Forjas del Salnés,Leirana,Albariño,"Rías Baixas, ESP",£98,,yes
-Bottle,White — Round & Textured,♢,2022,Strekov 1075,Richard,Chardonnay,"Strekov, SK",£105,,yes
-Bottle,White — Round & Textured,,2023,De Fermo,Don Carlino,Pecorino,"Abruzzo, IT",£110,,yes
-Bottle,White — Round & Textured,♢,2023,Pierre Frick,Chasselas sans soufre,Chasselas,"Alsace, FR",£115,,yes
-Bottle,White — Round & Textured,♢,2023,António Madeira,Vinhas Velhas Branco,Native Varieties,"Dão, PT",£120,,yes
-Bottle,White — Round & Textured,,2022,Blackbook,Painter of Light,Chardonnay,"Essex, UK",£120,,yes
-Bottle,White — Round & Textured,,2023,Selvadolce,Crescendo,Pigato,"Liguria, IT",£130,,yes
-Bottle,White — Round & Textured,,2021,"Johannes Zillinger, Neumen",Fume Blanc,Sauvignon Blanc,"Weinviertel, AUT",£140,,yes
-Bottle,White — Round & Textured,♢,2021,Leon Barral,Le Blanc,"Terret Blanc, Terret Gris & Roussane","Languedoc, FR",£150,,yes
-Bottle,White — Round & Textured,♢,2024,Matassa,Rufo,Macabeo,"Roussillon, FR",£150,,yes
-Bottle,White — Round & Textured,,2022,Pyramid Valley,Chardonnay,,"North Canterbury, NZ",£160,,yes
-Bottle,White — Round & Textured,,2021,Anne et Jean-Francois Ganevat,Victor de la Combe,Chardonnay,"Jura, FR",£180,,yes
-Bottle,White — Round & Textured,♢,2023,La Porte Saint Jean,Les Pouches,Chenin Blanc,"Loire, FR",£190,,yes
-Bottle,White — Round & Textured,♢,2023,Chantereves,Mainbey,Chardonnay,"Burgundy, FR",£230,,yes
-Bottle,White — Round & Textured,♢,2023,Chantereves,Les Monts de Fussey,Chardonnay,"Burgundy, FR",£240,,yes
-Bottle,White — Round & Textured,,2022,Emidio Pepe,Pecorino,,"Abruzzo, IT",£280,,yes
-Bottle,White — Round & Textured,♢,2019,Domaine Miroirs,Sonortie du Vent,Chardonnay,"Jura, FR",£475,,yes
-Bottle,Rosé,,2025,Valérie Courrèges,Le Vent dans les Voiles,"Grenache, Cinsaut","Provence, FR",£79,,yes
-Bottle,Rosé,♢,2021,Azul y Garanza,Naturaleza Salvaje Clarete,Garnacha Blanca & Garnacha,"Navarra, ESP",£84,,yes
-Bottle,Rosé,,2024,Marabino,Rosanera,Nero d'Avola,"Silicy, IT",£85,,yes
-Bottle,Rosé,,2021,Blackbook,I'd Rather Be a Rebel,Pinot Noir,"London, ENG",£98,,yes
-Bottle,Rosé,♢,2023,Sophie Evans,Pinot Pinot,"Pinot Noir, Pinot Gris","Kent, ENG",£114,,yes
-Bottle,Orange / Skin Contact,♢,2023,Ham Street,Field Blend,"Pinot Noir, Pinot Meunier","Kent, UK",£95,,yes
-Bottle,Orange / Skin Contact,♢,2025,Gili,N5,Muscat,"Sicily, IT",£99,,yes
-Bottle,Orange / Skin Contact,♢,2025,Radikon,Pop Bianco,"Malvasia, Ribolla Gialla, Tocai Friulano","Fruili, IT",£105,,yes
-Bottle,Orange / Skin Contact,♢,2024,Matassa,Cuvée Marguerite,"Muscat, Muscat di Alexandria, Macabeo","Roussillon, FR",£130,,yes
-Bottle,Orange / Skin Contact,♢,2024,La Stoppa,Costabosco,Malvasia di Candia Aromatica,"Emilia-Romagna, IT",£130,,yes
-Bottle,Orange / Skin Contact,♢,2022,Weingut Werlitsch,Glück,Sauvignon Blanc,"Styria, AUT",£155,,yes
-Bottle,Orange / Skin Contact,♢,2023,Massa Vecchia,Ariento,Vermentino,"Tuscany, IT",£190,,yes
-Bottle,Red — Soft & Juicy,,2023,Valdibella Cooperative,Rosso,Nero d'Avola,"Sicily, IT",£45,,yes
-Bottle,Red — Soft & Juicy,♢,2017,Syfany,André,,"Moravia, CZ",£55,,yes
-Bottle,Red — Soft & Juicy,♢,2024,I Foresteri,Girotondo,Sangiovese,"Tuscany, IT",£80,,yes
-Bottle,Red — Soft & Juicy,,2024,Domaine Breton,Le Grolleau,Grolleau,"Loire, FR",£82,,yes
-Bottle,Red — Soft & Juicy,♢,2020,Wachter Wiesler,Bela-Joska,Blaufränkisch,"Burgenland, AUT",£94,,yes
-Bottle,Red — Soft & Juicy,♢,2021,Domaine Inebriati,Naia,Carignan,"Languedoc, FR",£95,,yes
-Bottle,Red — Soft & Juicy,,2023,Fedellos,Ax Xaras,Mencia,"Galicia, ESP",£95,,yes
-Bottle,Red — Soft & Juicy,♢,2024,Pranzegg,Rosso per tutti,Vernatsch & Lagrein,"Trentino Alto-Adige, IT",£99,,yes
-Bottle,Red — Soft & Juicy,♢,NV,Milan Nestarec,Postmoderna,Blaufrankisch,"Moravia, CZ",£110,,yes
-Bottle,Red — Soft & Juicy,♢,2023,Etienne Seignovert,Gentil Monstre,Syrah & Merlot,"Ardeche, FR",£110,,yes
-Bottle,Red — Soft & Juicy,♢,2021,Ktima Ligas,XI-RO,Xinomavro,"Pella, GR",£116,,yes
-Bottle,Red — Soft & Juicy,,2021,Christof Ruof,Steingut,Pinot Noir,"Valais, SUI",£120,,yes
-Bottle,Red — Soft & Juicy,♢,2023,Domaine Thillardon,Chenas Vibrations,Gamay,"Beaujolais, FR",£120,,yes
-Bottle,Red — Soft & Juicy,♢,2024,Pierre Frick,Physalis,Pinot Noir,"Alsace, FR",£120,,yes
-Bottle,Red — Soft & Juicy,♢,2022,Walgate Wines,Pinot Meunier,,"East Sussex, UK",£127,,yes
-Bottle,Red — Soft & Juicy,♢,2024,Matassa,River,Syrah,"Rousillon, FR",£130,,yes
-Bottle,Red — Soft & Juicy,♢,2022,Correntin Houillon,Arcane,Pinot Noir,"Savoie, FR",£130,,yes
-Bottle,Red — Soft & Juicy,,2024,Fanny Sabre,Bourgogne XXIV,Pinot Noir,"Burgundy, FR",£140,,yes
-Bottle,Red — Soft & Juicy,♢,2022,Cailloux du Paradis,Racines Rouge,"Pineau d'Aunis, Cot, Gamay +","Loire, FR",£140,,yes
-Bottle,Red — Soft & Juicy,♢,2021,Matassa,French Disko,Cinsault,"Roussillon, FR",£160,,yes
-Bottle,Red — Soft & Juicy,♢,2023,Domaine Dandellion,Sur La Plage,Pinot Noir,"Burgundy, FR",£175,,yes
-Bottle,Red — Soft & Juicy,,2024,Anne et Jean-Francois Ganevat,La Croix des Batailles,Pinot Noir & Gamay,"Jura, FR",£195,,yes
-Bottle,Red — Soft & Juicy,,2024,Chantereves,La Maladerote,Pinot Noir,"Burgundy, FR",£210,,yes
-Bottle,Red — Soft & Juicy,,2024,Chantereves,Dessus De Montchenevoy,Pinot Noir,"Burgundy, FR",£230,,yes
-Bottle,Red — Soft & Juicy,♢,2021,Yann Durieux,Les 1ers Ponts,Pinot Noir,"Burgundy, FR",£280,,yes
-Bottle,Red — Soft & Juicy,,2023,Philippe Pacalet,Nuits-Saint-Georges Village,Pinot Noir,"Burgundy, FR",£310,,yes
-Bottle,Red — Soft & Juicy,,2023,Preurie Roch,VDF Rouge,Pinot Noir,"Burgundy, FR",£310,,yes
-Bottle,Red — Rich & Structured,,2023,Fabrizio Iuli,Umberta,Barbera,"Piemonte, IT",£70,,yes
-Bottle,Red — Rich & Structured,,2024,Mas du Libian,Bout d'Zan,Grenache & Syrah,"Ardèche, FR",£74,,yes
-Bottle,Red — Rich & Structured,♢,NV,Slobodne,Majer 3,Field Blend,"Trnava, SK",£81,,yes
-Bottle,Red — Rich & Structured,,2018,Vino Magula,Baccara,"Dunaj, Frankovka & Rosa","Trnava, SK",£85,,yes
-Bottle,Red — Rich & Structured,,2024,Ferdinando Principiano,Langhe,Nebbiolo,"Piemonte, IT",£90,,yes
-Bottle,Red — Rich & Structured,,2019,Dva Duby,Vox Silentum,Frankovka (Blaufränkisch),"Moravia, CZ",£90,,yes
-Bottle,Red — Rich & Structured,,2021,Clos Fantine,Faugéres Tradition,"Carignan, Grenache, Syrah","Languedoc, FR",£90,,yes
-Bottle,Red — Rich & Structured,,2024,Domaine Breton,Les Beaux Monts,Cabernet Franc,"Loire, FR",£95,,yes
-Bottle,Red — Rich & Structured,,2023,Agricola Foradori,Foradori,Teroldego,"Trentino, IT",£105,,yes
-Bottle,Red — Rich & Structured,,2020,Matthieu Cosse,Fronsac,"Cabernet Sauvignon, Merlot, Malbec, Cabernet Franc","Bordeaux, FR",£105,,yes
-Bottle,Red — Rich & Structured,,2014,Claus Preisinger,Pannobile,"Blaufränkisch, Zweigelt","Burgenland, AUT",£110,,yes
-Bottle,Red — Rich & Structured,,2023,Bott Frigyes,Kékfrankos,Blaufränkisch,"Garam Valley, SK",£115,,yes
-Bottle,Red — Rich & Structured,♢,2022,Cantine Matrone,A Muntagna,Cascaveglia & Piedirosso,"Campania, IT",£120,,yes
-Bottle,Red — Rich & Structured,,2020,Matthieu Dumarcher,Réserve,"Syrah, Grenache & Carignan","Rhône, FR",£120,,yes
-Bottle,Red — Rich & Structured,,2017,Louis Magnin,La Brova,Mondeuse,"Savoie, FR",£130,,yes
-Bottle,Red — Rich & Structured,,2023,La Porte Saint Jean,Saumur-Champigny,Cabernet Franc,"Loire, FR",£155,,yes
-Bottle,Red — Rich & Structured,♢,2023,Dard et Ribo,Crozes-Hermitage Rouge,Syrah,"Rhône, FR",£160,,yes
-Bottle,Red — Rich & Structured,,2020,Fonterenza,Rosso di Montalcino,Sangiovese,"Tuscany, IT",£160,,yes
-Bottle,Red — Rich & Structured,,2019,Olivier Riviere,Ganko,Garanacha & Mazuelo,"Rhône, FR",£160,,yes
-Bottle,Red — Rich & Structured,,2022,Pyramid Valley,Snake's Tongue,Pinot Noir,"Central Otago, NZ",£220,,yes
-Bottle,Red — Rich & Structured,♢,2022,Massa Vecchia,Poggio a'Venti,Sangiovese,"Tuscany, IT",£260,,yes
-Bottle,Red — Rich & Structured,,2021,Philippe Pacalet,Cornas,Syrah,"Rhône, FR",£260,,yes
-Bottle,Sweet & Afters,,2024,L'Archetipo,Moscatello Selvatico,,"Puglia, IT",£80,£15 / 125ml,yes
-Bottle,Sweet & Afters,,NV,Szolo,Dolce,Furmint +,"Tokaj, HUN",£90,£10 / 75ml,yes
-Bottle,Sweet & Afters,,2023,Mas Amiel,Maury Vintage,Grenache,"Rousillon, FR",£118,£12 / 75ml,yes
-Bottle,Sweet & Afters,,2024,La Stoppa,Vino del volta,Malvasia di Candia Aromatica,"Emiglia Romagna, IT",£150,£17 / 75ml,yes
-Bottle,Sweet & Afters,,2022,Domaine de Souch,Cuvee Marie-Kattalyn,Petit Manseng,"Jurancon, FR",£210,£21 / 75ml,yes
-Bottle,Sweet & Afters,♢,2005,Staffelter Hof,Riesling Auslese,Riesling,"Mosel, GER",£85,,yes
+Section,Subsection,Unique Expression (♢),Vintage,Producer,Cuvée,Grape Varieties,Region,Bottle Price (£),Glass Price (£),Glass Size
+By the Glass,Sparkling,yes,2024,Chateau Le Roc,Roc Ambulle,Negrette,"Fronton, FR",16,,
+By the Glass,Sparkling,,2020,Roebuck Estates,Classic Cuvée,"Chardonnay, Pinot Noir & Pinot Meunier","Sussex, ENG",22,,
+By the Glass,Champagne,,2022,Thibaud Brocard,Dits-Lieux,"Pinot Noir, Pinot Blanc & Chardonnay","Champagne, FR",29,,
+By the Glass,White,yes,NV,Apricity × Wasted Wine Club,Riesling+,,"Mosel, GER",14,,
+By the Glass,White,,2023,Davenport,Horsmonden,"Bacchus, Ortega+","East Sussex, UK",15,,
+By the Glass,White,,2025,Mas Foulaquier,L'Oiseau,"Clairette, Grenache Gris, Grenache Blanc & Bourboulenc","Languedoc, FR",18,,
+By the Glass,White,,2023,Gili,Villo,Grillo,"Sicily, IT",19,,
+By the Glass,White,,2023,Montanet-Thoden,Vezelay,Chardonnay,"Burgundy, FR",20,,
+By the Glass,Rosé,,2025,Valérie Courrèges,Le Vent dans les Voiles,"Grenache, Cinsaut","Provence, FR",16,,
+By the Glass,Skin Contact,yes,2025,Radikon,Pop Bianco,"Malvasia, Ribolla Gialla, Tocai Friulano","Fruili, IT",20,,
+By the Glass,Red,,2024,Mas du Libian,Bout d'Zan,Grenache & Syrah,"Rhone, FR",15,,
+By the Glass,Red,,2024,Ferdinando Principiano,Langhe,Nebbiolo,"Piemonte, IT",17,,
+By the Glass,Red,,2024,Pranzegg,Rosso per tutti,Vernatsch & Lagrein,"Trentino Alto-Adige, IT",19,,
+By the Glass,Red,,2020,Matthieu Cosse,Fronsac,"Cabernet Sauvignon, Merlot, Cabernet Franc","Bordeaux, FR",20,,
+Bottles,Sparkling,,2021,Entre Vinyes,Funambul Brut Nature,"Macabeo, Parellada, Xarel-lo","Penedes, ESP",75,,
+Bottles,Sparkling,yes,2022,Kamara Estate,Blooming Island,"Assyrtiko, Malagousia & Xinomavro","Thessaloniki, GRE",95,,
+Bottles,Sparkling,yes,2023/2024,Domaine Rietsch,Cremant D'Alsace,"Auxerrois, Chardonnay & Pinot Gris","Alsace, FR",110,,
+Bottles,Sparkling,,2020,Roebuck Estates,Classic Cuvée,"Chardonnay, Pinot Noir & Pinot Meunier","Sussex, ENG",130,,
+Bottles,Sparkling,,NV,Langham Estate,Culver,"Pinot Noir, Chardonnay & Pinot Meunier","Dorset, ENG",130,,
+Bottles,Sparkling,,2015,Staffelter Hof,Brut Sekt,Riesling,"Mosel, GER",140,,
+Bottles,Sparkling,,2015,Roebuck Estates,Rare Expressions No.19,Pinot Noir,"Sussex, ENG",190,,
+Bottles,Champagne,,2022,Thibaud Brocard,Dits-Lieux,"Pinot Noir, Pinot Blanc & Chardonnay","Champagne, FR",170,,
+Bottles,Champagne,,2018,Franck Pascal,Tolérance (Rose),Chardonnay & Pinot Meunier,"Champagne, FR",220,,
+Bottles,Champagne,,NV,Domaine Les Monts Furnois,Côte,Chardonnay,"Champagne, FR",230,,
+Bottles,Champagne,,NV,La Rogerie,Le Burgh Sud,Chardonnay,"Champagne, FR",245,,
+Bottles,Champagne,,2023,Georges Laval,Cumieres Premier Cru Brut Nature,"Pinot Noir, Chardonnay & Pinot Meunier","Champagne, FR",260,,
+Bottles,Champagne,,NV,Vincent Laval,Les Vignes de mon Oncle,"Pinot Noir, Chardonnay & Pinot Meunier","Champagne, FR",340,,
+Bottles,Champagne,,NV (2019 base),Guillame Selosse,Largillier,Pinot Noir,"Champagne, FR",475,,
+Bottles,White — Aromatic & Fresh,yes,NV,Apricity × Wasted Wine Club,Riesling+,,"Mosel, GER",68,,
+Bottles,White — Aromatic & Fresh,yes,2023,Michael Gindl,Michi's Farm,Grüner Veltliner,"Weinviertel, AUT",72,,
+Bottles,White — Aromatic & Fresh,,2023,Davenport,Horsemonden,"Bacchus, Ortega+","East Sussex, UK",77,,
+Bottles,White — Aromatic & Fresh,,2025,Clos du Tue-Beouf,Vin Blanc,Sauvignon Blanc,"Loire, FR",78,,
+Bottles,White — Aromatic & Fresh,,2023,Vignoble de L'Écu,Classic,Melon Blanc,"Loire, FR",88,,
+Bottles,White — Aromatic & Fresh,,2023,Frantz Saumon,Vin de Frantz,Chenin Blanc,"Loire, FR",93,,
+Bottles,White — Aromatic & Fresh,,2025,Josmeyer,Mise du Printemps,Pinot Blanc,"Alsace, FR",95,,
+Bottles,White — Aromatic & Fresh,yes,2023,Titerok-Akaet,Ye-Ye,Malvasia Volcánica,"Lanzarote, ESP",95,,
+Bottles,White — Aromatic & Fresh,,2023,Domaine Rietsch,Vieille Vigne,Sylvaner,"Alsace, FR",105,,
+Bottles,White — Aromatic & Fresh,yes,2023,Ham Street,,"Chardonnay, Bacchus","Kent, UK",105,,
+Bottles,White — Aromatic & Fresh,yes,2024,Alice et Oliver De Moor,Le Meme Azimut,"Riesling, Gewurztraminer, Muscat, Pinot Blanc","Alsace, FR",100,,
+Bottles,White — Aromatic & Fresh,,2023,Montanet-Thoden,Galerne,Chardonnay,"Burgundy, FR",110,,
+Bottles,White — Aromatic & Fresh,yes,2022,Token,Ribolla Gialla,,"Friuli, IT",110,,
+Bottles,White — Aromatic & Fresh,,2024,Domaine Henri Bourgeois,"Sancerre, La Vigne Blanche",Sauvignon Blanc,"Loire, FR",110,,
+Bottles,White — Aromatic & Fresh,,2024,Domaine Giachino,Monfarina,Jacquère,"Savoie, FR",110,,
+Bottles,White — Aromatic & Fresh,,2023,Marie-Pierre Chevassu-Fassenet,Ouille,Savagnin,"Jura, FR",115,,
+Bottles,White — Aromatic & Fresh,yes,2023,Bott Frigyes,Furmint,,"Garam Valley, SK",115,,
+Bottles,White — Aromatic & Fresh,,2024,Domaine Les Enfants Sauvages,Cool Moon,"Grenache Blanc, Maccabeu, Vermentino","Languedoc, FR",120,,
+Bottles,White — Aromatic & Fresh,,2023,Correntin Houillon,Force of Nature,Altesse,"Savoie, FR",130,,
+Bottles,White — Aromatic & Fresh,,2024,Enviante,Palo Blanco,Listan Bianco (Palomino),"Tenerife, ESP",140,,
+Bottles,White — Aromatic & Fresh,,2024,Alberto Nanclares,Albarino,,"Rias Baxias, ESP",140,,
+Bottles,White — Aromatic & Fresh,,2022,Vignes du Maynes,Aligo-Rhythm,Aligoté,"Burgundy, FR",140,,
+Bottles,White — Aromatic & Fresh,yes,2021,Maria & Sepp Muster,Graf,Sauvignon Blanc,"Styria, AUT",140,,
+Bottles,White — Aromatic & Fresh,,2023,R&R Trossen,Madonna Purus,Riesling,"Mosel, GER",150,,
+Bottles,White — Aromatic & Fresh,,2024,Simon Faure,Saint Veran,Chardonnay,"Burgundy, FR",155,,
+Bottles,White — Aromatic & Fresh,yes,2021,Tony Bornard,Au fil des générations,Chardonnay,"Jura, FR",165,,
+Bottles,White — Aromatic & Fresh,yes,2024,Chantereves,Yume Utai,Chardonnay,"Burgundy, FR",170,,
+Bottles,White — Aromatic & Fresh,yes,2024,Chantereves,Bas Des Ees,Aligote,"Burgundy, FR",180,,
+Bottles,White — Aromatic & Fresh,,2023,Philippe Pacalet,Ladoix,Chardonnay,"Burgundy, FR",255,,
+Bottles,White — Round & Textured,,2023,Valdibella Cooperative,Bianco,Cataratto,"Sicily, IT",45,,
+Bottles,White — Round & Textured,,2025,Mas Foulaquier,L'Oiseau,"Clairette, Grenache Gris, Grenache Blanc & Bourboulenc","Languedoc, FR",87,,
+Bottles,White — Round & Textured,,2023,Domaine Tessier,Sables,Romarantin,"Loire, FR",90,,
+Bottles,White — Round & Textured,,2020,Chapel Down,Kit's Coty,Chardonnay,"Kent, ENG",90,,
+Bottles,White — Round & Textured,,2024,Gili,Bislacco,Catarratto,"Sicily, IT",95,,
+Bottles,White — Round & Textured,,2024,Domaine Les Bruyeres,L'Envie,Marsanne,"Rhone, FR",95,,
+Bottles,White — Round & Textured,,2021,Bodegas Moraza,Moraza Dia Sol,Viura,"Rioja, ESP",98,,
+Bottles,White — Round & Textured,,2025,Forjas del Salnés,Leirana,Albariño,"Rías Baixas, ESP",98,,
+Bottles,White — Round & Textured,yes,2022,Strekov 1075,Richard,Chardonnay,"Strekov, SK",105,,
+Bottles,White — Round & Textured,,2023,De Fermo,Don Carlino,Pecorino,"Abruzzo, IT",110,,
+Bottles,White — Round & Textured,yes,2023,Pierre Frick,Chasselas sans soufre,Chasselas,"Alsace, FR",115,,
+Bottles,White — Round & Textured,yes,2023,António Madeira,Vinhas Velhas Branco,Native Varieties,"Dão, PT",120,,
+Bottles,White — Round & Textured,,2022,Blackbook,Painter of Light,Chardonnay,"Essex, UK",120,,
+Bottles,White — Round & Textured,,2023,Selvadolce,Crescendo,Pigato,"Liguria, IT",130,,
+Bottles,White — Round & Textured,,2021,"Johannes Zillinger, Neumen",Fume Blanc,Sauvignon Blanc,"Weinviertel, AUT",140,,
+Bottles,White — Round & Textured,yes,2021,Leon Barral,Le Blanc,"Terret Blanc, Terret Gris & Roussane","Languedoc, FR",150,,
+Bottles,White — Round & Textured,yes,2024,Matassa,Rufo,Macabeo,"Roussillon, FR",150,,
+Bottles,White — Round & Textured,,2022,Pyramid Valley,Chardonnay,,"North Canterbury, NZ",160,,
+Bottles,White — Round & Textured,,2021,Anne et Jean-Francois Ganevat,Victor de la Combe,Chardonnay,"Jura, FR",180,,
+Bottles,White — Round & Textured,yes,2023,La Porte Saint Jean,Les Pouches,Chenin Blanc,"Loire, FR",190,,
+Bottles,White — Round & Textured,yes,2023,Chantereves,Mainbey,Chardonnay,"Burgundy, FR",230,,
+Bottles,White — Round & Textured,yes,2023,Chantereves,Les Monts de Fussey,Chardonnay,"Burgundy, FR",240,,
+Bottles,White — Round & Textured,,2022,Emidio Pepe,Pecorino,,"Abruzzo, IT",280,,
+Bottles,White — Round & Textured,yes,2019,Domaine Miroirs,Sonortie du Vent,Chardonnay,"Jura, FR",475,,
+Bottles,Rosé,,2025,Valérie Courrèges,Le Vent dans les Voiles,"Grenache, Cinsaut","Provence, FR",79,,
+Bottles,Rosé,yes,2021,Azul y Garanza,Naturaleza Salvaje Clarete,Garnacha Blanca & Garnacha,"Navarra, ESP",84,,
+Bottles,Rosé,,2024,Marabino,Rosanera,Nero d'Avola,"Silicy, IT",85,,
+Bottles,Rosé,,2021,Blackbook,I'd Rather Be a Rebel,Pinot Noir,"London, ENG",98,,
+Bottles,Rosé,yes,2023,Sophie Evans,Pinot Pinot,"Pinot Noir, Pinot Gris","Kent, ENG",114,,
+Bottles,Orange / Skin Contact,yes,2023,Ham Street,Field Blend,"Pinot Noir, Pinot Meunier","Kent, UK",95,,
+Bottles,Orange / Skin Contact,yes,2025,Gili,N5,Muscat,"Sicily, IT",99,,
+Bottles,Orange / Skin Contact,yes,2025,Radikon,Pop Bianco,"Malvasia, Ribolla Gialla, Tocai Friulano","Fruili, IT",105,,
+Bottles,Orange / Skin Contact,yes,2024,Matassa,Cuvée Marguerite,"Muscat, Muscat di Alexandria, Macabeo","Roussillon, FR",130,,
+Bottles,Orange / Skin Contact,yes,2024,La Stoppa,Costabosco,Malvasia di Candia Aromatica,"Emilia-Romagna, IT",130,,
+Bottles,Orange / Skin Contact,yes,2022,Weingut Werlitsch,Glück,Sauvignon Blanc,"Styria, AUT",155,,
+Bottles,Orange / Skin Contact,yes,2023,Massa Vecchia,Ariento,Vermentino,"Tuscany, IT",190,,
+Bottles,Red — Soft & Juicy,,2023,Valdibella Cooperative,Rosso,Nero d'Avola,"Sicily, IT",45,,
+Bottles,Red — Soft & Juicy,yes,2017,Syfany,André,,"Moravia, CZ",55,,
+Bottles,Red — Soft & Juicy,yes,2024,I Foresteri,Girotondo,Sangiovese,"Tuscany, IT",80,,
+Bottles,Red — Soft & Juicy,,2024,Domaine Breton,Le Grolleau,Grolleau,"Loire, FR",82,,
+Bottles,Red — Soft & Juicy,yes,2020,Wachter Wiesler,Bela-Joska,Blaufränkisch,"Burgenland, AUT",94,,
+Bottles,Red — Soft & Juicy,yes,2021,Domaine Inebriati,Naia,Carignan,"Languedoc, FR",95,,
+Bottles,Red — Soft & Juicy,,2023,Fedellos,Ax Xaras,Mencia,"Galicia, ESP",95,,
+Bottles,Red — Soft & Juicy,yes,2024,Pranzegg,Rosso per tutti,Vernatsch & Lagrein,"Trentino Alto-Adige, IT",99,,
+Bottles,Red — Soft & Juicy,yes,NV,Milan Nestarec,Postmoderna,Blaufrankisch,"Moravia, CZ",110,,
+Bottles,Red — Soft & Juicy,yes,2023,Etienne Seignovert,Gentil Monstre,Syrah & Merlot,"Ardeche, FR",110,,
+Bottles,Red — Soft & Juicy,yes,2021,Ktima Ligas,XI-RO,Xinomavro,"Pella, GR",116,,
+Bottles,Red — Soft & Juicy,,2021,Christof Ruof,Steingut,Pinot Noir,"Valais, SUI",120,,
+Bottles,Red — Soft & Juicy,yes,2023,Domaine Thillardon,Chenas Vibrations,Gamay,"Beaujolais, FR",120,,
+Bottles,Red — Soft & Juicy,yes,2024,Pierre Frick,Physalis,Pinot Noir,"Alsace, FR",120,,
+Bottles,Red — Soft & Juicy,yes,2022,Walgate Wines,Pinot Meunier,,"East Sussex, UK",127,,
+Bottles,Red — Soft & Juicy,yes,2024,Matassa,River,Syrah,"Rousillon, FR",130,,
+Bottles,Red — Soft & Juicy,yes,2022,Correntin Houillon,Arcane,Pinot Noir,"Savoie, FR",130,,
+Bottles,Red — Soft & Juicy,,2024,Fanny Sabre,Bourgogne XXIV,Pinot Noir,"Burgundy, FR",140,,
+Bottles,Red — Soft & Juicy,yes,2022,Cailloux du Paradis,Racines Rouge,"Pineau d'Aunis, Cot, Gamay +","Loire, FR",140,,
+Bottles,Red — Soft & Juicy,yes,2021,Matassa,French Disko,Cinsault,"Roussillon, FR",160,,
+Bottles,Red — Soft & Juicy,yes,2023,Domaine Dandellion,Sur La Plage,Pinot Noir,"Burgundy, FR",175,,
+Bottles,Red — Soft & Juicy,,2024,Anne et Jean-Francois Ganevat,La Croix des Batailles,Pinot Noir & Gamay,"Jura, FR",195,,
+Bottles,Red — Soft & Juicy,,2024,Chantereves,La Maladerote,Pinot Noir,"Burgundy, FR",210,,
+Bottles,Red — Soft & Juicy,,2024,Chantereves,Dessus De Montchenevoy,Pinot Noir,"Burgundy, FR",230,,
+Bottles,Red — Soft & Juicy,yes,2021,Yann Durieux,Les 1ers Ponts,Pinot Noir,"Burgundy, FR",280,,
+Bottles,Red — Soft & Juicy,,2023,Philippe Pacalet,Nuits-Saint-Georges Village,Pinot Noir,"Burgundy, FR",310,,
+Bottles,Red — Soft & Juicy,,2023,Preurie Roch,VDF Rouge,Pinot Noir,"Burgundy, FR",310,,
+Bottles,Red — Rich & Structured,,2023,Fabrizio Iuli,Umberta,Barbera,"Piemonte, IT",70,,
+Bottles,Red — Rich & Structured,,2024,Mas du Libian,Bout d'Zan,Grenache & Syrah,"Ardèche, FR",74,,
+Bottles,Red — Rich & Structured,yes,NV,Slobodne,Majer 3,Field Blend,"Trnava, SK",81,,
+Bottles,Red — Rich & Structured,,2018,Vino Magula,Baccara,"Dunaj, Frankovka & Rosa","Trnava, SK",85,,
+Bottles,Red — Rich & Structured,,2024,Ferdinando Principiano,Langhe,Nebbiolo,"Piemonte, IT",90,,
+Bottles,Red — Rich & Structured,,2019,Dva Duby,Vox Silentum,Frankovka (Blaufränkisch),"Moravia, CZ",90,,
+Bottles,Red — Rich & Structured,,2021,Clos Fantine,Faugéres Tradition,"Carignan, Grenache, Syrah","Languedoc, FR",90,,
+Bottles,Red — Rich & Structured,,2024,Domaine Breton,Les Beaux Monts,Cabernet Franc,"Loire, FR",95,,
+Bottles,Red — Rich & Structured,,2023,Agricola Foradori,Foradori,Teroldego,"Trentino, IT",105,,
+Bottles,Red — Rich & Structured,,2020,Matthieu Cosse,Fronsac,"Cabernet Sauvignon, Merlot, Malbec, Cabernet Franc","Bordeaux, FR",105,,
+Bottles,Red — Rich & Structured,,2014,Claus Preisinger,Pannobile,"Blaufränkisch, Zweigelt","Burgenland, AUT",110,,
+Bottles,Red — Rich & Structured,,2023,Bott Frigyes,Kékfrankos,Blaufränkisch,"Garam Valley, SK",115,,
+Bottles,Red — Rich & Structured,yes,2022,Cantine Matrone,A Muntagna,Cascaveglia & Piedirosso,"Campania, IT",120,,
+Bottles,Red — Rich & Structured,,2020,Matthieu Dumarcher,Réserve,"Syrah, Grenache & Carignan","Rhône, FR",120,,
+Bottles,Red — Rich & Structured,,2017,Louis Magnin,La Brova,Mondeuse,"Savoie, FR",130,,
+Bottles,Red — Rich & Structured,,2023,La Porte Saint Jean,Saumur-Champigny,Cabernet Franc,"Loire, FR",155,,
+Bottles,Red — Rich & Structured,yes,2023,Dard et Ribo,Crozes-Hermitage Rouge,Syrah,"Rhône, FR",160,,
+Bottles,Red — Rich & Structured,,2020,Fonterenza,Rosso di Montalcino,Sangiovese,"Tuscany, IT",160,,
+Bottles,Red — Rich & Structured,,2019,Olivier Riviere,Ganko,Garanacha & Mazuelo,"Rhône, FR",160,,
+Bottles,Red — Rich & Structured,,2022,Pyramid Valley,Snake's Tongue,Pinot Noir,"Central Otago, NZ",220,,
+Bottles,Red — Rich & Structured,yes,2022,Massa Vecchia,Poggio a'Venti,Sangiovese,"Tuscany, IT",260,,
+Bottles,Red — Rich & Structured,,2021,Philippe Pacalet,Cornas,Syrah,"Rhône, FR",260,,
+Bottles,Sweet & Afters,,2024,L'Archetipo,Moscatello Selvatico,,"Puglia, IT",80,15,125ml
+Bottles,Sweet & Afters,,NV,Szolo,Dolce,Furmint +,"Tokaj, HUN",90,10,75ml
+Bottles,Sweet & Afters,,2023,Mas Amiel,Maury Vintage,Grenache,"Rousillon, FR",118,12,75ml
+Bottles,Sweet & Afters,,2024,La Stoppa,Vino del volta,Malvasia di Candia Aromatica,"Emiglia Romagna, IT",150,17,75ml
+Bottles,Sweet & Afters,,2022,Domaine de Souch,Cuvee Marie-Kattalyn,Petit Manseng,"Jurancon, FR",210,21,75ml
+Bottles,Sweet & Afters,yes,2005,Staffelter Hof,Riesling Auslese,Riesling,"Mosel, GER",85,,

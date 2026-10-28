@@ -228,6 +228,7 @@ details dd { margin: 0; }
     kids: "sheets/kids.csv",
     chefs: "sheets/chefs-table.csv",
     chefsDetails: "sheets/chefs-table-details.csv",
+    // The restaurant's existing wine sheet. build.sh points the live pages at it; the preview reads a copy.
     wine: "sheets/wine.csv"
   };
   var NEEDS = { drinks: ["drinks"], wine: ["wine"], alacarte: ["alacarte"], tasting: ["tasting", "tastingPrices", "kids"], chefs: ["chefs", "chefsDetails"] };
@@ -327,6 +328,13 @@ details dd { margin: 0; }
       (priceNote ? "<small>" + esc(priceNote) + "</small>" : "") + "</span>" + (desc ? '<p class="desc">' + esc(desc) + "</p>" : "") + "</li>";
   }
   function rowItem(r) { return item(r.item || r.dish, r.allergens, r.price, r["price note"], r.description); }
+  // The wine list is the restaurant's existing "apricity_wines" sheet, used as it is: Section (By the Glass / Bottles),
+  // Subsection, Unique Expression (♢), Vintage, Producer, Cuvée, Grape Varieties, Region, Bottle Price (£), Glass Price (£), Glass Size.
+  function wineRow(r) {
+    var glass = r["glass price (£)"] ? money(r["glass price (£)"]) + (r["glass size"] ? " / " + r["glass size"] : "") : "";
+    return { serve: r.section, section: r.subsection, unique: r["unique expression (♢)"], vintage: r.vintage, producer: r.producer,
+      "cuvée": r["cuvée"], grapes: r["grape varieties"], region: r.region, price: r["bottle price (£)"], "glass price": glass };
+  }
   function wine(w) {
     var unique = w.unique && !/^(no|n)$/i.test(w.unique);
     return '<li class="item"><span class="name">' + (unique ? '<span aria-hidden="true">♢ </span><span class="sr-only">Unique expression: </span>' : "") + '<span class="vin">' + esc(w.vintage) + "</span> " + esc(w.producer) +
@@ -378,7 +386,7 @@ details dd { margin: 0; }
     },
     wine: function (d) {
       var html = '<p class="note"><span aria-hidden="true">♢</span> Wines with unique expressions</p>', nav = [];
-      groupBy(d.wine, "serve").forEach(function (serve) {
+      groupBy(d.wine.map(wineRow), "serve").forEach(function (serve) {
         var sections = groupBy(serve.rows, "section");
         if (/glass/i.test(serve.title)) {
           nav.push(["glass", "By the glass"]);
