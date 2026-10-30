@@ -25,6 +25,7 @@
   --rule-strong: rgba(0, 0, 0, 0.55);
   --font: "Josefin Sans", "Brandon Grotesque", "Futura", "Century Gothic", sans-serif;
   --tap: 44px;
+  --brand: #034852;         /* logo teal, from the logo pack: 6.7:1 on the peach */
   /* Always the website's peach look: no dark mode, and browsers are asked not to auto-darken it. */
   color-scheme: only light;
 }
@@ -60,14 +61,18 @@ button { font: inherit; color: inherit; letter-spacing: inherit; }
 /* ---------- header ---------- */
 .top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--page); border-bottom: 1px solid var(--rule-strong); }
 .brandrow { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 8px 0; }
-.wordmark { font-size: 1.375rem; letter-spacing: 0.24em; line-height: 1; min-height: var(--tap); background: none; border: 0; padding: 0; cursor: pointer; }
+.wordmark { min-height: var(--tap); background: none; border: 0; padding: 0; cursor: pointer; display: flex; align-items: center; }
+/* The logo is a 1.8KB vector traced from the logo pack and drawn once in the page, so it adds no download and stays sharp at any text size. */
+.logo { display: block; aspect-ratio: 5839 / 821; height: auto; fill: var(--brand); }
+.wordmark .logo { width: 9.75rem; }
 
 /* ---------- splash ---------- */
 .splash {
   min-height: calc(100svh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
   display: grid; align-content: center; gap: 40px; text-align: center; padding-block: 40px;
 }
-.splash h1 { margin: 0; font-weight: 400; font-size: 2.25rem; letter-spacing: 0.3em; margin-right: -0.3em; line-height: 1; }
+.splash h1 { margin: 0; display: flex; justify-content: center; }
+.splash h1 .logo { width: min(17.5rem, 78vw); }
 .links { display: grid; border-top: 1px solid var(--rule-strong); }
 .links button {
   border: 0; border-bottom: 1px solid var(--rule-strong); background: none; padding: 20px 0 18px; cursor: pointer;
@@ -218,10 +223,12 @@ details dd { margin: 0; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
 </style>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="apricity-logo" viewBox="0 0 5839 821"><path fill-rule="evenodd" d="M3435 .7c-175.3 10.7-318.3 122-368 286.3a453 453 0 0 0-4 231.5 399 399 0 0 0 310.5 293c109.8 22 225.6 2.4 314-53 14.4-9 30.5-20.5 30.5-21.8 0-.8-24.2-41.2-25.5-42.5-.2-.2-4 2.6-8.6 6-94.6 72.6-245.5 89.5-362.4 40.6-146.2-61.1-228.8-206.3-211.9-372.6C3127.2 195 3259.4 66.6 3434.4 53c92-7.1 182.3 16.7 247.1 65.3 5.7 4.2 10.6 7.7 10.8 7.7s2-2.6 4-5.7c1.8-3.2 7.7-12.8 13-21.5l9.6-15.6-11.4-8.1C3631.9 21.2 3534.7-5.4 3435 .7M309.5 15.3 154.7 410.5.4 804.5l28 .3c15.3.1 28.1 0 28.3-.2.3-.3 23.8-60.9 52.3-134.8l51.8-134.3h347.5l51.6 134.7L611.5 805h28.4c26.6 0 28.3-.1 27.7-1.7L512.8 407.8 358.6 14h-24.3c-18.6 0-24.5.3-24.8 1.3M1022 409.5V805h52l.2-171.2.3-171.3 86.5-.6c82.9-.5 87-.6 100.5-2.7 127.2-20.2 201.9-108.2 198.2-233.7C1456 100.5 1373 23.1 1234 15c-9.6-.5-61.3-1-114.7-1H1022zm808 0V805h52l.2-170.7.3-170.8h103l127.8 169 129 170.8c1.1 1.6 3.5 1.7 34.4 1.5l33.3-.3-131.5-172A33284 33284 0 0 1 2047 459.9c0-.3 4.1-1 9.2-1.3 20.2-1.5 50.5-8.1 69.4-15.1 81.8-30.3 133.5-97.4 141.3-183.5 11.4-124.2-55.6-214.6-176.9-239-30.7-6.2-33-6.3-151.7-6.7l-108.3-.4zm813 .1V805h52V14h-52zm1415 0V805h52V14h-52zm359.7-394.8c-.4.3-.7 11.4-.7 24.5V63h252v742h52V63h252V14h-277.3c-152.6 0-277.7.3-278 .7m833.2 1.2L5385 241l133 223.4V805h53V464.1l133.5-224A34585 34585 0 0 0 5838 15c0-.7-11.3-1-31.2-.8l-31.3.3L5660 210.7c-109.8 186.6-115.6 196.1-117 194-.8-1.1-52.8-89.4-115.6-196.1l-114-194.1-31.8-.3c-30.8-.2-31.7-.2-30.7 1.7M1074.2 237.2l.3 179.3 66.5.3c69.8.3 89.1-.4 110-3.9 100.3-17 161.1-89.7 156.6-187-4.2-91.1-59.7-148.3-160.6-165.6-8-1.3-21.7-1.6-91.3-2l-81.7-.4zm808 0 .3 179.3h76c82.8 0 87.4-.3 113.5-6.1a222 222 0 0 0 74-32.1c48.9-34.8 74.3-93.2 69.2-159.1-6.7-87.1-62.3-143-157.7-158.5-12.3-2-17.3-2.1-94.3-2.4l-81.2-.4zM331 91 179.3 487.3c-.5 1.6 7.4 1.7 155.2 1.7s155.7 0 155.3-1.7L335 84.6c-.6-1.6-1.5-.1-4 6.4"/></symbol></svg>
+
 <header class="top">
   <div class="wrap">
     <div class="brandrow">
-      <button class="wordmark" id="home" type="button" aria-label="Apricity, back to all menus">APRICITY</button>
+      <button class="wordmark" id="home" type="button" aria-label="Apricity, back to all menus"><svg class="logo" aria-hidden="true" focusable="false"><use href="#apricity-logo"/></svg></button>
     </div>
     <nav class="tabs" aria-label="Menus">
       <div class="group">
@@ -239,7 +246,7 @@ details dd { margin: 0; }
 </header>
 
 <main class="splash wrap" id="splash" hidden>
-  <h1>APRICITY</h1>
+  <h1><svg class="logo" role="img" aria-label="Apricity"><use href="#apricity-logo"/></svg></h1>
   <div class="event" data-mode="chefs">
     <p class="event-welcome" id="event-welcome">Chefs’ table</p>
     <p class="event-date" id="event-date"></p>
