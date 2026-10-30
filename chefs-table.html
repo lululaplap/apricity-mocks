@@ -174,6 +174,7 @@ main:focus { outline: none; }
 .seg small { font-size: 0.875rem; color: var(--mid); }
 .seg button[aria-pressed="true"] { background: var(--ink); color: var(--page); }
 .seg button[aria-pressed="true"] small { color: var(--page); }
+.choose { margin: 16px 0 0; font-size: 1.125rem; font-weight: 600; }
 .opts { list-style: none; margin: 0; padding: 0; }
 .extra {
   display: inline-block; margin-left: 8px; padding: 3px 10px 1px; border: 1px solid var(--ink); border-radius: 999px;
@@ -511,8 +512,8 @@ details dd { margin: 0; }
         var sub = m.kids ? m.r.note : m.r["lunch & early evening"] && "Lunch & early evening " + money(m.r["lunch & early evening"]) + "*";
         return '<button type="button" data-courses="' + m.id + '" aria-pressed="' + (state.courses === m.id) + '"><span class="caps">' +
           (m.kids ? "Kids" : m.id + " courses") + '</span><span class="big">' + esc(money(m.r.price)) + "</span>" + (sub ? "<small>" + esc(sub) + "</small>" : "") + "</button>";
-      }).join("") + '</div><p class="note">' + (cur.kids ? "Choose one dish per course. We can cater for most dietary needs, so please ask your server."
-        : "*Lunch &amp; pre-booked early dinner, groups up to 6. Choose one dish per course.") + "</p>";
+      }).join("") + '</div><p class="note">' + (cur.kids ? "We can cater for most dietary needs, so please ask your server."
+        : "*Lunch &amp; pre-booked early dinner, groups up to 6.") + "</p>";
 
       // Priced groups (bread, sides) sit where they are in the sheet: above the first course they come before the
       // courses, below it they come after the pairings.
@@ -541,7 +542,9 @@ details dd { margin: 0; }
         html += section(slug(g.title), g.title, list(plantFilter(g.rows).map(rowItem)));
       });
       nav.push(["courses", "Courses"]);
-      html += section("courses", cur.kids ? "Culinary Kids’ menu" : state.courses + "-course menu", courses);
+      // The one instruction guests need, on its own line where the choosing starts.
+      html += section("courses", cur.kids ? "Culinary Kids’ menu" : state.courses + "-course menu",
+        '<p class="choose">Choose one dish from each course</p>' + courses);
       var nonAlcoholic = sel["non-alcoholic pairing"] || sel["alcohol-free pairing"];  // older sheets used "Alcohol-free"
       if (!cur.kids && (sel["wine pairing"] || nonAlcoholic)) {
         nav.push(["pairings", "Drinks pairing"]);
