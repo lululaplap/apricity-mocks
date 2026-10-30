@@ -415,8 +415,8 @@ details dd { margin: 0; }
   // A plain menu tab (drinks, a la carte): Section | Item | Description | Allergens | Price | Price note | Section note | Show
   // Rows with no Section (or Course) in the sheet, like the bread, sit at the top with no heading and no button.
   function notice(r) {
-    return '<div class="notice"><p class="notice-head"><span class="name">' + esc(r.item) + '</span><span class="price">' + esc(money(r.price || "")) +
-      (r["price note"] ? " <small>" + esc(r["price note"]) + "</small>" : "") + "</span></p>" + (r.description ? '<p class="desc">' + esc(r.description) + "</p>" : "") + "</div>";
+    return '<div class="notice"><p class="notice-head"><span class="name">' + esc(r.item) + "</span>" + (r.price ? '<span class="price">' + esc(money(r.price)) +
+      (r["price note"] ? " <small>" + esc(r["price note"]) + "</small>" : "") + "</span>" : "") + "</p>" + (r.description ? '<p class="desc">' + esc(r.description) + "</p>" : "") + "</div>";
   }
   function untitled(rows) { return rows.length ? '<div class="section untitled">' + list(rows.map(rowItem)) + "</div>" : ""; }
   function simpleMenu(rows, food) {
