@@ -160,8 +160,13 @@ main:focus { outline: none; }
 .seg button[aria-pressed="true"] { background: var(--ink); color: var(--page); }
 .seg button[aria-pressed="true"] small { color: var(--page); }
 .opts { list-style: none; margin: 0; padding: 0; }
-.opts li { padding: 14px 0; border-bottom: 1px solid var(--rule); font-weight: 600; }
-.opts li:last-child { border-bottom: 0; }
+.opts li { padding: 12px 0; font-weight: 600; }
+.opts li + li { padding-top: 4px; }
+.opts .or {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 12px;
+  font-size: 0.875rem; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; color: var(--light);
+}
+.opts .or::before, .opts .or::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
 .opts .desc { display: block; color: var(--mid); font-size: 0.9375rem; font-weight: 400; }
 
 /* cross-link between drinks and food */
@@ -482,8 +487,9 @@ details dd { margin: 0; }
           return;
         }
         // A course with one dish (the pre dessert) is served to everyone, so the plant-based filter leaves it alone.
-        courses += '<h3 class="caps">' + esc(g.title) + '</h3><ul class="opts">' + (g.rows.length > 1 ? plantFilter(g.rows) : g.rows).map(function (r) {
-          return "<li>" + esc(r.dish) + codes(r.allergens) + (r.supplement ? ' <span class="codes">+' + esc(money(r.supplement)) + "</span>" : "") + "</li>";
+        courses += '<h3 class="caps">' + esc(g.title) + '</h3><ul class="opts">' + (g.rows.length > 1 ? plantFilter(g.rows) : g.rows).map(function (r, i) {
+          // "or" between a course's dishes makes the choice obvious, and is read out by screen readers too.
+          return "<li>" + (i ? '<span class="or">or </span>' : "") + esc(r.dish) + codes(r.allergens) + (r.supplement ? ' <span class="codes">+' + esc(money(r.supplement)) + "</span>" : "") + "</li>";
         }).join("") + "</ul>";
       });
       var nav = [["courses", "Courses"]];
