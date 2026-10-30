@@ -15,17 +15,18 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600&display=swap">
 <style>
 /* Layout: a bare splash (wordmark + four menu links) leads to the menus: one sticky header (wordmark, four tabs, section chips) over a single peach column.
-   Readability floor for older guests: no text under 14px, regular weight or heavier, contrast of at least 6:1, tap targets of at least 44px. */
+   Readability floor for older guests: no text under 14px, regular weight or heavier, contrast of at least 6.7:1, tap targets of at least 44px.
+   Colours come from the logo: its teal is the text colour, and the greys are teal-tinted to match. */
 :root {
   --page: #F9C6BA;          /* apricityrestaurant.com peach */
-  --ink: #000000;           /* 14:1 on peach */
-  --mid: #333333;           /* 8:1 on peach */
-  --light: #45403F;         /* 6.6:1 on peach */
-  --rule: rgba(0, 0, 0, 0.18);
-  --rule-strong: rgba(0, 0, 0, 0.55);
+  --ink: #034852;           /* logo teal: 6.73:1 on peach */
+  --mid: #2B4447;           /* teal-grey for descriptions: 6.84:1 */
+  --light: #354345;         /* quieter grey for notes and allergen codes: 6.77:1 */
+  --rule: rgba(3, 72, 82, 0.22);        /* faint lines between items (decorative) */
+  --rule-strong: rgba(3, 72, 82, 0.7);  /* button outlines and section lines: 3.65:1, above the 3:1 needed */
   --font: "Josefin Sans", "Brandon Grotesque", "Futura", "Century Gothic", sans-serif;
   --tap: 44px;
-  --brand: #034852;         /* logo teal, from the logo pack: 6.7:1 on the peach */
+  --brand: var(--ink);      /* the logo is drawn in the same teal */
   /* Always the website's peach look: no dark mode, and browsers are asked not to auto-darken it. */
   color-scheme: only light;
 }
@@ -183,7 +184,7 @@ main:focus { outline: none; }
 .opts { list-style: none; margin: 0; padding: 0; }
 .extra {
   display: inline-block; margin-left: 8px; padding: 3px 10px 1px; border: 1px solid var(--ink); border-radius: 999px;
-  color: var(--ink); font-size: 0.8125rem; letter-spacing: 0.1em; white-space: nowrap; vertical-align: 0.05em;
+  color: var(--ink); font-size: 0.875rem; letter-spacing: 0.08em; white-space: nowrap; vertical-align: 0.05em;
 }
 .opts li { padding: 12px 0; font-weight: 600; }
 .opts li + li { padding-top: 4px; }
@@ -208,7 +209,7 @@ main:focus { outline: none; }
 .foot p { margin: 0; }
 .foot .fine-print { text-align: left; line-height: 1.65; }
 .foot .fine-print strong { color: var(--ink); font-weight: 600; }
-.foot .fine-print a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.foot .fine-print a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; padding-block: 14px; margin-block: -14px; } /* a 44px-tall tap area without moving the text */
 .foot .textsize { justify-self: center; }
 details { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 160px); }
 summary { cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.875rem; color: var(--ink); min-height: var(--tap); display: flex; align-items: center; }
