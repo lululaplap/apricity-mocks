@@ -319,7 +319,7 @@ details dd { margin: 0; }
   function groupBy(rows, key) {
     var out = [], idx = {};
     rows.forEach(function (r) {
-      var k = r[key] || "Other";
+      var k = r[key] || "";
       if (!(k in idx)) { idx[k] = out.length; out.push({ title: k, rows: [] }); }
       out[idx[k]].rows.push(r);
     });
@@ -402,14 +402,17 @@ details dd { margin: 0; }
   chips.addEventListener("scroll", updateFade, { passive: true });
   window.addEventListener("resize", updateFade);
   // A plain menu tab (drinks, a la carte): Section | Item | Description | Allergens | Price | Price note | Section note | Show
+  // Rows with no Section (or Course) in the sheet, like the bread, sit at the top with no heading and no button.
+  function untitled(rows) { return rows.length ? '<div class="section untitled">' + list(rows.map(rowItem)) + "</div>" : ""; }
   function simpleMenu(rows, food) {
     var groups = groupBy(rows, "section");
     var html = groups.map(function (g) {
       var shown = food ? plantFilter(g.rows) : g.rows;
+      if (!g.title) return untitled(shown);
       var note = (g.rows.filter(function (r) { return r["section note"]; })[0] || {})["section note"];
       return section(slug(g.title), g.title, shown.length ? list(shown.map(rowItem)) : '<p class="empty">No plant-based ' + esc(g.title.toLowerCase()) + " today.</p>", note);
     }).join("");
-    setChips(groups.map(function (g) { return [slug(g.title), g.title]; }), food);
+    setChips(groups.filter(function (g) { return g.title; }).map(function (g) { return [slug(g.title), g.title]; }), food);
     return html;
   }
 
@@ -496,6 +499,7 @@ details dd { margin: 0; }
       });
       var nav = [];
       before.forEach(function (g) {
+        if (!g.title) { html += untitled(plantFilter(g.rows)); return; }
         nav.push([slug(g.title), g.title]);
         html += section(slug(g.title), g.title, list(plantFilter(g.rows).map(rowItem)));
       });

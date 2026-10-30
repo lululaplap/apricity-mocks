@@ -27,6 +27,8 @@ The menu guests see after scanning the QR code is read from the **Apricity menus
 
 **Add a new section** (for example "Snacks"). Type the new name in the *Section* column. Sections appear in the order they first appear in the sheet.
 
+**Something at the top with no heading** (like the bread). Leave its *Section* (or, on the Tasting tab, *Course*) empty and put the row first. It shows above the first section, with no heading and no button.
+
 **Allergens.** Use the codes from the printed menu, separated by commas, for example `P-B, Mu`. Any dish with `P-B` appears when guests turn on the *Plant-based* filter.
 
 ## Setting up the Chefs' Table for a booking
@@ -60,7 +62,7 @@ The menu guests see after scanning the QR code is read from the **Apricity menus
 | Supplement | Extra charge for this choice | 14 |
 | Courses | `Both`, or `7 only` for courses served only on the 7-course menu | 7 only |
 | Add to 5-course | For a 7-only course that 5-course guests can add, the price | 8 |
-| Description, Price | Only for priced extras such as *Bread* and *Add on the side*. Rows above the first course (bread) show before the courses; rows below the last course (sides) show after the pairings | £8 |
+| Description, Price | Only for priced extras: the bread and the *Add on the side* rows. Priced rows above the first course show before the courses; those below the last course show after the pairings | £8 |
 | Show | `no` to hide | yes |
 
 **Kids**: the same columns as *Tasting*. Usually only *Course*, *Dish*, *Allergens* and *Show* are filled in.
