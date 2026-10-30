@@ -27,6 +27,8 @@ The menu guests see after scanning the QR code is read from the **Apricity menus
 
 **Add a new section** (for example "Snacks"). Type the new name in the *Section* column. Sections appear in the order they first appear in the sheet.
 
+**A notice at the top of a menu** (like the Belu water on Drinks). Type `Note` in its *Section* column. It shows as a box at the top of that menu, whatever row it's on, with its *Item*, *Price*, *Price note* and *Description*.
+
 **Something at the top with no heading** (like the bread). Leave its *Section* (or, on the Tasting tab, *Course*) empty and put the row first. It shows above the first section, with no heading and no button.
 
 **Allergens.** Use the codes from the printed menu, separated by commas, for example `P-B, Mu`. Any dish with `P-B` appears when guests turn on the *Plant-based* filter.
