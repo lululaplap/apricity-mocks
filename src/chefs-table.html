@@ -192,6 +192,8 @@ main:focus { outline: none; }
 /* footer */
 .foot { padding-block: 28px 32px; color: var(--light); font-size: 0.875rem; display: grid; gap: 12px; text-align: center; }
 .foot p { margin: 0; }
+.foot .fine-print { text-align: left; line-height: 1.65; }
+.foot .fine-print strong { color: var(--ink); font-weight: 600; }
 .foot .textsize { justify-self: center; }
 details { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 160px); }
 summary { cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.875rem; color: var(--ink); min-height: var(--tap); display: flex; align-items: center; }
@@ -275,7 +277,13 @@ details dd { margin: 0; }
   var TRACES = "We prepare our food in an environment with allergens and can’t guarantee that a dish is completely free of any allergen as traces may remain.";
   var ALLERGENS = '<details id="key"><summary>What the allergen codes mean</summary><dl>' +
     Object.keys(CODES).map(function (k) { return "<dt>" + k + "</dt><dd>" + CODES[k] + "</dd>"; }).join("") + "</dl><p>" + TRACES + "</p></details>";
-  var FOOT = "<p>A discretionary 13.5% ‘Apriciation’ goes to the whole team. 50p per person supports School Food Matters.</p>" +
+  // The website's own wording for the service contribution and the charity donation, in full.
+  var FOOT = "<p class=\"fine-print\"><strong>Apriciation</strong> - our pricing is such that we can ensure our team is paid appropriately for their contribution to the restaurant. " +
+    "All of the team go over and above and ensure that we create a memorable experience for you, our guests. As such, we have a discretionary " +
+    "'Apriciation' contribution of 13.5%. All of these funds go directly to everyone who is working in the business. Please note that the amount is at your " +
+    "discretion, so if you do not feel comfortable with this it can be left unpaid.</p>" +
+    "<p class=\"fine-print\">A donation of 50p per person is added to each bill to support the work of School Food Matters believes that every child should " +
+    "enjoy nutritious, delicious and sustainable food at school and leave with an informed and positive relationship with food.</p>" +
     '<button class="textsize" type="button" data-textsize></button>';
   var ALLERGY_NOTE = '<p class="note">Allergies? Please tell your server before ordering. <button class="keylink" type="button" data-key>What the allergen codes mean</button></p>';
   var TITLES = { drinks: "Drinks", wine: "Wine list", alacarte: "A la carte menu", tasting: "Tasting menus", chefs: "Chefs’ table menu" };

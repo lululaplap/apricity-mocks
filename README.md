@@ -116,4 +116,4 @@ axe-core 4.10 (WCAG 2.0–2.2 A/AA and best-practice rules) reports no issues on
 
 ## What was cut for clarity
 
-Hero photo, menu intro paragraphs, the long Apriciation and School Food Matters paragraphs (now one line), the non-alcoholic pairing description and spirits blurb, the "♢ unique only" wine filter and the teal bands.
+Hero photo, menu intro paragraphs, the non-alcoholic pairing description and spirits blurb, the "♢ unique only" wine filter and the teal bands.
