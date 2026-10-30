@@ -14,7 +14,7 @@ wrap() {
 # The live pages read the menus straight from published Google Sheets (File → Share → Publish to web,
 # then each tab's .csv link). A tab left empty here keeps reading its copy in sheets/.
 # MENUS is the "Apricity menus" sheet's published link up to "/pub"; the numbers are each tab's gid.
-MENUS=''
+MENUS='https://docs.google.com/spreadsheets/d/e/2PACX-1vRH461lNEKHLiOt1PwiXBaHZaFvvZ40PBM4OmvGivX--VYyvd5MQZyqb-ByvsShOZQho554CRt0ziFZ'
 DRINKS_GID='' ALACARTE_GID='' TASTING_GID='' TASTING_PRICES_GID='' KIDS_GID='' CHEFS_GID='' CHEFS_DETAILS_GID=''
 # The wine list is the restaurant's own published "apricity_wines" sheet.
 WINE_CSV='https://docs.google.com/spreadsheets/d/e/2PACX-1vSH5PMPgMOSJTzJ3FnKJmZxY3lI0loTNugZsmD6_U7PeT4LHiYJY75BtW-mFIgpeVbuDoZ8x724M6i1/pub?gid=652214147&single=true&output=csv'
