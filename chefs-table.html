@@ -91,12 +91,33 @@ button { font: inherit; color: inherit; letter-spacing: inherit; }
 .chips::-webkit-scrollbar { display: none; }
 /* A fade on the right edge shows there are more sections to scroll to. */
 .chips.more { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent); }
+.chips.less { -webkit-mask-image: linear-gradient(to right, transparent, #000 28px); mask-image: linear-gradient(to right, transparent, #000 28px); }
+.chips.less.more { -webkit-mask-image: linear-gradient(to right, transparent, #000 28px, #000 calc(100% - 48px), transparent); mask-image: linear-gradient(to right, transparent, #000 28px, #000 calc(100% - 48px), transparent); }
 .chip {
   flex: none; min-height: var(--tap); border: 1px solid var(--rule-strong); background: transparent; border-radius: 999px;
   padding: 2px 16px 0; font-size: 0.875rem; cursor: pointer; color: var(--ink);
   white-space: nowrap; text-transform: uppercase; letter-spacing: 0.08em;
 }
 .chip.active, .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--page); }
+/* Wine: "Bottles" opens into a button per style, which slide out one after another. */
+.chip { overflow: hidden; }
+.chip.parent[aria-expanded="true"]:not(.active) { border-color: var(--ink); font-weight: 600; }
+.chip .chev {
+  display: inline-block; width: 0.45em; height: 0.45em; margin-left: 0.55em; vertical-align: 0.15em;
+  border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+  transform: rotate(-45deg); transition: transform 0.3s ease;
+}
+.chip.parent[aria-expanded="true"] .chev { transform: rotate(45deg); }
+.chips.opening::after { content: ""; flex: none; width: 100%; }
+.chip.sub {
+  max-width: 0; padding-left: 0; padding-right: 0; border-width: 0; margin-left: -8px; opacity: 0; visibility: hidden;
+  transition: max-width 0.25s ease, padding 0.25s ease, margin 0.25s ease, border-width 0s 0.25s, opacity 0.12s ease, visibility 0s 0.25s;
+}
+.chips.open .chip.sub {
+  max-width: 16rem; padding-left: 16px; padding-right: 16px; border-width: 1px; margin-left: 0; opacity: 1; visibility: visible;
+  transition: max-width 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d), padding 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d),
+    margin 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d), border-width 0s var(--d), opacity 0.3s ease calc(var(--d) + 80ms), visibility 0s var(--d);
+}
 .chips .sep { flex: none; width: 1px; background: var(--rule-strong); margin: 8px 2px; }
 
 /* ---------- lists ---------- */
@@ -111,7 +132,7 @@ main:focus { outline: none; }
 }
 .section h2 small { font-size: 0.875rem; color: var(--light); letter-spacing: 0.08em; }
 .section h3 { font-size: 0.875rem; color: var(--light); margin: 18px 0 0; }
-.group-title { font-size: 1.25rem; text-align: center; letter-spacing: 0.24em; margin: 44px 0 0; }
+.group-title { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 160px); font-size: 1.25rem; text-align: center; letter-spacing: 0.24em; margin: 44px 0 0; }
 .items { list-style: none; margin: 0; padding: 0; }
 .item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 20px; padding: 14px 0; border-bottom: 1px solid var(--rule); }
 .item:last-child { border-bottom: 0; }
@@ -367,11 +388,20 @@ details dd { margin: 0; }
   }
   function setChips(nav, filter) {
     chips.innerHTML = (filter ? '<button class="chip" type="button" id="plant" aria-pressed="' + state.plantOnly + '">Plant-based</button><span class="sep" aria-hidden="true"></span>' : "") +
-      nav.map(function (s) { return '<button class="chip" type="button" data-jump="' + s[0] + '">' + esc(s[1]) + "</button>"; }).join("");
+      nav.map(function (s, i) {
+        var o = s[2] || {};
+        if (o.parent) return '<button class="chip parent" type="button" data-jump="' + s[0] + '" aria-expanded="false">' + esc(s[1]) + '<span class="chev" aria-hidden="true"></span></button>';
+        if (o.sub) return '<button class="chip sub" type="button" data-jump="' + s[0] + '" style="--d:' + 40 * o.sub + 'ms" tabindex="-1" aria-hidden="true">' + esc(s[1]) + "</button>";
+        return '<button class="chip" type="button" data-jump="' + s[0] + '">' + esc(s[1]) + "</button>";
+      }).join("");
+    chips.classList.remove("open");
     chips.hidden = !chips.children.length;
     updateFade();
   }
-  function updateFade() { chips.classList.toggle("more", chips.scrollWidth - chips.scrollLeft - chips.clientWidth > 4); }
+  function updateFade() {
+    chips.classList.toggle("more", chips.scrollWidth - chips.scrollLeft - chips.clientWidth > 4);
+    chips.classList.toggle("less", chips.scrollLeft > 4);
+  }
   chips.addEventListener("scroll", updateFade, { passive: true });
   window.addEventListener("resize", updateFade);
   // A plain menu tab (drinks, a la carte): Section | Item | Description | Allergens | Price | Price note | Section note | Show
@@ -402,10 +432,12 @@ details dd { margin: 0; }
             return '<h3 class="caps">' + esc(s.title) + "</h3>" + list(s.rows.map(wine));
           }).join(""), "125ml");
         } else {
-          html += '<h2 class="caps group-title">Bottles</h2>';
+          // One "Bottles" button that opens into a button per style.
+          html += '<h2 class="caps group-title" id="sec-bottles">Bottles</h2>';
+          nav.push(["bottles", "Bottles", { parent: true }]);
           sections.forEach(function (s, i) {
             var id = "b-" + slug(s.title);
-            nav.push([id, s.title.replace(/^(White|Red)\s*[—–-]\s*/, "$1: ").replace(/^Orange\s*\/.*/, "Orange")]);
+            nav.push([id, s.title.replace(/^(White|Red)\s*[—–-]\s*/, "$1: ").replace(/^Orange\s*\/.*/, "Orange"), { sub: i + 1 }]);
             html += section(id, s.title, list(s.rows.map(wine)), i === 0 ? "750ml" : "");
           });
         }
@@ -553,14 +585,42 @@ details dd { margin: 0; }
   }
   // Moves the chip row instantly: a second smooth scroll running alongside the page's can cancel it on some phones.
   function setActive(id) {
+    var parent = chips.querySelector(".chip.parent"), current = null;
+    // The Bottles button stays open while the guest is anywhere in the bottles, and closes back in By the glass.
+    if (parent) setOpen(id === parent.dataset.jump || !!chips.querySelector('.chip.sub[data-jump="' + id + '"]'));
     chips.querySelectorAll("[data-jump]").forEach(function (c) {
       var on = c.dataset.jump === id;
       c.classList.toggle("active", on);
-      if (!on) return;
-      var cr = c.getBoundingClientRect(), r = chips.getBoundingClientRect();
-      if (cr.left < r.left || cr.right > r.right) chips.scrollLeft += cr.left - r.left - 8;
+      if (on) current = c;
     });
+    reveal(current);
     updateFade();
+  }
+  // A button scrolled to the left edge stops this far in, so the faded edge covers the end of the previous button, not it.
+  var EDGE = 36;
+  function reveal(c) {
+    if (!c) return;
+    var cr = c.getBoundingClientRect(), r = chips.getBoundingClientRect();
+    if (cr.left < r.left || cr.right > r.right) chips.scrollLeft += cr.left - r.left - EDGE;
+  }
+  var revealTimer;
+  function setOpen(open) {
+    var parent = chips.querySelector(".chip.parent");
+    if (!parent || chips.classList.contains("open") === open) return;
+    chips.classList.toggle("open", open);
+    parent.setAttribute("aria-expanded", open);
+    // Opening: move Bottles to the left edge so the styles slide out into view beside it. A temporary spacer gives
+    // the row room to scroll before the styles have grown.
+    if (open) {
+      chips.classList.add("opening");
+      chips.scrollLeft += parent.getBoundingClientRect().left - chips.getBoundingClientRect().left - EDGE;
+    }
+    chips.querySelectorAll(".chip.sub").forEach(function (c) {
+      if (open) { c.removeAttribute("tabindex"); c.removeAttribute("aria-hidden"); } else { c.setAttribute("tabindex", "-1"); c.setAttribute("aria-hidden", "true"); }
+    });
+    // Once the buttons have finished opening or closing, keep the highlighted one in view.
+    clearTimeout(revealTimer);
+    revealTimer = setTimeout(function () { chips.classList.remove("opening"); reveal(chips.querySelector(".chip.active")); updateFade(); }, 800);
   }
 
   // ---------- jumping to a section ----------

@@ -10,7 +10,7 @@ Phone screenshots at 390 × 844. "Before" is the current website, rendered from 
 | --- | --- | --- | --- |
 | Switch from drinks to food | 4 screens back up to the menu links, then a new page | 1 tap | [1-switch-drinks-to-food.png](boards/1-switch-drinks-to-food.png) |
 | Jump to puddings | 2.4 screens of scrolling | 1 tap | [2-jump-to-puddings.png](boards/2-jump-to-puddings.png) |
-| Find a red wine by the bottle | About 15 screens of scrolling, inside a box that scrolls separately from the page | 2 taps | [3-find-a-red-wine.png](boards/3-find-a-red-wine.png) |
+| Find a red wine by the bottle | About 15 screens of scrolling, inside a box that scrolls separately from the page | 3 taps (Wine, Bottles, the style) | [3-find-a-red-wine.png](boards/3-find-a-red-wine.png) |
 | Choose a tasting menu | One combined list, with 7-course-only courses marked inside it | 1 tap | [4-choose-a-tasting-menu.png](boards/4-choose-a-tasting-menu.png) |
 | Find the children's menu | A separate page, reached from the Menus page only | 1 tap from the start page | [5-find-the-kids-menu.png](boards/5-find-the-kids-menu.png) |
 | Read comfortably and check allergens | Key about 3 screens down, below every dish; thin, small grey text | 1 tap to the key; 17px text and a *Larger text* button | [6-read-and-check-allergens.png](boards/6-read-and-check-allergens.png) |
@@ -43,6 +43,7 @@ The menu content in these saved pages matches the spreadsheets in `sheets/`.
 **New menu** (`after/`)
 - `after-1-start.png`: the start page.
 - `after-2-drinks.png`, `after-drinks-end.png`: Drinks, top and end (with *Food menu →*).
+- `after-wine-top.png`, `after-wine-bottles.png`: the wine list, and after tapping *Bottles* (the styles open beside it).
 - `after-3-wine-red.png`: after tapping *Red: Soft & Juicy*.
 - `after-4-alacarte-plant.png`, `after-alacarte-puddings.png`: A la carte with *Plant-based* on, and after tapping *Puddings*.
 - `after-tasting-5.png`, `after-tasting-7-middle.png`, `after-5-kids.png`: Tasting with 5 courses, 7 courses and Kids.
