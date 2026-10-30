@@ -14,7 +14,7 @@ Measured on a 390px-wide phone screen. Website sizes are what a guest actually s
 | Smallest text | 12.2px | 14px |
 | Text under 16px | 100% | 10–49% (notes, allergen codes, wine details) |
 | Text in a thin (light) weight | 71% | 0% |
-| Lowest text contrast (WCAG minimum 4.5:1) | 3.56:1 | 6.73:1 |
+| Lowest text contrast (WCAG minimum 4.5:1) | 3.56:1 | 6.72:1 |
 | Text below 4.5:1 contrast | 41% | 0% |
 | Automated WCAG 2.2 AA failures (axe-core) | 293 contrast, 3 links with no name | None |
 | axe best-practice issues | No main heading, no main landmark, content outside landmarks | None |
@@ -27,14 +27,14 @@ Measured on a 390px-wide phone screen. Website sizes are what a guest actually s
 
 | Screen | Smallest text | Lowest contrast | Thin text | Targets under 44px | axe issues (AA and best practice) |
 | --- | --- | --- | --- | --- | --- |
-| Start page | 13px → 14px | 4.47 → 6.73 | 100% → 0% | 0 → 0 | 3 → 0 |
-| Drinks | 11px → 14px | 4.47 → 6.73 | 41% → 0% | 10 → 0 | 3 → 0 |
-| Wine list | 11px → 14px | 4.47 → 6.73 | 77% → 0% | 15 → 0 | 16 → 0 |
-| A la carte | 11px → 14px | 4.47 → 6.73 | 34% → 0% | 12 → 0 | 21 → 0 |
-| Tasting | 11px → 14px | 4.47 → 6.73 | 41% → 0% | 10 → 0 | 26 → 0 |
+| Start page | 13px → 14px | 4.47 → 6.72 | 100% → 0% | 0 → 0 | 3 → 0 |
+| Drinks | 11px → 14px | 4.47 → 6.72 | 41% → 0% | 10 → 0 | 3 → 0 |
+| Wine list | 11px → 14px | 4.47 → 6.72 | 77% → 0% | 15 → 0 | 16 → 0 |
+| A la carte | 11px → 14px | 4.47 → 6.72 | 34% → 0% | 12 → 0 | 21 → 0 |
+| Tasting | 11px → 14px | 4.47 → 6.72 | 41% → 0% | 10 → 0 | 26 → 0 |
 
 What changed to get there:
-- Secondary text darkened from `#5F5A59` (4.47:1, just under the minimum) to a level that clears 6.7:1. The colours now come from the logo: main text in its teal `#034852` (6.73:1), descriptions in teal-grey `#2B4447` (6.84:1) and notes and allergen codes in `#354345` (6.77:1). Button outlines are 70% teal (3.65:1, above the 3:1 needed for controls).
+- Secondary text darkened from `#5F5A59` (4.47:1, just under the minimum). Colours now follow the website: black main text (13.8:1), its dark grey `#3A3A3A` (7.48:1) and `#414141` (6.72:1) in place of its light grey `#6A6A6A` (3.56:1, which fails). Headings and the logo use the logo's teal `#034852` (6.73:1).
 - No text under 14px; body text 17px; every weight regular or heavier.
 - Tabs, section buttons and links at least 44px tall and wide.
 - A *Larger text* button on the start page and at the end of every menu.
