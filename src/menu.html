@@ -270,8 +270,8 @@ details dd { margin: 0; }
 <script>
 (function () {
   // ---------- where the menus come from ----------
-  // Each menu is one tab of a Google Sheet. In Google Sheets: File → Share → Publish to web,
-  // choose the tab and "Comma-separated values (.csv)", then paste the link here.
+  // Each menu is one tab of the "Apricity menus" Google Sheet. These are the copies in sheets/, used by the
+  // preview and local testing; build.sh points the live pages at the published sheet (set the links there).
   var SHEETS = {
     drinks: "sheets/drinks.csv",
     alacarte: "sheets/alacarte.csv",
@@ -280,7 +280,7 @@ details dd { margin: 0; }
     kids: "sheets/kids.csv",
     chefs: "sheets/chefs-table.csv",
     chefsDetails: "sheets/chefs-table-details.csv",
-    // The restaurant's existing wine sheet. build.sh points the live pages at it; the preview reads a copy.
+    // The restaurant's existing apricity_wines sheet.
     wine: "sheets/wine.csv"
   };
   var NEEDS = { drinks: ["drinks"], wine: ["wine"], alacarte: ["alacarte"], tasting: ["tasting", "tastingPrices", "kids"], chefs: ["chefs", "chefsDetails"] };

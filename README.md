@@ -4,7 +4,7 @@ A phone-first menu that guests open by scanning the QR code on their table.
 
 - `chefs-table.html`: the Chefs' Table menu, for that table's own QR code. See *Chefs' Table* below.
 - `index.html`: the menu page. It loads its content, so open it through a web server rather than as a file, e.g. `python3 -m http.server` then http://localhost:8000/.
-- `sheets/*.csv`: the menu content, one file per Google Sheet tab. Import these to create the sheet.
+- `sheets/*.csv`: copies of each Google Sheet tab, read only by the preview and local testing. The live pages read the Google Sheets.
 - `UPDATING-THE-MENU.md`: the guide for staff.
 - `accessibility/`: the accessibility comparison with the current website, raw results and the audit script.
 - `screenshots/`: before-and-after phone screenshots and task boards showing the journey improvements.
@@ -28,11 +28,11 @@ The plant-based filter follows the restaurant's own "P-B" codes. Guests with a s
 Staff update the menu in a Google Sheet, never in code. The page fetches each tab as CSV when a guest opens a menu, so changes appear within about 5 minutes. Rows with *Show* = `no` are hidden, which makes it quick to take a dish off for the night. See `UPDATING-THE-MENU.md`.
 
 **One-off setup**
-1. Create a Google Sheet called *Apricity menus*. Import each file from `sheets/` as its own tab (File → Import → Upload → *Insert new sheet*): Drinks, A la carte, Tasting, Kids, Tasting prices, Chefs table, Chefs table details. The wine list already lives in its own sheet.
-2. File → Share → Publish to web. For each tab, choose the tab and *Comma-separated values (.csv)*, then copy the link.
-3. Paste the links into `SHEETS` at the top of the script in `src/menu.html`, then run `./build.sh` (it rebuilds both `index.html` and `chefs-table.html`).
-4. The wine list is already connected. The live pages read the restaurant's existing published **apricity_wines** sheet as it is (columns *Section*, *Subsection*, *Unique Expression (♢)*, *Vintage*, *Producer*, *Cuvée*, *Grape Varieties*, *Region*, *Bottle Price (£)*, *Glass Price (£)*, *Glass Size*). `build.sh` puts its CSV link into `index.html` and `chefs-table.html`. The preview and local testing read the copy in `sheets/wine.csv` (taken from the sheet on 28 Oct 2026).
-5. Host it. The repo root is the site (`index.html`, `sheets/`), so GitHub Pages can serve it as is. The menu is live at https://lululaplap.github.io/apricity-mocks/.
+1. The **Apricity menus** workbook is in Google Drive, with one tab per menu: Drinks, A la carte, Tasting, Kids, Tasting prices, Chefs table, Chefs table details. Open it and choose File → *Save as Google Sheets*, then delete the .xlsx so staff only see one copy. (Starting again: import each file from `sheets/` as its own tab.)
+2. In the Google Sheet, File → Share → Publish to web, *Entire document*, *Web page*, then *Publish*. Copy the link.
+3. In `build.sh`, set `MENUS` to that link up to `/pub` (it starts `https://docs.google.com/spreadsheets/d/e/2PACX-`), and each `…_GID` to that tab's number: click the tab and copy the number after `#gid=` in the address bar. Run `./build.sh`, which points `index.html` and `chefs-table.html` at the sheet. Any tab left blank keeps reading its copy in `sheets/`.
+4. The wine list is already connected. The live pages read the restaurant's existing published **apricity_wines** sheet as it is (columns *Section*, *Subsection*, *Unique Expression (♢)*, *Vintage*, *Producer*, *Cuvée*, *Grape Varieties*, *Region*, *Bottle Price (£)*, *Glass Price (£)*, *Glass Size*). The preview and local testing read the copy in `sheets/wine.csv` (taken from the sheet on 28 Oct 2026).
+5. Host it. The repo root is the site (`index.html`, `chefs-table.html`), so GitHub Pages can serve it as is. The menu is live at https://lululaplap.github.io/apricity-mocks/.
 6. Keep the existing QR codes. They open apricityrestaurant.com/menus, so move the website's Menus page to a new address and redirect `/menus` to this menu. See *Switching over, and switching back* below.
 
 If a sheet can't be reached, the page says the menu didn't load and offers *Try again*. It never shows stale or made-up content.
