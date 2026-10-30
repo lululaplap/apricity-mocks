@@ -118,6 +118,8 @@ button { font: inherit; color: inherit; letter-spacing: inherit; }
     margin 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d), border-width 0s var(--d), opacity 0.3s ease calc(var(--d) + 80ms), visibility 0s var(--d);
 }
 .chips .sep { flex: none; width: 1px; background: var(--rule-strong); margin: 8px 2px; }
+/* Plant-based, while on: pinned to the left so the other buttons slide underneath it. The shadow hides them in the gap. */
+.chip#plant[aria-pressed="true"] { position: sticky; left: 0; z-index: 1; box-shadow: 12px 0 0 var(--page), 22px 0 10px var(--page), -8px 0 0 var(--page); }
 
 /* ---------- lists ---------- */
 main { padding-block: 4px 8px; }
@@ -427,8 +429,12 @@ details dd { margin: 0; }
   }
   function updateFade() {
     chips.classList.toggle("more", chips.scrollWidth - chips.scrollLeft - chips.clientWidth > 4);
-    chips.classList.toggle("less", chips.scrollLeft > 4);
+    // No left fade while the Plant-based button is pinned there, so it's never faded.
+    chips.classList.toggle("less", chips.scrollLeft > 4 && !pinned());
   }
+  // While the Plant-based filter is on, its button stays pinned at the left of the row, so guests can always see it's on.
+  function pinned() { return chips.querySelector('#plant[aria-pressed="true"]'); }
+  function leftEdge() { var pin = pinned(); return pin ? pin.offsetWidth + 24 : EDGE; }
   chips.addEventListener("scroll", updateFade, { passive: true });
   window.addEventListener("resize", updateFade);
   // A plain menu tab (drinks, a la carte): Section | Item | Description | Allergens | Price | Price note | Section note | Show
@@ -620,7 +626,7 @@ details dd { margin: 0; }
       body.innerHTML = title + '<div class="status" role="alert"><p>The menu didn’t load. Check your connection, or ask your server.</p><button class="next" type="button" data-retry>Try again</button></div>';
     });
   }
-  function rerender() { var y = window.scrollY; show(state.view).then(function () { window.scrollTo(0, y); }); }
+  function rerender() { var y = window.scrollY; return show(state.view).then(function () { window.scrollTo(0, y); }); }
 
   // ---------- section scroll-spy ----------
   var observer;
@@ -653,7 +659,8 @@ details dd { margin: 0; }
   function reveal(c) {
     if (!c) return;
     var cr = c.getBoundingClientRect(), r = chips.getBoundingClientRect();
-    if (cr.left < r.left || cr.right > r.right) chips.scrollLeft += cr.left - r.left - EDGE;
+    var edge = leftEdge();
+    if (cr.left < r.left + (pinned() ? edge - 8 : 0) || cr.right > r.right) chips.scrollLeft += cr.left - r.left - edge;
   }
   var revealTimer;
   function setOpen(open) {
@@ -665,7 +672,7 @@ details dd { margin: 0; }
     // the row room to scroll before the styles have grown.
     if (open) {
       chips.classList.add("opening");
-      chips.scrollLeft += parent.getBoundingClientRect().left - chips.getBoundingClientRect().left - EDGE;
+      chips.scrollLeft += parent.getBoundingClientRect().left - chips.getBoundingClientRect().left - leftEdge();
     }
     chips.querySelectorAll(".chip.sub").forEach(function (c) {
       if (open) { c.removeAttribute("tabindex"); c.removeAttribute("aria-hidden"); } else { c.setAttribute("tabindex", "-1"); c.setAttribute("aria-hidden", "true"); }
@@ -710,7 +717,8 @@ details dd { margin: 0; }
     if (t.id === "plant") {
       state.plantOnly = !state.plantOnly;
       try { localStorage.setItem("apricity-menu", JSON.stringify({ plantOnly: state.plantOnly })); } catch (err) {}
-      return rerender();
+      // Keep the button under the guest's finger: back to the start of the row, where it's visible on or off.
+      return rerender().then(function () { chips.scrollLeft = 0; updateFade(); });
     }
     if (t.dataset.courses) { state.courses = courseChoice(t); return rerender(); }
     if (t.hasAttribute("data-key")) {
