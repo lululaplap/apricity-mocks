@@ -76,9 +76,9 @@ The Culinary Kids' tasting menu (£36, five courses, up to age 12) was taken fro
 
 ## Visual style
 
-- The logo from the brand's logo pack, in its teal (#034852), on the start page and in the header. It's a 1.8KB vector (`brand/apricity-logo.svg`, traced from the pack's PNG) drawn once inside the page, so it needs no extra download and stays sharp at every text size. The teal has 6.7:1 contrast on the peach.
+- The logo from the brand's logo pack, in black, on the start page and in the header. It's a 1.8KB vector (`brand/apricity-logo.svg`, traced from the pack's PNG) drawn once inside the page, so it needs no extra download and stays sharp at every text size.
 
-- The site's peach (#F9C6BA) everywhere, with the website's colours: black text (13.8:1 on the peach), its dark grey #3A3A3A (7.5:1), and #414141 in place of its light grey #6A6A6A, which fails contrast (3.6:1). The logo's teal (#034852, 6.7:1) is used only for the logo and headings. No teal bands or backgrounds, no photo, no intro paragraphs.
+- The site's peach (#F9C6BA) everywhere, with the website's colours: black text (13.8:1 on the peach), its dark grey #3A3A3A (7.5:1), and #414141 in place of its light grey #6A6A6A, which fails contrast (3.6:1). The logo is black too. No teal bands or backgrounds, no photo, no intro paragraphs.
 - Josefin Sans, the fallback font the website itself names after Brandon Grotesque (a licensed font).
 - Selected tabs are underlined, as in the site's navigation. Selected chips and buttons are filled black.
 - Always light: no dark mode, and the page asks browsers not to darken it automatically.

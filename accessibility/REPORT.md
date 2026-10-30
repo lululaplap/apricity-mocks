@@ -34,7 +34,7 @@ Measured on a 390px-wide phone screen. Website sizes are what a guest actually s
 | Tasting | 11px → 14px | 4.47 → 6.72 | 41% → 0% | 10 → 0 | 26 → 0 |
 
 What changed to get there:
-- Secondary text darkened from `#5F5A59` (4.47:1, just under the minimum). Colours now follow the website: black main text (13.8:1), its dark grey `#3A3A3A` (7.48:1) and `#414141` (6.72:1) in place of its light grey `#6A6A6A` (3.56:1, which fails). Headings and the logo use the logo's teal `#034852` (6.73:1).
+- Secondary text darkened from `#5F5A59` (4.47:1, just under the minimum). Colours now follow the website: black main text (13.8:1), its dark grey `#3A3A3A` (7.48:1) and `#414141` (6.72:1) in place of its light grey `#6A6A6A` (3.56:1, which fails). Headings and the logo are black.
 - No text under 14px; body text 17px; every weight regular or heavier.
 - Tabs, section buttons and links at least 44px tall and wide.
 - A *Larger text* button on the start page and at the end of every menu.
