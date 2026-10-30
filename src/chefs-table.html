@@ -160,6 +160,10 @@ main:focus { outline: none; }
 .seg button[aria-pressed="true"] { background: var(--ink); color: var(--page); }
 .seg button[aria-pressed="true"] small { color: var(--page); }
 .opts { list-style: none; margin: 0; padding: 0; }
+.extra {
+  display: inline-block; margin-left: 8px; padding: 3px 10px 1px; border: 1px solid var(--ink); border-radius: 999px;
+  color: var(--ink); font-size: 0.8125rem; letter-spacing: 0.1em; white-space: nowrap; vertical-align: 0.05em;
+}
 .opts li { padding: 12px 0; font-weight: 600; }
 .opts li + li { padding-top: 4px; }
 .opts .or {
@@ -486,13 +490,16 @@ details dd { margin: 0; }
       groups.forEach(function (g) {
         if (g.rows.some(function (r) { return r.price; })) { (courses ? extras : before).push(g); return; }
         var only7 = g.rows.some(function (r) { return /7/.test(r.courses || "") && !/both|5/i.test(r.courses); });
+        // A 7-course-only course is left out of the 5-course menu, unless it can be added for a price (the cheese
+        // course): then its dishes show in full, clearly marked as an optional extra.
+        var extra = "";
         if (only7 && state.courses !== 7) {
           var add = (g.rows.filter(function (r) { return r["add to 5-course"]; })[0] || {})["add to 5-course"];
-          if (add) courses += '<h3 class="caps">' + esc(g.title) + " · add " + esc(money(add)) + "</h3>";
-          return;
+          if (!add) return;
+          extra = ' <span class="extra">Optional · ' + esc(money(add)) + " extra</span>";
         }
         // A course with one dish (the pre dessert) is served to everyone, so the plant-based filter leaves it alone.
-        courses += '<h3 class="caps">' + esc(g.title) + '</h3><ul class="opts">' + (g.rows.length > 1 ? plantFilter(g.rows) : g.rows).map(function (r, i) {
+        courses += '<h3 class="caps">' + esc(g.title) + extra + '</h3><ul class="opts">' + (g.rows.length > 1 ? plantFilter(g.rows) : g.rows).map(function (r, i) {
           // "or" between a course's dishes makes the choice obvious, and is read out by screen readers too.
           return "<li>" + (i ? '<span class="or">or </span>' : "") + esc(r.dish) + codes(r.allergens) + (r.supplement ? ' <span class="codes">+' + esc(money(r.supplement)) + "</span>" : "") + "</li>";
         }).join("") + "</ul>";

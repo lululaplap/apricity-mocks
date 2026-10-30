@@ -61,7 +61,7 @@ The menu guests see after scanning the QR code is read from the **Apricity menus
 | Allergens | Allergen codes | F, D |
 | Supplement | Extra charge for this choice | 14 |
 | Courses | `Both`, or `7 only` for courses served only on the 7-course menu | 7 only |
-| Add to 5-course | For a 7-only course that 5-course guests can add, the price | 8 |
+| Add to 5-course | For a 7-only course that 5-course guests can add, the price. The 5-course menu then shows that course in full, labelled *Optional · £8 extra* | 8 |
 | Description, Price | Only for priced extras: the bread and the *Add on the side* rows. Priced rows above the first course show before the courses; those below the last course show after the pairings | £8 |
 | Show | `no` to hide | yes |
 
