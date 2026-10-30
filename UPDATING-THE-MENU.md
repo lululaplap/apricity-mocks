@@ -60,7 +60,7 @@ The menu guests see after scanning the QR code is read from the **Apricity menus
 | Supplement | Extra charge for this choice | 14 |
 | Courses | `Both`, or `7 only` for courses served only on the 7-course menu | 7 only |
 | Add to 5-course | For a 7-only course that 5-course guests can add, the price | 8 |
-| Description, Price | Only for the *Add on the side* rows (bread and sides) | £8 |
+| Description, Price | Only for priced extras such as *Bread* and *Add on the side*. Rows above the first course (bread) show before the courses; rows below the last course (sides) show after the pairings | £8 |
 | Show | `no` to hide | yes |
 
 **Kids**: the same columns as *Tasting*. Usually only *Course*, *Dish*, *Allergens* and *Show* are filled in.

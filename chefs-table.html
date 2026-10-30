@@ -485,9 +485,11 @@ details dd { margin: 0; }
       }).join("") + '</div><p class="note">' + (cur.kids ? "Choose one dish per course. We can cater for most dietary needs, so please ask your server."
         : "*Lunch &amp; pre-booked early dinner, groups up to 6. Choose one dish per course.") + "</p>";
 
-      var groups = groupBy(cur.kids ? d.kids : d.tasting, "course"), courses = "", extras = [];
+      // Priced groups (bread, sides) sit where they are in the sheet: above the first course they come before the
+      // courses, below it they come after the pairings.
+      var groups = groupBy(cur.kids ? d.kids : d.tasting, "course"), courses = "", before = [], extras = [];
       groups.forEach(function (g) {
-        if (g.rows.some(function (r) { return r.price; })) { extras.push(g); return; }
+        if (g.rows.some(function (r) { return r.price; })) { (courses ? extras : before).push(g); return; }
         var only7 = g.rows.some(function (r) { return /7/.test(r.courses || "") && !/both|5/i.test(r.courses); });
         if (only7 && state.courses !== 7) {
           var add = (g.rows.filter(function (r) { return r["add to 5-course"]; })[0] || {})["add to 5-course"];
@@ -500,7 +502,12 @@ details dd { margin: 0; }
           return "<li>" + (i ? '<span class="or">or </span>' : "") + esc(r.dish) + codes(r.allergens) + (r.supplement ? ' <span class="codes">+' + esc(money(r.supplement)) + "</span>" : "") + "</li>";
         }).join("") + "</ul>";
       });
-      var nav = [["courses", "Courses"]];
+      var nav = [];
+      before.forEach(function (g) {
+        nav.push([slug(g.title), g.title]);
+        html += section(slug(g.title), g.title, list(plantFilter(g.rows).map(rowItem)));
+      });
+      nav.push(["courses", "Courses"]);
       html += section("courses", cur.kids ? "Culinary Kids’ menu" : state.courses + "-course menu", courses);
       if (!cur.kids && (sel["wine pairing"] || sel["alcohol-free pairing"])) {
         nav.push(["pairings", "Pairings"]);
