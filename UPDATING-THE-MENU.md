@@ -67,7 +67,7 @@ The menu guests see after scanning the QR code is read from the **Apricity menus
 
 **Kids**: the same columns as *Tasting*. Usually only *Course*, *Dish*, *Allergens* and *Show* are filled in.
 
-**Tasting prices**: one row per menu, with columns *Menu*, *Price*, *Lunch & early evening*, *Wine pairing*, *Alcohol-free pairing*, *Pairing glasses* and *Note*. The kids' row must have "Kids" somewhere in its *Menu* name (for example `Culinary Kids`), and its *Note* shows under the price (for example `Up to age 12`).
+**Tasting prices**: one row per menu, with columns *Menu*, *Price*, *Lunch & early evening*, *Wine pairing*, *Non-alcoholic pairing*, *Pairing glasses* and *Note*. The kids' row must have "Kids" somewhere in its *Menu* name (for example `Culinary Kids`), and its *Note* shows under the price (for example `Up to age 12`).
 
 **Wine** (the existing *apricity_wines* sheet): one row per wine. *Section* is `By the Glass` or `Bottles`, *Subsection* is the style heading (for example `Red — Soft & Juicy`), and *Unique Expression (♢)* is `yes` for the marked wines. *Glass Price (£)* and *Glass Size* are only for wines that are also sold by the glass from a bottle, like the sweet wines. To take a wine off, delete its row, as you do now. (If you'd rather hide wines than delete them, add a *Show* column and type `no`; the table menu understands it.)
 

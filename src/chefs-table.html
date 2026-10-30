@@ -467,7 +467,7 @@ details dd { margin: 0; }
       foot.innerHTML = (coded ? ALLERGENS : "") + FOOT;
     },
     // Tasting tab: Course | Dish | Allergens | Supplement | Courses (Both / 7 only) | Add to 5-course | Description | Price | Show
-    // Prices tab: Menu | Price | Lunch & early evening | Wine pairing | Alcohol-free pairing | Pairing glasses
+    // Prices tab: Menu | Price | Lunch & early evening | Wine pairing | Non-alcoholic pairing | Pairing glasses | Note
     tasting: function (d) {
       // Each row of the prices tab is one menu: "5 courses", "7 courses", or the kids' menu (any name containing "kid").
       var menus = d.tastingPrices.map(function (r) {
@@ -512,9 +512,10 @@ details dd { margin: 0; }
       });
       nav.push(["courses", "Courses"]);
       html += section("courses", cur.kids ? "Culinary Kids’ menu" : state.courses + "-course menu", courses);
-      if (!cur.kids && (sel["wine pairing"] || sel["alcohol-free pairing"])) {
-        nav.push(["pairings", "Pairings"]);
-        html += section("pairings", "Pairings", list([item("Wine", "", sel["wine pairing"]), item("Alcohol-free", "", sel["alcohol-free pairing"])]),
+      var nonAlcoholic = sel["non-alcoholic pairing"] || sel["alcohol-free pairing"];  // older sheets used "Alcohol-free"
+      if (!cur.kids && (sel["wine pairing"] || nonAlcoholic)) {
+        nav.push(["pairings", "Drinks pairing"]);
+        html += section("pairings", "Drinks pairing", list([item("Wine", "", sel["wine pairing"]), item("Non-alcoholic", "", nonAlcoholic)]),
           sel["pairing glasses"] ? sel["pairing glasses"].replace(/^(\d+)$/, "$1 glasses") : "");
       }
       extras.forEach(function (g) {
