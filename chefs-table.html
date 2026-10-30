@@ -546,7 +546,10 @@ details dd { margin: 0; }
           extra = ' <span class="extra">Optional · ' + esc(money(add)) + " extra</span>";
         }
         // A course with one dish (the pre dessert) is served to everyone, so the plant-based filter leaves it alone.
-        courses += '<h3 class="caps">' + esc(g.title) + extra + '</h3><ul class="opts">' + (g.rows.length > 1 ? plantFilter(g.rows) : g.rows).map(function (r, i) {
+        // A course with no dish named shows as just its heading.
+        var dishes = g.rows.filter(function (r) { return r.dish; });
+        courses += '<h3 class="caps">' + esc(g.title) + extra + "</h3>";
+        if (dishes.length) courses += '<ul class="opts">' + (dishes.length > 1 ? plantFilter(dishes) : dishes).map(function (r, i) {
           // "or" between a course's dishes makes the choice obvious, and is read out by screen readers too.
           return "<li>" + (i ? '<span class="or">or </span>' : "") + esc(r.dish) + codes(r.allergens) + (r.supplement ? ' <span class="codes">+' + esc(money(r.supplement)) + "</span>" : "") + "</li>";
         }).join("") + "</ul>";
