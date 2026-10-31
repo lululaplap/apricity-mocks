@@ -525,11 +525,11 @@ details dd { margin: 0; }
       var cur = menus.filter(function (m) { return m.id === state.courses; })[0] || { r: {} }, sel = cur.r;
 
       var html = '<div class="seg" role="group" aria-label="Choose a tasting menu">' + menus.map(function (m) {
-        var sub = m.kids ? m.r.note : m.r["lunch & early evening"] && "Lunch & early evening " + money(m.r["lunch & early evening"]) + "*";
+        var sub = m.kids ? m.r.note : m.r["lunch & early evening"] && "Lunch & early dinner " + money(m.r["lunch & early evening"]) + "*";
         return '<button type="button" data-courses="' + m.id + '" aria-pressed="' + (state.courses === m.id) + '"><span class="caps">' +
           (m.kids ? "Kids" : m.id + " courses") + '</span><span class="big">' + esc(money(m.r.price)) + "</span>" + (sub ? "<small>" + esc(sub) + "</small>" : "") + "</button>";
       }).join("") + '</div><p class="note">' + (cur.kids ? "We can cater for most dietary needs, so please ask your server."
-        : "*Lunch &amp; pre-booked early dinner, groups up to 6.") + "</p>";
+        : "*Lunch &amp; pre-booked early dinner (before 6PM), groups up to 6.") + "</p>";
 
       // Priced groups (bread, sides) sit where they are in the sheet: above the first course they come before the
       // courses, below it they come after the pairings.
