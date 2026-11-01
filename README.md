@@ -68,7 +68,7 @@ To keep switching back instant, keep the website's menu pages in Wix up to date 
 
 ## Content
 
-The starting content in `sheets/` is copied from apricityrestaurant.com (captured 25 Oct 2026): the menus intro, the à la carte, tasting and drinks menus, the allergen key and trace warning, the 13.5% 'Apriciation' note, the 50p School Food Matters donation and the Belu water note.
+The starting content in `sheets/` is copied from apricityrestaurant.com (captured 25 Oct 2026): the menus intro, the à la carte, tasting and drinks menus, the allergen key and trace warning, the 13.5% 'Apriciation' note, the 50p charity donation (now City Harvest London) and the Belu water note.
 
 The wine list comes from the restaurant's own published wine sheet (148 wines on 28 Oct 2026), the same sheet that feeds the website's wine list, so the two always match.
 
