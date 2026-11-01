@@ -280,6 +280,7 @@ details dd { margin: 0; }
     kids: "sheets/kids.csv",
     chefs: "sheets/chefs-table.csv",
     chefsDetails: "sheets/chefs-table-details.csv",
+    footer: "sheets/footer.csv",
     // The restaurant's existing apricity_wines sheet.
     wine: "sheets/wine.csv"
   };
@@ -291,14 +292,8 @@ details dd { margin: 0; }
   var ALLERGENS = '<details id="key"><summary>What the allergen codes mean</summary><dl>' +
     Object.keys(CODES).map(function (k) { return "<dt>" + k + "</dt><dd>" + CODES[k] + "</dd>"; }).join("") + "</dl><p>" + TRACES + "</p></details>";
   // The website's own wording for the service contribution and the charity donation, in full.
-  var FOOT = "<p class=\"fine-print\"><strong>Apriciation</strong> - our pricing is such that we can ensure our team is paid appropriately for their contribution to the restaurant. " +
-    "All of the team go over and above and ensure that we create a memorable experience for you, our guests. As such, we have a discretionary " +
-    "'Apriciation' contribution of 13.5%. All of these funds go directly to everyone who is working in the business. Please note that the amount is at your " +
-    "discretion, so if you do not feel comfortable with this it can be left unpaid.</p>" +
-    "<p class=\"fine-print\">A donation of 50p per person is added to each bill to support the work of <a href=\"https://www.cityharvest.org.uk/\" target=\"_blank\" rel=\"noopener\">City Harvest London</a> food charity " +
-    "rescues nutritious surplus food from farms, manufacturers, wholesalers, and retailers, and delivers it, for free, to over 130,000 people a week " +
-    "via organisations feeding those facing food poverty.</p>" +
-    '<button class="textsize" type="button" data-textsize></button>';
+  // The end-of-menu notes (Apriciation, the charity donation) come from the Footer tab; see footer().
+  var TEXTSIZE = '<button class="textsize" type="button" data-textsize></button>', FOOT = TEXTSIZE;
   var ALLERGY_NOTE = '<p class="note">Allergies? Please tell your server before ordering. <button class="keylink" type="button" data-key>What the allergen codes mean</button></p>';
   var TITLES = { drinks: "Drinks", wine: "Wine list", alacarte: "A la carte menu", tasting: "Tasting menus", chefs: "Chefs’ table menu" };
 
@@ -370,6 +365,16 @@ details dd { margin: 0; }
   // ---------- building blocks ----------
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function slug(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "s"; }
+  // Footer tab: Heading | Text | Link text | Link | Show. The heading shows in bold before the text, and the first
+  // place the link text appears in the text links to Link.
+  function footer(rows) {
+    return rows.map(function (r) {
+      var text = esc(r.text || ""), name = r["link text"], url = r.link;
+      if (name && /^https?:\/\//i.test(url) && text.indexOf(esc(name)) > -1)
+        text = text.replace(esc(name), '<a href="' + esc(url) + '" target="_blank" rel="noopener">' + esc(name) + "</a>");
+      return '<p class="fine-print">' + (r.heading ? "<strong>" + esc(r.heading) + "</strong> - " : "") + text + "</p>";
+    }).join("");
+  }
   function money(v) { return /^\d+(\.\d+)?$/.test(v) ? "£" + v : v; }
   // Codes are shown as printed on the website; screen readers hear them in words instead ("plant-based; contains mustard").
   function codes(c) {
@@ -613,9 +618,11 @@ details dd { margin: 0; }
     chips.innerHTML = ""; foot.innerHTML = "";
     var title = '<h1 class="sr-only" id="view-title" tabindex="-1">' + TITLES[view] + "</h1>";
     var keys = NEEDS[view], pending = setTimeout(function () { body.innerHTML = title + '<p class="status" role="status">Loading menu…</p>'; }, 150);
-    return Promise.all(keys.map(load)).then(function (res) {
+    // The footer loads alongside the menu; if it fails, the menu still shows, just without the notes.
+    return Promise.all(keys.map(load).concat(load("footer").catch(function () { return null; }))).then(function (res) {
       clearTimeout(pending);
       if (state.view !== view) return;
+      if (res[keys.length]) FOOT = footer(res[keys.length]) + TEXTSIZE;
       var d = {}; keys.forEach(function (k, i) { d[k] = res[i]; });
       render[view](d);
       body.insertAdjacentHTML("afterbegin", title);

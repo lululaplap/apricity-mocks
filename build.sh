@@ -15,7 +15,7 @@ wrap() {
 # then each tab's .csv link). A tab left empty here keeps reading its copy in sheets/.
 # MENUS is the "Apricity menus" sheet's published link up to "/pub"; the numbers are each tab's gid.
 MENUS='https://docs.google.com/spreadsheets/d/e/2PACX-1vRH461lNEKHLiOt1PwiXBaHZaFvvZ40PBM4OmvGivX--VYyvd5MQZyqb-ByvsShOZQho554CRt0ziFZ'
-DRINKS_GID='582856367' ALACARTE_GID='1788082523' TASTING_GID='1307369044' TASTING_PRICES_GID='1503099288' KIDS_GID='1728861107' CHEFS_GID='91023610' CHEFS_DETAILS_GID='1137714254'
+DRINKS_GID='582856367' ALACARTE_GID='1788082523' TASTING_GID='1307369044' TASTING_PRICES_GID='1503099288' KIDS_GID='1728861107' CHEFS_GID='91023610' CHEFS_DETAILS_GID='1137714254' FOOTER_GID=''
 # The wine list is the restaurant's own published "apricity_wines" sheet.
 WINE_CSV='https://docs.google.com/spreadsheets/d/e/2PACX-1vSH5PMPgMOSJTzJ3FnKJmZxY3lI0loTNugZsmD6_U7PeT4LHiYJY75BtW-mFIgpeVbuDoZ8x724M6i1/pub?gid=652214147&single=true&output=csv'
 # Point each sheet at its live link (sed needs "&" escaped in the replacement).
@@ -24,7 +24,8 @@ live() {
   set -- drinks drinks.csv "$(url "$DRINKS_GID")" alacarte alacarte.csv "$(url "$ALACARTE_GID")" \
     tasting tasting.csv "$(url "$TASTING_GID")" tastingPrices tasting-prices.csv "$(url "$TASTING_PRICES_GID")" \
     kids kids.csv "$(url "$KIDS_GID")" chefs chefs-table.csv "$(url "$CHEFS_GID")" \
-    chefsDetails chefs-table-details.csv "$(url "$CHEFS_DETAILS_GID")" wine wine.csv "$WINE_CSV"
+    chefsDetails chefs-table-details.csv "$(url "$CHEFS_DETAILS_GID")" \
+    footer footer.csv "$(url "$FOOTER_GID")" wine wine.csv "$WINE_CSV"
   script=""
   while [ $# -gt 0 ]; do
     [ -n "$3" ] && script="$script

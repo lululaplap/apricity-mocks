@@ -16,6 +16,7 @@ The menu guests see after scanning the QR code is read from the **Apricity menus
 | **Wine** | The wine list: your existing **apricity_wines** sheet, which also feeds the website. Keep using it exactly as you do now |
 | **Chefs table** | Tonight's Chefs' Table courses, one row per course in the order served |
 | **Chefs table details** | The Chefs' Table welcome line, date and personal message |
+| **Footer** | The notes at the end of every menu: the Apriciation contribution and the charity donation |
 
 ## Everyday changes
 
@@ -32,6 +33,8 @@ The menu guests see after scanning the QR code is read from the **Apricity menus
 **Something at the top with no heading** (like the bread). Leave its *Section* (or, on the Tasting tab, *Course*) empty and put the row first. It shows above the first section, with no heading and no button.
 
 **Allergens.** Use the codes from the printed menu, separated by commas, for example `P-B, Mu`. Any dish with `P-B` appears when guests turn on the *Plant-based* filter.
+
+**Change the charity, or the Apriciation note.** On the **Footer** tab, edit the *Text*. To link a name to a website, type the name exactly as it appears in the text in *Link text* and the full address (starting `https://`) in *Link*. To add another note, add a row; to hide one, type `no` in *Show*.
 
 ## Setting up the Chefs' Table for a booking
 
@@ -72,6 +75,16 @@ The menu guests see after scanning the QR code is read from the **Apricity menus
 **Tasting prices**: one row per menu, with columns *Menu*, *Price*, *Lunch & early evening*, *Wine pairing*, *Non-alcoholic pairing*, *Pairing glasses* and *Note*. The kids' row must have "Kids" somewhere in its *Menu* name (for example `Culinary Kids`), and its *Note* shows under the price (for example `Up to age 12`).
 
 **Wine** (the existing *apricity_wines* sheet): one row per wine. *Section* is `By the Glass` or `Bottles`, *Subsection* is the style heading (for example `Red — Soft & Juicy`), and *Unique Expression (♢)* is `yes` for the marked wines. *Glass Price (£)* and *Glass Size* are only for wines that are also sold by the glass from a bottle, like the sweet wines. To take a wine off, delete its row, as you do now. (If you'd rather hide wines than delete them, add a *Show* column and type `no`; the table menu understands it.)
+
+**Footer**: one row per note, shown in the same order at the end of every menu.
+
+| Column | What to type | Example |
+| --- | --- | --- |
+| Heading | Optional bold word at the start, followed by a dash | Apriciation |
+| Text | The note | A donation of 50p per person is added to each bill… |
+| Link text | Optional: the words in the text to turn into a link, exactly as they appear | City Harvest London |
+| Link | The website address for that link | https://www.cityharvest.org.uk/ |
+| Show | `no` to hide | yes |
 
 ## Please don't
 
