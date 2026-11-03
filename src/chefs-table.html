@@ -513,7 +513,8 @@ details dd { margin: 0; }
     },
     // Tasting tab: Course | Dish | Allergens | Supplement | Courses (Both / 7 only) | Add to 5-course | Description | Price | Show
     // Prices tab: Menu | Price | Lunch & early evening | Wine pairing | Non-alcoholic pairing | Pairing glasses | Note
-    // From 3am to 4pm (London time) the tasting menus show their lunch price; the rest of the day, the dinner price.
+    // From 3am to 4pm (London time) the tasting menus show their lunch price; the rest of the day, the dinner price,
+    // with the early-dinner (lunch) price and its note underneath.
     tasting: function (d) {
       // Each row of the prices tab is one menu: "5 courses", "7 courses", or the kids' menu (any name containing "kid").
       var menus = d.tastingPrices.map(function (r) {
@@ -524,10 +525,14 @@ details dd { margin: 0; }
       var cur = menus.filter(function (m) { return m.id === state.courses; })[0] || { r: {} }, sel = cur.r;
 
       var html = '<div class="seg" role="group" aria-label="Choose a tasting menu">' + menus.map(function (m) {
-        var sub = m.kids && m.r.note, price = (lunchTime() && m.r["lunch & early evening"]) || m.r.price;
+        // At dinner, the lunch price still applies to pre-booked early dinners, so it shows under the dinner price.
+        var early = !m.kids && !lunchTime() && m.r["lunch & early evening"];
+        var sub = m.kids ? m.r.note : early && "Early dinner " + money(early) + "*";
+        var price = (lunchTime() && m.r["lunch & early evening"]) || m.r.price;
         return '<button type="button" data-courses="' + m.id + '" aria-pressed="' + (state.courses === m.id) + '"><span class="caps">' +
           (m.kids ? "Kids" : m.id + " courses") + '</span><span class="big">' + esc(money(price)) + "</span>" + (sub ? "<small>" + esc(sub) + "</small>" : "") + "</button>";
-      }).join("") + "</div>" + (cur.kids ? '<p class="note">We can cater for most dietary needs, so please ask your server.</p>' : "");
+      }).join("") + "</div>" + (cur.kids ? '<p class="note">We can cater for most dietary needs, so please ask your server.</p>'
+        : !lunchTime() && cur.r["lunch & early evening"] ? '<p class="note">*Pre-booked early dinner (before 6PM), groups up to 6.</p>' : "");
 
       // Priced groups (bread, sides) sit where they are in the sheet: above the first course they come before the
       // courses, below it they come after the pairings.
