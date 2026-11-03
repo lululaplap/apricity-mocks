@@ -521,6 +521,7 @@ details dd { margin: 0; }
     },
     // Tasting tab: Course | Dish | Allergens | Supplement | Courses (Both / 7 only) | Add to 5-course | Description | Price | Show
     // Prices tab: Menu | Price | Lunch & early evening | Wine pairing | Non-alcoholic pairing | Pairing glasses | Note
+    // From 3am to 4pm (London time) the tasting menus show their lunch price; the rest of the day, the dinner price.
     tasting: function (d) {
       // Each row of the prices tab is one menu: "5 courses", "7 courses", or the kids' menu (any name containing "kid").
       var menus = d.tastingPrices.map(function (r) {
@@ -531,11 +532,10 @@ details dd { margin: 0; }
       var cur = menus.filter(function (m) { return m.id === state.courses; })[0] || { r: {} }, sel = cur.r;
 
       var html = '<div class="seg" role="group" aria-label="Choose a tasting menu">' + menus.map(function (m) {
-        var sub = m.kids ? m.r.note : m.r["lunch & early evening"] && "Lunch & early dinner " + money(m.r["lunch & early evening"]) + "*";
+        var sub = m.kids && m.r.note, price = (lunchTime() && m.r["lunch & early evening"]) || m.r.price;
         return '<button type="button" data-courses="' + m.id + '" aria-pressed="' + (state.courses === m.id) + '"><span class="caps">' +
-          (m.kids ? "Kids" : m.id + " courses") + '</span><span class="big">' + esc(money(m.r.price)) + "</span>" + (sub ? "<small>" + esc(sub) + "</small>" : "") + "</button>";
-      }).join("") + '</div><p class="note">' + (cur.kids ? "We can cater for most dietary needs, so please ask your server."
-        : "*Lunch &amp; pre-booked early dinner (before 6PM), groups up to 6.") + "</p>";
+          (m.kids ? "Kids" : m.id + " courses") + '</span><span class="big">' + esc(money(price)) + "</span>" + (sub ? "<small>" + esc(sub) + "</small>" : "") + "</button>";
+      }).join("") + "</div>" + (cur.kids ? '<p class="note">We can cater for most dietary needs, so please ask your server.</p>' : "");
 
       // Priced groups (bread, sides) sit where they are in the sheet: above the first course they come before the
       // courses, below it they come after the pairings.
@@ -645,6 +645,22 @@ details dd { margin: 0; }
       body.innerHTML = title + '<div class="status" role="alert"><p>The menu didn’t load. Check your connection, or ask your server.</p><button class="next" type="button" data-retry>Try again</button></div>';
     });
   }
+  // Lunch prices from 3am to 4pm London time. "?prices=lunch" or "?prices=dinner" in the address forces one, for checking.
+  function lunchTime() {
+    var force = (location.search.match(/[?&]prices=(lunch|dinner)/) || [])[1];
+    if (force) return force === "lunch";
+    var h;
+    try { h = parseInt(new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/London", hour: "numeric", hourCycle: "h23" }).format(new Date()), 10); }
+    catch (e) { h = new Date().getHours(); }
+    return h >= 3 && h < 16;
+  }
+  // If the menu is open on the tasting page when lunch turns to dinner (or back), update the prices in place.
+  var lunchNow = lunchTime();
+  setInterval(function () {
+    if (lunchTime() === lunchNow) return;
+    lunchNow = !lunchNow;
+    if (state.view === "tasting") rerender();
+  }, 60000);
   function rerender() { var y = window.scrollY; return show(state.view).then(function () { window.scrollTo(0, y); }); }
 
   // ---------- section scroll-spy ----------
