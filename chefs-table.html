@@ -520,7 +520,7 @@ details dd { margin: 0; }
       foot.innerHTML = (coded ? ALLERGENS : "") + FOOT;
     },
     // Tasting tab: Course | Dish | Allergens | Supplement | Courses (Both / 7 only) | Add to 5-course | Description | Price | Show
-    // Prices tab: Menu | Price | Lunch & early evening | Wine pairing | Non-alcoholic pairing | Pairing glasses | Note
+    // Prices tab: Menu | Price | Lunch & early dinner | Wine pairing | Non-alcoholic pairing | Pairing glasses | Note
     // From 3am to 4pm (London time) the tasting menus show their lunch price; the rest of the day, the dinner price.
     tasting: function (d) {
       // Each row of the prices tab is one menu: "5 courses", "7 courses", or the kids' menu (any name containing "kid").
@@ -532,7 +532,9 @@ details dd { margin: 0; }
       var cur = menus.filter(function (m) { return m.id === state.courses; })[0] || { r: {} }, sel = cur.r;
 
       var html = '<div class="seg" role="group" aria-label="Choose a tasting menu">' + menus.map(function (m) {
-        var sub = m.kids && m.r.note, price = (lunchTime() && m.r["lunch & early evening"]) || m.r.price;
+        // The lunch column has been called "Lunch & early evening" and "Lunch & early dinner"; either works.
+        var lunch = m.r["lunch & early dinner"] || m.r["lunch & early evening"] || m.r["lunch price"];
+        var sub = m.kids && m.r.note, price = (lunchTime() && lunch) || m.r.price;
         return '<button type="button" data-courses="' + m.id + '" aria-pressed="' + (state.courses === m.id) + '"><span class="caps">' +
           (m.kids ? "Kids" : m.id + " courses") + '</span><span class="big">' + esc(money(price)) + "</span>" + (sub ? "<small>" + esc(sub) + "</small>" : "") + "</button>";
       }).join("") + "</div>" + (cur.kids ? '<p class="note">We can cater for most dietary needs, so please ask your server.</p>' : "");
