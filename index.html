@@ -265,7 +265,7 @@ details dd { margin: 0; }
     <button type="button" data-view="drinks">Drinks</button>
     <button type="button" data-view="wine">Wine list</button>
     <button type="button" data-view="alacarte">A la carte</button>
-    <button type="button" data-view="tasting" data-courses="5">Tasting menus</button>
+    <button type="button" data-view="tasting" data-courses="7">Tasting menus</button>
     <button type="button" data-view="tasting" data-courses="kids">Kids’ menu</button>
   </nav>
   <p class="note">Allergies? Please tell your server before ordering.</p>
@@ -364,7 +364,7 @@ details dd { margin: 0; }
 
   // ---------- state ----------
   var VIEWS = MODE === "chefs" ? ["home", "chefs", "drinks", "wine"] : ["home", "drinks", "wine", "alacarte", "tasting"];
-  var state = { view: "home", plantOnly: false, courses: 5 };
+  var state = { view: "home", plantOnly: false, courses: 7 };
   try { state.plantOnly = !!JSON.parse(localStorage.getItem("apricity-menu") || "{}").plantOnly; } catch (e) {}
 
   var $ = function (s) { return document.querySelector(s); };
@@ -528,6 +528,8 @@ details dd { margin: 0; }
         var kids = /kid/i.test(r.menu);
         return { id: kids ? "kids" : parseInt(r.menu, 10), kids: kids, r: r };
       }).filter(function (m) { return m.id; });
+      // Longest menu first (7 courses, then 5), then the kids' menu, whatever order the sheet lists them in.
+      menus.sort(function (a, b) { return (a.kids ? 0 : a.id) > (b.kids ? 0 : b.id) ? -1 : (a.kids ? 0 : a.id) < (b.kids ? 0 : b.id) ? 1 : 0; });
       if (!menus.some(function (m) { return m.id === state.courses; }) && menus.length) state.courses = menus[0].id;
       var cur = menus.filter(function (m) { return m.id === state.courses; })[0] || { r: {} }, sel = cur.r;
 
