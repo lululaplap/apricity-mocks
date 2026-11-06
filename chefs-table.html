@@ -159,6 +159,10 @@ main:focus { outline: none; }
 .notice .price { font-weight: 600; white-space: nowrap; }
 .notice .price small { font-weight: 400; color: var(--mid); font-size: 0.875rem; }
 .notice .desc { color: var(--mid); font-size: 0.9375rem; }
+.special { margin-top: 22px; padding: 18px 18px 6px; border: 2px solid var(--ink); }
+.special-label { margin: 0 0 2px; font-size: 0.875rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; }
+.special .items { margin: 0; }
+.special .item:last-child { border-bottom: 0; }
 .empty { color: var(--mid); padding: 14px 0; margin: 0; font-size: 1rem; }
 
 /* chefs' table */
@@ -457,13 +461,19 @@ details dd { margin: 0; }
     return '<div class="notice"><p class="notice-head"><span class="name">' + esc(r.item) + "</span>" + (r.price ? '<span class="price">' + esc(money(r.price)) +
       (r["price note"] ? " <small>" + esc(r["price note"]) + "</small>" : "") + "</span>" : "") + "</p>" + (r.description ? '<p class="desc">' + esc(r.description) + "</p>" : "") + "</div>";
   }
+  // Rows with Section "Special" show in a highlighted box at the top of the menu, as "Today's special".
+  function special(rows) {
+    return rows.length ? '<section class="special" aria-labelledby="special-label"><h2 class="special-label" id="special-label">Today’s special' +
+      (rows.length > 1 ? "s" : "") + "</h2>" + list(rows.map(rowItem)) + "</section>" : "";
+  }
   function untitled(rows) { return rows.length ? '<div class="section untitled">' + list(rows.map(rowItem)) + "</div>" : ""; }
   function simpleMenu(rows, food) {
     var groups = groupBy(rows, "section");
     // Rows with Section "Note" (the table water) show first, as a boxed notice with no heading or button.
     var notes = groups.filter(function (g) { return /^note$/i.test(g.title); });
-    groups = groups.filter(function (g) { return !/^note$/i.test(g.title); });
-    var html = notes.map(function (g) { return g.rows.map(notice).join(""); }).join("") + groups.map(function (g) {
+    var specials = [].concat.apply([], groups.filter(function (g) { return /^specials?$/i.test(g.title); }).map(function (g) { return g.rows; }));
+    groups = groups.filter(function (g) { return !/^(note|specials?)$/i.test(g.title); });
+    var html = notes.map(function (g) { return g.rows.map(notice).join(""); }).join("") + special(food ? plantFilter(specials) : specials) + groups.map(function (g) {
       var shown = food ? plantFilter(g.rows) : g.rows;
       if (!g.title) return untitled(shown);
       var note = (g.rows.filter(function (r) { return r["section note"]; })[0] || {})["section note"];

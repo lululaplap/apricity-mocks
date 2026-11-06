@@ -30,6 +30,8 @@ The menu guests see after scanning the QR code is read from the **Apricity menus
 
 **A notice at the top of a menu** (like the Belu water on Drinks). Type `Note` in its *Section* column. It shows as a box at the top of that menu, whatever row it's on, with its *Item*, *Price*, *Price note* and *Description*.
 
+**Today's special** (A la carte). Add a row with `Special` in its *Section* column and fill in *Item*, *Description*, *Allergens* and *Price* as for any dish. It shows in a highlighted box at the top of the menu, headed *Today's special* (or *Today's specials* if there's more than one). Type `no` in *Show*, or delete the row, when it's gone.
+
 **Something at the top with no heading** (like the bread). Leave its *Section* (or, on the Tasting tab, *Course*) empty and put the row first. It shows above the first section, with no heading and no button.
 
 **Allergens.** Use the codes from the printed menu, separated by commas, for example `P-B, Mu`. Any dish with `P-B` appears when guests turn on the *Plant-based* filter.
