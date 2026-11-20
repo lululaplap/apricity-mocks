@@ -28,7 +28,7 @@ The menu guests see after scanning the QR code is read from the **Apricity menus
 
 **Add a new section** (for example "Snacks"). Type the new name in the *Section* column. Sections appear in the order they first appear in the sheet.
 
-**A notice at the top of a menu** (like the Belu water on Drinks). Type `Note` in its *Section* column. It shows as a box at the top of that menu, whatever row it's on, with its *Item*, *Price*, *Price note* and *Description*.
+**A notice at the top of a menu** (like the Belu water on Drinks). Type `Note` in its *Section* column. It shows as a box at the top of that menu, whatever row it's on (on Drinks, it's repeated at the end of the list too), with its *Item*, *Price*, *Price note* and *Description*.
 
 **Today's special** (A la carte). Add a row with `Special` in its *Section* column and fill in *Item*, *Description*, *Allergens* and *Price* as for any dish. It shows in a highlighted box at the top of the menu, headed *Today's special* (or *Today's specials* if there's more than one). Type `no` in *Show*, or delete the row, when it's gone.
 

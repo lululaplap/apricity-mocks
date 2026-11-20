@@ -160,6 +160,7 @@ main:focus { outline: none; }
 .special .items { margin: 0; }
 .special .item:last-child { border-bottom: 0; }
 .empty { color: var(--mid); padding: 14px 0; margin: 0; font-size: 1rem; }
+.notes-end { margin-top: 28px; }
 
 /* chefs' table */
 .event { display: grid; gap: 8px; }
@@ -500,7 +501,9 @@ details dd { margin: 0; }
   // ---------- views ----------
   var render = {
     drinks: function (d) {
-      body.innerHTML = simpleMenu(d.drinks) + foodNext();
+      // The table water note (Section "Note") also shows at the end of the drinks, for guests who scroll straight down.
+      var notes = d.drinks.filter(function (r) { return /^note$/i.test(r.section || ""); }).map(notice).join("");
+      body.innerHTML = simpleMenu(d.drinks) + (notes ? '<div class="notes-end">' + notes + "</div>" : "") + foodNext();
       foot.innerHTML = FOOT;
     },
     wine: function (d) {
