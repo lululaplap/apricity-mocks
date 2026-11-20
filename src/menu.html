@@ -482,28 +482,29 @@ details dd { margin: 0; }
       (rows.length > 1 ? "s" : "") + "</h2>" + list(rows.map(rowItem)) + "</section>" : "";
   }
   function untitled(rows) { return rows.length ? '<div class="section untitled">' + list(rows.map(rowItem)) + "</div>" : ""; }
-  function simpleMenu(rows, food) {
+  function simpleMenu(rows, food, notesLast) {
     var groups = groupBy(rows, "section");
-    // Rows with Section "Note" (the table water) show first, as a boxed notice with no heading or button.
+    // Rows with Section "Note" show as a boxed notice with no heading or button: first, or with notesLast at the end
+    // (the table water on Drinks).
     var notes = groups.filter(function (g) { return /^note$/i.test(g.title); });
     var specials = [].concat.apply([], groups.filter(function (g) { return /^specials?$/i.test(g.title); }).map(function (g) { return g.rows; }));
     groups = groups.filter(function (g) { return !/^(note|specials?)$/i.test(g.title); });
-    var html = notes.map(function (g) { return g.rows.map(notice).join(""); }).join("") + special(food ? plantFilter(specials) : specials) + groups.map(function (g) {
+    var boxes = notes.map(function (g) { return g.rows.map(notice).join(""); }).join("");
+    var html = (notesLast ? "" : boxes) + special(food ? plantFilter(specials) : specials) + groups.map(function (g) {
       var shown = food ? plantFilter(g.rows) : g.rows;
       if (!g.title) return untitled(shown);
       var note = (g.rows.filter(function (r) { return r["section note"]; })[0] || {})["section note"];
       return section(slug(g.title), g.title, shown.length ? list(shown.map(rowItem)) : '<p class="empty">No plant-based ' + esc(g.title.toLowerCase()) + " today.</p>", note);
     }).join("");
     setChips(groups.filter(function (g) { return g.title; }).map(function (g) { return [slug(g.title), g.title]; }), food);
-    return html;
+    return html + (notesLast && boxes ? '<div class="notes-end">' + boxes + "</div>" : "");
   }
 
   // ---------- views ----------
   var render = {
     drinks: function (d) {
-      // The table water note (Section "Note") also shows at the end of the drinks, for guests who scroll straight down.
-      var notes = d.drinks.filter(function (r) { return /^note$/i.test(r.section || ""); }).map(notice).join("");
-      body.innerHTML = simpleMenu(d.drinks) + (notes ? '<div class="notes-end">' + notes + "</div>" : "") + foodNext();
+      // The table water note (Section "Note") shows at the end of the drinks, above the link to the food.
+      body.innerHTML = simpleMenu(d.drinks, false, true) + foodNext();
       foot.innerHTML = FOOT;
     },
     wine: function (d) {
