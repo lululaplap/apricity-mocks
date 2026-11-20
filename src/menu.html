@@ -224,18 +224,18 @@ details dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; marg
 details dt { font-weight: 600; color: var(--ink); }
 details dd { margin: 0; }
 /* Tasting sides: a drop-down under the main course. */
-.sides { margin-top: 10px; }
-.sides summary { gap: 12px; }
-.sides summary { list-style: none; }
+.sides { margin-top: 16px; border: 2px solid var(--blue); padding: 0 16px; }
+.sides summary { gap: 12px; list-style: none; min-height: 52px; color: var(--blue); font-weight: 600; font-size: 0.9375rem; }
 .sides summary::-webkit-details-marker { display: none; }
-.sides summary small { margin-left: auto; text-transform: none; letter-spacing: 0.02em; font-size: 0.875rem; color: var(--mid); }
+.sides summary small { margin-left: auto; text-transform: none; letter-spacing: 0.02em; font-size: 0.875rem; font-weight: 400; color: var(--blue); }
 .sides summary::after {
-  content: ""; flex: none; width: 8px; height: 8px; margin: -4px 4px 0 2px;
-  border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink); transform: rotate(45deg); transition: transform 0.2s;
+  content: ""; flex: none; width: 9px; height: 9px; margin: -4px 2px 0 2px;
+  border-right: 2.5px solid var(--blue); border-bottom: 2.5px solid var(--blue); transform: rotate(45deg); transition: transform 0.2s;
 }
+.sides[open] summary { border-bottom: 1px solid var(--rule); }
 .sides[open] summary::after { margin-top: 4px; transform: rotate(-135deg); }
 @media (prefers-reduced-motion: reduce) { .sides summary::after { transition: none; } }
-.sides .items { margin-bottom: 6px; }
+.sides .items { margin-bottom: 4px; }
 .sides .item:last-child { border-bottom: 0; }
 
 .status { padding-block: 48px; text-align: center; color: var(--mid); }
