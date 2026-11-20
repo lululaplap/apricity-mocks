@@ -11,7 +11,7 @@ The menu guests see after scanning the QR code is read from the **Apricity menus
 | **Drinks** | Cocktails, To start, Soft, Beer & cider, To finish |
 | **A la carte** | Bread, Starters, Mains, Sides, Puddings |
 | **Tasting** | The courses, the dish choices and the sides |
-| **Kids** | The Culinary Kids' tasting menu: courses and dish choices |
+| **Kids** | The Culinary Kids' tasting menu (its own *Kids* tab on the menu): courses and dish choices |
 | **Tasting prices** | The 5-course, 7-course and kids' prices, and pairing prices |
 | **Wine** | The wine list: your existing **apricity_wines** sheet, which also feeds the website. Keep using it exactly as you do now |
 | **Chefs table** | Tonight's Chefs' Table courses, one row per course in the order served |

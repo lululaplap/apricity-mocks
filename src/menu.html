@@ -14,6 +14,7 @@
   --page: #F9C6BA;          /* apricityrestaurant.com peach */
   --ink: #000000;           /* the website's black: 13.8:1 on peach */
   --mid: #3A3A3A;           /* the website's dark grey: 7.48:1 */
+  --blue: #034852;          /* the Apricity logo's blue; the peach on it is 6.9:1 */
   --light: #414141;         /* in place of the website's #6A6A6A: 6.72:1 */
   --rule: rgba(0, 0, 0, 0.18);
   --rule-strong: rgba(0, 0, 0, 0.55);
@@ -77,11 +78,11 @@ button { font: inherit; color: inherit; letter-spacing: inherit; }
 .splash .textsize { justify-self: center; }
 
 /* Drinks and food sit in two groups; with large text the food group wraps onto its own line. */
-.tabs { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; column-gap: 28px; }
-.tabs .group { display: flex; gap: 16px; }
+.tabs { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; column-gap: 16px; }
+.tabs .group { display: flex; gap: 10px; }
 .tab {
   border: 0; background: none; min-height: var(--tap); min-width: var(--tap); padding: 0; cursor: pointer;
-  font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--mid);
+  font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--mid);
   text-underline-offset: 7px;
 }
 .tab[aria-current="page"] { color: var(--ink); font-weight: 600; text-decoration: underline; text-decoration-thickness: 2px; }
@@ -172,13 +173,16 @@ main:focus { outline: none; }
 .courses .desc { margin: 2px 0 0; color: var(--mid); font-size: 0.9375rem; font-weight: 400; }
 
 /* tasting */
-.seg { display: grid; grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr)); margin-top: 20px; border: 1px solid var(--rule-strong); }
-.seg button { border: 0; background: transparent; padding: 14px 6px 12px; cursor: pointer; display: grid; gap: 4px; }
-.seg button + button { border-left: 1px solid var(--rule-strong); }
+/* The tasting menu selector, in the Apricity blue: the chosen menu (and the kids' price) is filled blue with peach
+   lettering; the other is outlined in blue with blue lettering. */
+.seg { display: grid; grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr)); margin-top: 20px; border: 2px solid var(--blue); color: var(--blue); }
+.seg button, .seg .one { border: 0; background: transparent; padding: 14px 6px 12px; display: grid; gap: 4px; text-align: center; }
+.seg button { cursor: pointer; }
+.seg .one { margin: 0; background: var(--blue); color: var(--page); }
+.seg button + button { border-left: 2px solid var(--blue); }
 .seg .big { font-size: 1.5rem; font-weight: 600; }
-.seg small { font-size: 0.875rem; color: var(--mid); }
-.seg button[aria-pressed="true"] { background: var(--ink); color: var(--page); }
-.seg button[aria-pressed="true"] small { color: var(--page); }
+.seg small { font-size: 0.875rem; color: inherit; }
+.seg button[aria-pressed="true"] { background: var(--blue); color: var(--page); }
 .choose { margin: 16px 0 0; font-size: 1.125rem; font-weight: 600; }
 .opts { list-style: none; margin: 0; padding: 0; }
 .extra {
@@ -239,6 +243,7 @@ details dd { margin: 0; }
       <div class="group">
         <button class="tab" data-view="alacarte" data-mode="main" type="button">A la carte</button>
         <button class="tab" data-view="tasting" data-mode="main" type="button">Tasting</button>
+        <button class="tab" data-view="kids" data-mode="main" type="button">Kids</button>
       </div>
     </nav>
     <div class="chips" id="chips" role="group" aria-label="Jump to a section"></div>
@@ -262,7 +267,7 @@ details dd { margin: 0; }
     <button type="button" data-view="wine">Wine list</button>
     <button type="button" data-view="alacarte">A la carte</button>
     <button type="button" data-view="tasting" data-courses="7">Tasting menus</button>
-    <button type="button" data-view="tasting" data-courses="kids">Kids’ menu</button>
+    <button type="button" data-view="kids">Kids’ menu</button>
   </nav>
   <p class="note">Allergies? Please tell your server before ordering.</p>
   <button class="textsize" type="button" data-textsize>Larger text</button>
@@ -288,7 +293,7 @@ details dd { margin: 0; }
     // The restaurant's existing apricity_wines sheet.
     wine: "sheets/wine.csv"
   };
-  var NEEDS = { drinks: ["drinks"], wine: ["wine"], alacarte: ["alacarte"], tasting: ["tasting", "tastingPrices", "kids"], chefs: ["chefs", "chefsDetails"] };
+  var NEEDS = { drinks: ["drinks"], wine: ["wine"], alacarte: ["alacarte"], tasting: ["tasting", "tastingPrices"], kids: ["kids", "tastingPrices"], chefs: ["chefs", "chefsDetails"] };
 
   var CODES = { "V": "Vegetarian", "P-B": "Plant-based", "C": "Crustaceans", "Ce": "Celery", "D": "Dairy", "E": "Eggs", "F": "Fish", "P": "Peanuts",
     "G": "Gluten", "L": "Lupin", "N": "Nuts", "Mo": "Molluscs", "Mu": "Mustard", "S": "Soya", "SD": "Sulphur dioxide", "Se": "Sesame", "A": "Alcohol" };
@@ -299,7 +304,7 @@ details dd { margin: 0; }
   // The end-of-menu notes (Apriciation, the charity donation) come from the Footer tab; see footer().
   var TEXTSIZE = '<button class="textsize" type="button" data-textsize></button>', FOOT = TEXTSIZE;
   var ALLERGY_NOTE = '<p class="note">Allergies? Please tell your server before ordering. <button class="keylink" type="button" data-key>What the allergen codes mean</button></p>';
-  var TITLES = { drinks: "Drinks", wine: "Wine list", alacarte: "A la carte menu", tasting: "Tasting menus", chefs: "Chefs’ table menu" };
+  var TITLES = { drinks: "Drinks", wine: "Wine list", alacarte: "A la carte menu", tasting: "Tasting menus", kids: "Culinary Kids’ menu", chefs: "Chefs’ table menu" };
 
   // ---------- which set of pages ----------
   // chefs-table.html is this same page with <meta name="apricity-menu" content="chefs-table">: its own menu, message and
@@ -359,7 +364,7 @@ details dd { margin: 0; }
   }
 
   // ---------- state ----------
-  var VIEWS = MODE === "chefs" ? ["home", "chefs", "drinks", "wine"] : ["home", "drinks", "wine", "alacarte", "tasting"];
+  var VIEWS = MODE === "chefs" ? ["home", "chefs", "drinks", "wine"] : ["home", "drinks", "wine", "alacarte", "tasting", "kids"];
   var state = { view: "home", plantOnly: false, courses: 7 };
   try { state.plantOnly = !!JSON.parse(localStorage.getItem("apricity-menu") || "{}").plantOnly; } catch (e) {}
 
@@ -524,35 +529,46 @@ details dd { margin: 0; }
     // Tasting tab: Course | Dish | Allergens | Supplement | Courses (Both / 7 only) | Add to 5-course | Description | Price | Show
     // Prices tab: Menu | Price | Lunch & early dinner | Wine pairing | Non-alcoholic pairing | Pairing glasses | Note
     // From 3am to 4pm (London time) the tasting menus show their lunch price; the rest of the day, the dinner price.
-    tasting: function (d) {
+    // The Kids tab is the same page, showing only the kids' menu (its own row in the prices tab and its own Kids tab).
+    kids: function (d) { render.tasting(d, true); },
+    tasting: function (d, kidsView) {
       // Each row of the prices tab is one menu: "5 courses", "7 courses", or the kids' menu (any name containing "kid").
       var menus = d.tastingPrices.map(function (r) {
         var kids = /kid/i.test(r.menu);
         return { id: kids ? "kids" : parseInt(r.menu, 10), kids: kids, r: r };
-      }).filter(function (m) { return m.id; });
-      // Longest menu first (7 courses, then 5), then the kids' menu, whatever order the sheet lists them in.
-      menus.sort(function (a, b) { return (a.kids ? 0 : a.id) > (b.kids ? 0 : b.id) ? -1 : (a.kids ? 0 : a.id) < (b.kids ? 0 : b.id) ? 1 : 0; });
-      if (!menus.some(function (m) { return m.id === state.courses; }) && menus.length) state.courses = menus[0].id;
-      var cur = menus.filter(function (m) { return m.id === state.courses; })[0] || { r: {} }, sel = cur.r;
-
-      var html = '<div class="seg" role="group" aria-label="Choose a tasting menu">' + menus.map(function (m) {
+      }).filter(function (m) { return m.id && m.kids === !!kidsView; });
+      // Longest menu first: 7 courses, then 5, whatever order the sheet lists them in.
+      menus.sort(function (a, b) { return b.id - a.id; });
+      var cur = kidsView ? menus[0] || { kids: true, r: {} } : null;
+      if (!kidsView) {
+        if (!menus.some(function (m) { return m.id === state.courses; }) && menus.length) state.courses = menus[0].id;
+        cur = menus.filter(function (m) { return m.id === state.courses; })[0] || { r: {} };
+      }
+      var sel = cur.r;
+      function price(m) {
         // The lunch column has been called "Lunch & early evening" and "Lunch & early dinner"; either works.
         var lunch = m.r["lunch & early dinner"] || m.r["lunch & early evening"] || m.r["lunch price"];
-        var sub = m.kids && m.r.note, price = (lunchTime() && lunch) || m.r.price;
-        return '<button type="button" data-courses="' + m.id + '" aria-pressed="' + (state.courses === m.id) + '"><span class="caps">' +
-          (m.kids ? "Kids" : m.id + " courses") + '</span><span class="big">' + esc(money(price)) + "</span>" + (sub ? "<small>" + esc(sub) + "</small>" : "") + "</button>";
-      }).join("") + "</div>" + (cur.kids ? '<p class="note">We can cater for most dietary needs, so please ask your server.</p>' : "");
+        return esc(money((lunchTime() && lunch) || m.r.price));
+      }
+
+      var html = kidsView
+        ? '<div class="seg"><p class="one"><span class="caps">Culinary Kids</span><span class="big">' + price(cur) + "</span>" +
+          (sel.note ? "<small>" + esc(sel.note) + "</small>" : "") + '</p></div><p class="note">We can cater for most dietary needs, so please ask your server.</p>'
+        : '<div class="seg" role="group" aria-label="Choose a tasting menu">' + menus.map(function (m) {
+            return '<button type="button" data-courses="' + m.id + '" aria-pressed="' + (state.courses === m.id) + '"><span class="caps">' +
+              m.id + ' courses</span><span class="big">' + price(m) + "</span></button>";
+          }).join("") + "</div>";
 
       // Priced groups (bread, sides) sit where they are in the sheet: above the first course they come before the
       // courses, below it they come after the pairings.
-      var groups = groupBy(cur.kids ? d.kids : d.tasting, "course"), courses = "", before = [], extras = [];
+      var groups = groupBy(kidsView ? d.kids : d.tasting, "course"), courses = "", before = [], extras = [];
       groups.forEach(function (g) {
         if (g.rows.some(function (r) { return r.price; })) { (courses ? extras : before).push(g); return; }
         var only7 = g.rows.some(function (r) { return /7/.test(r.courses || "") && !/both|5/i.test(r.courses); });
         // A 7-course-only course is left out of the 5-course menu, unless it can be added for a price (the cheese
         // course): then its dishes show in full, clearly marked as an optional supplement.
         var extra = "";
-        if (only7 && state.courses !== 7) {
+        if (only7 && !kidsView && state.courses !== 7) {
           var add = (g.rows.filter(function (r) { return r["add to 5-course"]; })[0] || {})["add to 5-course"];
           if (!add) return;
           extra = ' <span class="extra">Optional · ' + esc(money(add)) + " supplement</span>";
@@ -574,10 +590,10 @@ details dd { margin: 0; }
       });
       nav.push(["courses", "Courses"]);
       // The one instruction guests need, on its own line where the choosing starts.
-      html += section("courses", cur.kids ? "Culinary Kids’ menu" : state.courses + "-course menu",
+      html += section("courses", kidsView ? "Culinary Kids’ menu" : state.courses + "-course menu",
         '<p class="choose">Choose one dish from each course</p>' + courses);
       var nonAlcoholic = sel["non-alcoholic pairing"] || sel["alcohol-free pairing"];  // older sheets used "Alcohol-free"
-      if (!cur.kids && (sel["wine pairing"] || nonAlcoholic)) {
+      if (!kidsView && (sel["wine pairing"] || nonAlcoholic)) {
         nav.push(["pairings", "Drinks pairing"]);
         html += section("pairings", "Drinks pairing", list([item("Wine", "", sel["wine pairing"]), item("Non-alcoholic", "", nonAlcoholic)]),
           sel["pairing glasses"] ? sel["pairing glasses"].replace(/^(\d+)$/, "$1 glasses") : "");
@@ -665,7 +681,7 @@ details dd { margin: 0; }
   setInterval(function () {
     if (lunchTime() === lunchNow) return;
     lunchNow = !lunchNow;
-    if (state.view === "tasting") rerender();
+    if (state.view === "tasting" || state.view === "kids") rerender();
   }, 60000);
   function rerender() { var y = window.scrollY; return show(state.view).then(function () { window.scrollTo(0, y); }); }
 
@@ -741,7 +757,7 @@ details dd { margin: 0; }
     jumpTimer = setTimeout(function () { jumping = null; }, 1000);
   }
 
-  function courseChoice(t) { return t.dataset.courses === "kids" ? "kids" : +t.dataset.courses; }
+  function courseChoice(t) { return +t.dataset.courses; }
 
   // ---------- events ----------
   document.addEventListener("click", function (e) {
