@@ -81,7 +81,7 @@ button { font: inherit; color: inherit; letter-spacing: inherit; }
   border: 0; border-bottom: 1px solid var(--rule-strong); background: none; padding: 20px 0 18px; cursor: pointer;
   font-size: 1.0625rem; text-transform: uppercase; letter-spacing: 0.2em; transition: background .2s, color .2s;
 }
-.links button:hover, .links button:active { background: var(--ink); color: var(--page); }
+.links button:hover, .links button:active { background: var(--blue); color: var(--page); }
 .splash .note { margin: 0; font-size: 1rem; }
 .splash .textsize { justify-self: center; }
 
@@ -106,7 +106,7 @@ button { font: inherit; color: inherit; letter-spacing: inherit; }
   padding: 2px 16px 0; font-size: 0.875rem; cursor: pointer; color: var(--ink);
   white-space: nowrap; text-transform: uppercase; letter-spacing: 0.08em;
 }
-.chip.active, .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--page); }
+.chip.active, .chip[aria-pressed="true"] { background: var(--blue); border-color: var(--blue); color: var(--page); }
 /* Wine: "Bottles" opens into a button per style, which slide out one after another. */
 .chip { overflow: hidden; }
 .chip.parent[aria-expanded="true"]:not(.active) { border-color: var(--ink); font-weight: 600; }
@@ -213,7 +213,7 @@ main:focus { outline: none; }
   border: 1px solid var(--ink); background: transparent; text-align: left;
 }
 .next span { font-size: 0.9375rem; }
-.next:hover, .next:active { background: var(--ink); color: var(--page); }
+.next:hover, .next:active { background: var(--blue); color: var(--page); }
 
 /* footer */
 .foot { padding-block: 28px 32px; color: var(--light); font-size: 0.875rem; display: grid; gap: 12px; text-align: center; }
@@ -228,6 +228,20 @@ details p { margin: 0 0 12px; color: var(--mid); }
 details dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; margin: 4px 0 12px; color: var(--mid); }
 details dt { font-weight: 600; color: var(--ink); }
 details dd { margin: 0; }
+/* Tasting sides: a drop-down under the main course. */
+.sides { margin-top: 10px; }
+.sides summary { gap: 12px; }
+.sides summary { list-style: none; }
+.sides summary::-webkit-details-marker { display: none; }
+.sides summary small { margin-left: auto; text-transform: none; letter-spacing: 0.02em; font-size: 0.875rem; color: var(--mid); }
+.sides summary::after {
+  content: ""; flex: none; width: 8px; height: 8px; margin: -4px 4px 0 2px;
+  border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink); transform: rotate(45deg); transition: transform 0.2s;
+}
+.sides[open] summary::after { margin-top: 4px; transform: rotate(-135deg); }
+@media (prefers-reduced-motion: reduce) { .sides summary::after { transition: none; } }
+.sides .items { margin-bottom: 6px; }
+.sides .item:last-child { border-bottom: 0; }
 
 .status { padding-block: 48px; text-align: center; color: var(--mid); }
 .status .next { justify-content: center; margin-top: 20px; }
@@ -568,8 +582,8 @@ details dd { margin: 0; }
           }).join("") + "</div>";
 
       // Priced groups (bread, sides) sit where they are in the sheet: above the first course they come before the
-      // courses, below it they come after the pairings.
-      var groups = groupBy(kidsView ? d.kids : d.tasting, "course"), courses = "", before = [], extras = [];
+      // courses; below it they open from a drop-down under the main course.
+      var groups = groupBy(kidsView ? d.kids : d.tasting, "course"), courses = "", before = [], extras = [], SIDES = "<!--sides-->";
       groups.forEach(function (g) {
         if (g.rows.some(function (r) { return r.price; })) { (courses ? extras : before).push(g); return; }
         var only7 = g.rows.some(function (r) { return /7/.test(r.courses || "") && !/both|5/i.test(r.courses); });
@@ -589,6 +603,8 @@ details dd { margin: 0; }
           // "or" between a course's dishes makes the choice obvious, and is read out by screen readers too.
           return "<li>" + (i ? '<span class="or">or </span>' : "") + esc(r.dish) + codes(r.allergens) + (r.supplement ? ' <span class="codes">' + esc(money(r.supplement)) + " supplement</span>" : "") + "</li>";
         }).join("") + "</ul>";
+        // The sides (priced rows below the courses) open from a drop-down under the main course.
+        if (/main/i.test(g.title) && courses.indexOf(SIDES) < 0) courses += SIDES;
       });
       var nav = [];
       before.forEach(function (g) {
@@ -597,19 +613,21 @@ details dd { margin: 0; }
         html += section(slug(g.title), g.title, list(plantFilter(g.rows).map(rowItem)));
       });
       nav.push(["courses", "Courses"]);
+      var sides = extras.map(function (g) {
+        var rows = plantFilter(g.rows);
+        return '<details class="sides"><summary>' + esc(g.title) + "<small>" + rows.length + (rows.length === 1 ? " option" : " options") +
+          "</small></summary>" + list(rows.map(rowItem)) + "</details>";
+      }).join("");
+      // With no main course to hang them from, the sides go at the end of the courses.
+      courses = courses.indexOf(SIDES) > -1 ? courses.replace(SIDES, sides) : courses + sides;
       // The one instruction guests need, on its own line where the choosing starts.
       html += section("courses", kidsView ? "Culinary Kids’ menu" : state.courses + "-course menu",
         '<p class="choose">Choose one dish from each course</p>' + courses);
       var nonAlcoholic = sel["non-alcoholic pairing"] || sel["alcohol-free pairing"];  // older sheets used "Alcohol-free"
       if (!kidsView && (sel["wine pairing"] || nonAlcoholic)) {
-        nav.push(["pairings", "Drinks pairing"]);
         html += section("pairings", "Drinks pairing", list([item("Wine", "", sel["wine pairing"]), item("Non-alcoholic", "", nonAlcoholic)]),
           sel["pairing glasses"] ? sel["pairing glasses"].replace(/^(\d+)$/, "$1 glasses") : "");
       }
-      extras.forEach(function (g) {
-        nav.push([slug(g.title), g.title.replace(/^Add on the side$/i, "Sides")]);
-        html += section(slug(g.title), g.title, list(plantFilter(g.rows).map(rowItem)));
-      });
 
       body.innerHTML = ALLERGY_NOTE + html + next("drinks", "Drinks", "Cocktails, wine & more");
       setChips(nav, true);
